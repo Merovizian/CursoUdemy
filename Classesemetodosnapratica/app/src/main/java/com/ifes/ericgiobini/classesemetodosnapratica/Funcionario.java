@@ -13,3 +13,25 @@ class Funcionario {
     }
 
 }
+
+
+class Animal{
+    String Cor, Nome;
+    double Tamanho, Peso;
+
+
+    String correr (String intensidade){
+        switch (intensidade){
+            case "devagar":
+                return "O animal esta andando";
+            case "normal":
+                return "O animal esta caminhando";
+            case "correndo":
+                return "O animal esta correndo";
+            default:
+                return "Animal está parado";
+        }
+
+    }
+
+}
