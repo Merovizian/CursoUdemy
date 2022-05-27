@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Frases do dia projeto</string>
+    <string name="botao_inicio">NOVA FRASE</string>
+    <string name="frase_inicial">Clique no botao acima para gerar sua frase do dia.</string>
+    <string name="todo">TODO</string>
+    <string name="numero">numero</string>
+</resources>
