@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QUAL É O MELHOR FILHO?</string>
+    <string name="Titulo">Escolha um "pai":</string>
+    <string name="filho">Escolha um dos filhos:</string>
+    <string name="pedra"></string>
+    <string name="papel" />
+    <string name="tesoura" />
+    <string name="escolhaUsuario">Sua Escolha:</string>
+    <string name="escolhaComputador">Escolha do Celular:</string>
+    <string name="resultadoFinal">Escolha um pai e um filho para JOGAR</string>
+</resources>
