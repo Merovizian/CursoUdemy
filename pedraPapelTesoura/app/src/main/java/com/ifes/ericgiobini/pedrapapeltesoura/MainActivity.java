@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void selecionadoPai(View view){
+
         this.paiSelecionado("pai");
+
     }
     public void selecionadoMae(View view) {
         this.paiSelecionado("mae");
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void paiSelecionado(String stringpai){
+
 
     }
 

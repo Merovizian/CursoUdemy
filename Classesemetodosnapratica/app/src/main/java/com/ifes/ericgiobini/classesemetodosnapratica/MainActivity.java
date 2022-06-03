@@ -14,9 +14,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Animal animal = new Animal();
-        animal.
 
+        Obama obama = new Obama();
+        Eric eric = new Eric();
+        obama.direitosDeveres();
+        obama.ganharEleicao();
+        eric.ganharEleicao();
 
 
 
