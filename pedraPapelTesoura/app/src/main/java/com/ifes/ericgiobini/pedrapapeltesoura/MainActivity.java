@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private String escolhaPaiMae;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void selecionadoPai(View view){
-
-        this.paiSelecionado("pai");
+        escolhaPaiMae = "pai";
 
     }
     public void selecionadoMae(View view) {
-        this.paiSelecionado("mae");
+        escolhaPaiMae = "mae";
+
     }
 
     public void selecionadoBruno(View view){
@@ -43,18 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void paiSelecionado(String stringpai){
-
-
-    }
-
-
-
-
-
-
-
-
 
     public void opcaoSelecionada(String stringSelecionada){
 
@@ -66,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView imagemResultadoComputador = findViewById(R.id.resultadoComputador);
         ImageView imagemResultadoUsuario = findViewById(R.id.resultadoUsuario);
         TextView textoResultado = findViewById(R.id.resultadoFinal);
+        TextView paioumae = findViewById(R.id.epaioupae);
+
+        paioumae.setText(escolhaPaiMae);
 
 
 
