@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,15 +33,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selecionadoBruno(View view){
-        this.opcaoSelecionada("bruno");
+        this.opcaoSelecionada("Primogênito");
 
     }
     public void selecionadoEric(View view){
-        this.opcaoSelecionada("eric");
+        this.opcaoSelecionada("FilhodoMeio");
 
     }
     public void selecionadoCarolina(View view){
-        this.opcaoSelecionada("carolina");
+        this.opcaoSelecionada("Preferida");
 
     }
 
@@ -59,59 +58,70 @@ public class MainActivity extends AppCompatActivity {
         ImageView imagemResultadoComputador = findViewById(R.id.resultadoComputador);
         ImageView imagemResultadoUsuario = findViewById(R.id.resultadoUsuario);
         TextView textoResultado = findViewById(R.id.resultadoFinal);
-        TextView paioumae = findViewById(R.id.epaioupae);
 
-        paioumae.setText(escolhaPaiMae);
+
+        TextView nomeEscolhaUsuario = findViewById(R.id.escolhaUsuario);
+        nomeEscolhaUsuario.setText("Usuario Escolheu:");
+        TextView nomeEscolhaCelular = findViewById(R.id.escolhaCelular);
+        nomeEscolhaCelular.setText("Celular Escolheu:");
+
+
 
 
 
         int escolhaComputador = new Random().nextInt(3);
-        String [] opcoes = {"bruno", "eric", "carolina"};
+        String [] opcoes = {"Primogênito", "FilhodoMeio", "Preferida"};
         String opcaoComputador = opcoes[escolhaComputador];
 
         switch (opcaoComputador) {
-            case "bruno":
+            case "Primogênito":
                 imagemResultadoComputador.setImageResource(R.drawable.bruno);
                 break;
-            case "eric":
+            case "FilhodoMeio":
                 imagemResultadoComputador.setImageResource(R.drawable.eric);
                 break;
-            case "carolina":
+            case "Preferida":
                 imagemResultadoComputador.setImageResource(R.drawable.carolina);
                 break;
         }
         switch (stringSelecionada) {
-            case "bruno":
+            case "Primogênito":
                 imagemResultadoUsuario.setImageResource(R.drawable.bruno);
                 break;
-            case "eric":
+            case "FilhodoMeio":
                 imagemResultadoUsuario.setImageResource(R.drawable.eric);
                 break;
-            case "carolina":
+            case "Preferida":
                 imagemResultadoUsuario.setImageResource(R.drawable.carolina);
                 break;
         }
 
+        TextView escolhaUsuario = findViewById(R.id.nomeEscolhaUsuario);
+        escolhaUsuario.setText(stringSelecionada);
+        TextView escolhaCelular = findViewById(R.id.nomeEscolhaCelular);
+        escolhaCelular.setText(opcaoComputador);
 
-            if (opcaoComputador == "bruno" && stringSelecionada == "eric"){
-                textoResultado.setText("CELULAR GANHOU!! O filho do meio conseguiria no máximo um empate, se nascesse mulher");
-            }else if(opcaoComputador == "bruno" && stringSelecionada == "carolina"){
-                textoResultado.setText("EMPATE!! A filha preferida tem vantagem sobre todos, menos com o primogênito");
-            }else if(opcaoComputador == "carolina" && stringSelecionada == "eric"){
-                textoResultado.setText("CELULAR GANHOU!! O filho do meio já nasceu perdendo");
-            }else if (opcaoComputador == "carolina" && stringSelecionada == "bruno"){
-                textoResultado.setText("EMPATE!! o primogênito só ganharia se a filha predileta fosse a do meio.");
-            }else if (opcaoComputador == "eric" && stringSelecionada == "carolina"){
-                textoResultado.setText("JOGADOR GANHOU!! A filha tem seu proprio quarto, tem como competir com isso?");
-            }else if (opcaoComputador == "eric" && stringSelecionada == "bruno"){
-                textoResultado.setText("JOGADOR GANHOU!! O primogênito dominou sozinho por 4 anos. Coitado do filho do meio");
-            } else if (opcaoComputador == "eric" && stringSelecionada == "eric"){
-                textoResultado.setText("OS DOIS PERDERAM!! Não há vencedores quando se é o Filho do meio, só derrota.");
-            } else {
-                textoResultado.setText("VITORIA DOS DOIS!!");
-            }
 
+
+        if (opcaoComputador == "Primogênito" && stringSelecionada == "FilhodoMeio"){
+            textoResultado.setText("CELULAR GANHOU!! O filho do meio conseguiria no máximo um empate, se nascesse mulher");
+        }else if(opcaoComputador == "Primogênito" && stringSelecionada == "Preferida"){
+            textoResultado.setText("EMPATE!! A filha preferida tem vantagem sobre todos, menos com o primogênito");
+        }else if(opcaoComputador == "Preferida" && stringSelecionada == "FilhodoMeio"){
+            textoResultado.setText("CELULAR GANHOU!! O filho do meio já nasceu perdendo");
+        }else if (opcaoComputador == "Preferida" && stringSelecionada == "Primogênito"){
+            textoResultado.setText("EMPATE!! o primogênito só ganharia se a filha predileta fosse a do meio.");
+        }else if (opcaoComputador == "FilhodoMeio" && stringSelecionada == "Preferida"){
+            textoResultado.setText("JOGADOR GANHOU!! A filha tem seu proprio quarto, tem como competir com isso?");
+        }else if (opcaoComputador == "FilhodoMeio" && stringSelecionada == "Primogênito"){
+            textoResultado.setText("JOGADOR GANHOU!! O primogênito dominou sozinho por 4 anos. Coitado do filho do meio");
+        } else if (opcaoComputador == "FilhodoMeio" && stringSelecionada == "FilhodoMeio"){
+            textoResultado.setText("OS DOIS PERDERAM!! Não há vencedores quando se é o Filho do meio, só derrota.");
+        } else {
+            textoResultado.setText("VITORIA DOS DOIS!!");
         }
+
+    }
 }
 
 
