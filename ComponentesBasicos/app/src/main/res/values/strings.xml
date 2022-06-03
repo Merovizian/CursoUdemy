@@ -4,4 +4,5 @@
     <string name="digiteEmail">digite seu email</string>
     <string name="botao_enviar">Enviar</string>
     <string name="resultado">Resultado</string>
+    <string name="botao_limpar">Limpar</string>
 </resources>
