@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/digiteNome"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:autofillHints="" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -24,10 +25,60 @@
             android:id="@+id/digiteEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="digite seu email"
+            android:hint="@string/digite_seu_email"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cores" />
+
+    <CheckBox
+        android:id="@+id/checkVerde"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:duplicateParentState="false"
+        android:focusable="auto"
+        android:text="Verde" />
+
+    <CheckBox
+        android:id="@+id/checkBranco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Branco" />
+
+    <CheckBox
+        android:id="@+id/checkVermelho"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vermelho" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sexo" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioMasculino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
+        <RadioButton
+            android:id="@+id/radioFeminino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Muié" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/botao_enviar"
