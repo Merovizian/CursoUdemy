@@ -27,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle("Título da Dialog");
         dialog.setMessage("Mensagem da Dialog");
 
+        //Configura ação de cancelamento
+        dialog.setCancelable(false);
+
+        //Configura o icone
+        dialog.setIcon(android.R.drawable.ic_menu_myplaces);
+
+
         // Configura acoes para sim e nao
         dialog.setNegativeButton("Aceito", new DialogInterface.OnClickListener() {
             // Cria uma instancia que faz a leitura do que foi clicado e retorna uma ação.
