@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 getApplicationContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                itens
+                itens 
         );
 
         // Adiciona adaptador para a lista
