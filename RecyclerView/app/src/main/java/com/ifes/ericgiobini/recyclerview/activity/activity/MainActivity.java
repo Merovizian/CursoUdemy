@@ -1,4 +1,4 @@
-package com.ifes.ericgiobini.recyclerview;
+package com.ifes.ericgiobini.recyclerview.activity.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Adapter;
 import android.widget.RelativeLayout;
+
+import com.ifes.ericgiobini.recyclerview.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         // Configurar Recyclerview
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adaptador);
+
+        // Configura para tamanhos fixos.
+        recyclerView.setHasFixedSize(true);
+        // Faz a conexao
+        //recyclerView.setAdapter();
     }
 }
