@@ -14,7 +14,7 @@ public class MApplication extends Application {
         Helper.install(MApplication.this);
         if (fpvDemoApplication == null) {
             fpvDemoApplication = new FPVDemoApplication();
-            fpvDemoApplication.setContext(this);
+          //  fpvDemoApplication.setContext(this);
         }
     }
 
