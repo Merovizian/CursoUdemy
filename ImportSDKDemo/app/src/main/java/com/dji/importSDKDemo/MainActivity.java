@@ -120,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
                     showToast("registering, pls wait...");
                     DJISDKManager.getInstance().registerApp(MainActivity.this.getApplicationContext(), new DJISDKManager.SDKManagerCallback() {
                         @Override
+
                         public void onRegister(DJIError djiError) {
+                            showToast("MARCADOR 1");
+
                             if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
                                 showToast("Register Success");
                                 DJISDKManager.getInstance().startConnectionToProduct();
@@ -174,7 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                }
+                } //FIM DA RUN
+
+
             });
         }
     }
