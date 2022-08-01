@@ -2,6 +2,7 @@ package com.ifes.ericgiobini.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         buttonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SegundaActivity.class );
+                // Passar Dados:
+                intent.putExtra("nome", "Eric Giobini Micaela");
+                intent.putExtra("idade", 33);
+                startActivity(intent);
             }
         });
 
