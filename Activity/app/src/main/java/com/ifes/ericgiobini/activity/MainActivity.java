@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -26,9 +28,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SegundaActivity.class );
+                // Instanciar objeto
+                Usuario usuario = new Usuario("Eric Doidao", "ericgmicaela@gmail.com");
+
+
+
                 // Passar Dados:
                 intent.putExtra("nome", "Eric Giobini Micaela");
                 intent.putExtra("idade", 33);
+                intent.putExtra("objeto", (Serializable) usuario);
+
                 startActivity(intent);
             }
         });

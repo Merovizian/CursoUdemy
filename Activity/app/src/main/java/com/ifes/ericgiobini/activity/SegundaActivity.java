@@ -19,11 +19,14 @@ public class SegundaActivity extends AppCompatActivity {
 
         //Recuperar dados enviados
         Bundle dados = getIntent().getExtras();
-        String nome = dados.getString("nome");
-        int idade = dados.getInt("idade");
+        //String nome = dados.getString("nome");
+        //String idade = dados.getString("idade");
 
-        textNome.setText(nome);
-        textIdade.setText(String.valueOf(idade));
+        Usuario usuario = (Usuario) dados.getSerializable("objeto");
+
+
+        textNome.setText(usuario.getNome());
+        textIdade.setText(usuario.getEmail());
 
     }
 }
