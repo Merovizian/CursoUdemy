@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 imagemResultadoComputador.setImageResource(R.drawable.bruno);
                 break;
             case "FilhodoMeio":
+
                 imagemResultadoComputador.setImageResource(R.drawable.eric);
                 break;
             case "Preferida":
