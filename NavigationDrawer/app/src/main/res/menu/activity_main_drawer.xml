@@ -9,7 +9,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_home" />
 
         <item
@@ -24,9 +24,13 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/nav_contato"
+            android:icon="@drawable/ic_menu_email"
+            android:title="@string/menu_contato" />
     </group>
 
-    <item android:title="SOCIAL">
+    <item android:title="Comunicação">
         <menu>
             <item
                 android:id="@+id/nav_share"
