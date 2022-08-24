@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">ATM Consultoria</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">ATM Consultoria</string>
+    <string name="nav_header_subtitle">atendimento@atmconsultoria</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_principal">Principal</string>
+    <string name="menu_servicos">Serviços</string>
+    <string name="menu_clientes">Clientes</string>
+    <string name="menu_contato">Contato</string>
+    <string name="menu_sobre">Sobre</string>
+
+    <string name="fragments_servicos">Aqui, você trabalhador pode:
+        consultar as informações da sua Carteira de Trabalho Digital;
+        consultar a situação do seu Benefício TAC-Taxista;
+        consultar a situação do requerimento de Seguro-Desemprego
+        e informações sobre o benefício;
+        consultar a situação do seu Benefício Emergencial;
+        buscar emprego de acordo com o seu perfil profissional;
+        obter informações sobre o Abono Salarial;</string>
+
+    <string name="fragments_contatos">Vamos descobrir como superar seus desafios em Vendas?
+        Cada plano do nosso software foi pensado para operações comerciais diferentes.
+        Por isso, nosso time de consultores especialistas em Inside Sales precisa entender a fundo seu negócio e suas dificuldades.
+        A partir disso e se fizer sentido, vamos apresentar uma solução personalizada.
+        Caso contrário, vamos compartilhar boas práticas, sugerir um direcionamento para sua operação.
+        Parece justo? Preencha ao lado e converse conosco!</string>
+
+    <string name="fragments_clientes">É comum ver empresas que oferecem produtos de qualidade, mas que não conseguem se diferenciar
+        no mercado nem atrair clientes. Ao mesmo tempo, existem companhias que, embora com o sucesso estabelecido,
+        seguem melhorando suas vendas a cada ano. O que falta para uma e existe na outra?
+        A resposta, talvez, seja a estratégia de vendas. Para o empreendedor,
+        é preciso ter atenção a diferentes recursos que podem fazer com que sua atuação no mercado seja aperfeiçoada.
+        Melhores resultados podem surgir quando você desenvolve ações especificamente visando atrair o público para o seu negócio.</string>
+
+
+
+
+
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
