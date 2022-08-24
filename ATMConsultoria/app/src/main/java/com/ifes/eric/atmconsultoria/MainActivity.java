@@ -53,10 +53,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enviarEmail(){
-        //Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse("tel:27998404441") );
+        // Exemplos de Intent
+        //String celular = "tel: 27998404441";
+        //String imagem = "https://www.viagenscinematograficas.com.br/wp-content/uploads/2014/08/Arraial-do-Cabo-RJ-Dicas-O-que-fazer-3.jpg";
+        String endereco = "https://www.google.com.br/maps/place/20%C2%B039'59.3%22S+40%C2%B030'24.0%22W/@-20.66595,-40.5025375,15z/data=!4m6!3m5!1s0xb857b1972aff3d:0xb51a5e77956d929e!7e2!8m2!3d-20.666477!4d-40.5066642";
+
+        //Intent intent = new Intent (Intent.ACTION_DIAL,Uri.parse(celular) );
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(imagem));
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(endereco));
 
 
-        startActivity(intent);
+
+        Intent intent = new Intent (Intent.ACTION_SEND);
+        intent.putExtra( Intent.EXTRA_EMAIL, new String[]{"ericenois@hotmail.com","ericgmicaela@gmail.com"});
+        intent.putExtra( Intent.EXTRA_SUBJECT, "Titulo do email");
+        intent.putExtra(Intent.EXTRA_TEXT, "Mensagem que será enviada por email");
+
+
+        // São mime types
+        // https://www.sitepoint.com/mime-types-complete-list/   onde tem uma lista deles.
+
+        //intent.setType("message/rfc822");
+
+        intent.setType("application/pdf");
+
+        startActivity( Intent.createChooser(intent, "Escolha um APP de e-mail"));
 
 
 
