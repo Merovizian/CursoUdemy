@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.ifes.eric.atmconsultoria.R;
 
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SobreFragment#newInstance} factory method to
@@ -18,7 +21,6 @@ import com.ifes.eric.atmconsultoria.R;
 public class SobreFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -60,7 +62,38 @@ public class SobreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sobre, container, false);
+        String descricao = "Aqui, você trabalhador pode:" +
+                "consultar as informações da sua Carteira de Trabalho Digital;" +
+                "consultar a situação do seu Benefício TAC-Taxista;" +
+                "consultar a situação do requerimento de Seguro-Desemprego" +
+                "e informações sobre o benefício;" +
+                "consultar a situação do seu Benefício Emergencial;" +
+                "buscar emprego de acordo com o seu perfil profissional;" +
+                "obter informações sobre o Abono Salarial";
+
+        Element versao = new Element();
+        versao.setTitle("Versão 1.0");
+
+        return  new AboutPage(getActivity())
+
+
+                .setImage(R.drawable.logo)
+                .setDescription(descricao)
+
+                .addGroup("Redes Sociais")
+                .addFacebook("eric.micaela")
+                .addInstagram("ericgiobini")
+                .addTwitter("ericgiobini")
+                .addGitHub("ericgiobini")
+                .addYoutube("ericgiobini")
+                .addPlayStore("com.hbrz.wodan", "download app")
+
+                .addGroup("Entre em contato")
+                .addEmail("ericgmicaela@gmail.com","Envie um e-mail")
+                .addWebsite("www.google.com.br", "Acesse nosso site")
+                .addItem(versao)
+
+                .create();
+
     }
 }

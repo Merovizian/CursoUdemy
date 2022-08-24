@@ -73,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
         // São mime types
         // https://www.sitepoint.com/mime-types-complete-list/   onde tem uma lista deles.
 
-        //intent.setType("message/rfc822");
+        //intent.setType("application/pdf");
 
-        intent.setType("application/pdf");
+
+        intent.setType("message/rfc822");
+
 
         startActivity( Intent.createChooser(intent, "Escolha um APP de e-mail"));
 
