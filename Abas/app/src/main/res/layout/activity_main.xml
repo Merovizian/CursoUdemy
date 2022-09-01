@@ -11,7 +11,7 @@
     // AS ABAS
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/viewPagerTab"
+        android:id="@+id/view_pagertab"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/primary"
@@ -49,10 +49,10 @@
 
     // Area de View
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/viewPagerTab"
+        android:layout_below="@id/view_pagertab"
         />
 </LinearLayout>
 

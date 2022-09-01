@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        smartTabLayout = findViewById(R.id.viewPagerTab);
-        viewPager = findViewById(R.id.viewpager);
+        smartTabLayout = findViewById(R.id.view_pagertab);
+        viewPager = findViewById(R.id.view_pager);
 
         getSupportActionBar().setElevation(0);
 
