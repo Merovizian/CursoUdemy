@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -33,11 +35,17 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add(R.string.titleA, BichosFragment.class)
                 .add(R.string.titleB, NumerosFragment.class)
-                .add(R.string.titleB, VogaisFragment.class)
+                .add(R.string.titleC, VogaisFragment.class)
                 .create());
 
         viewPager.setAdapter(adapter);
         smartTabLayout.setViewPager(viewPager);
+
+    }
+
+    public void clicacao (View view){
+
+        Toast.makeText(this,"CLICADO",Toast.LENGTH_LONG).show();
 
     }
 
