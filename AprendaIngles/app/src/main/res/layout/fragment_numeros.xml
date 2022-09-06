@@ -25,7 +25,7 @@
         app:layout_constraintGuide_percent="0.875" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageUm"
         android:layout_width="140dp"
         android:layout_height="230dp"
         android:layout_marginTop="24dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageDois"
         android:layout_width="140dp"
         android:layout_height="230dp"
         android:layout_marginTop="24dp"
@@ -43,36 +43,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageTres"
         android:layout_width="140dp"
         android:layout_height="200dp"
         android:src="@drawable/tres"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageUm" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageQuatro"
         android:layout_width="140dp"
         android:layout_height="200dp"
         android:src="@drawable/quatro"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageDois" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageCinco"
         android:layout_width="140dp"
         android:layout_height="200dp"
         android:src="@drawable/cinco"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/imageTres" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageSeis"
         android:layout_width="140dp"
         android:layout_height="200dp"
         android:src="@drawable/seis"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageQuatro" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

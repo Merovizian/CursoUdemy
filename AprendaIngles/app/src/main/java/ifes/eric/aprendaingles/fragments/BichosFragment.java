@@ -68,6 +68,8 @@ public class BichosFragment extends Fragment {
 
 
 
+
+
         return view;
     }
 }
