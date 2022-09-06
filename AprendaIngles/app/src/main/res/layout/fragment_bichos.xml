@@ -22,55 +22,6 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <ImageView
-        android:id="@+id/imageCao"
-        android:layout_width="140dp"
-        android:layout_height="231dp"
-        android:clickable="true"
-        android:src="@drawable/cao"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageGato"
-        android:layout_width="140dp"
-        android:layout_height="231dp"
-        android:src="@drawable/gato"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageLeao"
-        android:layout_width="140dp"
-        android:layout_height="200dp"
-        android:src="@drawable/leao"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageCao" />
-
-    <ImageView
-        android:id="@+id/imageMacaco"
-        android:layout_width="140dp"
-        android:layout_height="200dp"
-        android:src="@drawable/macaco"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/imageGato" />
-
-    <ImageView
-        android:id="@+id/imageOvelha"
-        android:layout_width="140dp"
-        android:layout_height="200dp"
-        android:src="@drawable/ovelha"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageLeao" />
-
-    <ImageView
-        android:id="@+id/imageVaca"
-        android:layout_width="140dp"
-        android:layout_height="200dp"
-        android:src="@drawable/vaca"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/imageMacaco" />
-
-    <ImageView
         android:id="@+id/imageView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,5 +30,71 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <Button
+        android:id="@+id/imageCao"
+        style="@android:style/Widget.Holo.Button.Borderless"
+        android:layout_width="140dp"
+        android:layout_height="231dp"
+        android:foreground="@drawable/cao"
+        app:icon="@drawable/cao"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/imageGato"
+        style="@android:style/Widget.Holo.Button.Borderless"
+
+        android:layout_width="140dp"
+        android:layout_height="231dp"
+        android:foreground="@drawable/gato"
+        android:text="Button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/imageLeao"
+        android:layout_width="140dp"
+        style="@android:style/Widget.Holo.Button.Borderless"
+
+        android:layout_height="231dp"
+        android:foreground="@drawable/leao"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Button"
+        app:iconPadding="0dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/imageCao" />
+
+    <Button
+        android:id="@+id/imageMacaco"
+        android:layout_width="140dp"
+        style="@android:style/Widget.Holo.Button.Borderless"
+
+        android:layout_height="231dp"
+        android:foreground="@drawable/macaco"
+        android:text="Button"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/imageGato" />
+
+    <ImageButton
+        android:id="@+id/imageOvelha"
+        android:layout_width="140dp"
+        android:layout_height="231dp"
+
+        android:foreground="@drawable/ovelha"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ovelha"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/imageLeao" />
+
+    <ImageButton
+        android:id="@+id/imageVaca"
+        android:layout_width="140dp"
+        android:layout_height="231dp"
+        android:foreground="@drawable/vaca"
+        android:src="@drawable/vaca"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/imageMacaco" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

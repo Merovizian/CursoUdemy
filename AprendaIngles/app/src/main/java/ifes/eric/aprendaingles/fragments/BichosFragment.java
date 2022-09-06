@@ -1,13 +1,17 @@
 package ifes.eric.aprendaingles.fragments;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import ifes.eric.aprendaingles.R;
 
@@ -16,15 +20,15 @@ import ifes.eric.aprendaingles.R;
  * Use the {@link BichosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BichosFragment extends Fragment {
+public class BichosFragment extends Fragment implements View.OnClickListener{
+
+    private Button imageCao, imageLeao, imageGato, imageMacaco;
+    private ImageButton imageVaca, imageOvelha;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // Bichos
-    private ImageButton imageCao, imageGato, imageLeao, imageMacaco, imageOvelha, imageVaca;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +70,6 @@ public class BichosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_bichos, container, false);
-
         imageCao = view.findViewById(R.id.imageCao);
         imageGato = view.findViewById(R.id.imageGato);
         imageLeao = view.findViewById(R.id.imageLeao);
@@ -74,10 +77,20 @@ public class BichosFragment extends Fragment {
         imageOvelha = view.findViewById(R.id.imageOvelha);
         imageVaca = view.findViewById(R.id.imageVaca);
 
-
-
+        imageCao.setOnClickListener(this);
+        imageGato.setOnClickListener(this);
+        imageLeao.setOnClickListener(this);
+        imageMacaco.setOnClickListener(this);
+        imageOvelha.setOnClickListener(this);
+        imageVaca.setOnClickListener(this);
 
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.i("Elemento clicado", "item: " + view.getId());
+
     }
 }

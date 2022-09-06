@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.3575" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3575" />
         <entry key="app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3575" />
+        <entry key="app/src/main/res/drawable/ic_servicos.xml" value="0.3305" />
         <entry key="app/src/main/res/drawable/ic_seta.xml" value="0.3575" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.3575" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
@@ -20,14 +21,14 @@
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_principal.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_servicos.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/fragment_sobre.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_sobre.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.35625" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35625" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
