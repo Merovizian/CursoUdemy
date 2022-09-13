@@ -1,6 +1,8 @@
 package ifes.eric.aprendaingles.fragments;
 
+import android.annotation.SuppressLint;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import ifes.eric.aprendaingles.R;
 
@@ -24,6 +27,7 @@ public class BichosFragment extends Fragment implements View.OnClickListener{
 
     private Button imageCao, imageLeao, imageGato, imageMacaco;
     private ImageButton imageVaca, imageOvelha;
+    private MediaPlayer mediaPlayer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,9 +92,43 @@ public class BichosFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-        Log.i("Elemento clicado", "item: " + view.getId());
+           Log.i("Elemento clicado", "item: " + view.getId());
+           switch (view.getId()){
+               case R.id.imageCao:
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dog);
+                   break;
+               case R.id.imageGato:
+                   Toast.makeText(getActivity(),"GATO",Toast.LENGTH_SHORT).show();
+                   break;
+               case R.id.imageOvelha:
+                   Toast.makeText(getActivity(),"OVELHA",Toast.LENGTH_SHORT).show();
+                   break;
+               case R.id.imageLeao:
+                   Toast.makeText(getActivity(),"LEAO",Toast.LENGTH_SHORT).show();
+                   break;
+               case R.id.imageMacaco:
+                   Toast.makeText(getActivity(),"MACACO",Toast.LENGTH_SHORT).show();
+                   break;
+               case R.id.imageVaca:
+                   Toast.makeText(getActivity(),"VACA",Toast.LENGTH_SHORT).show();
+                   break;
 
+           }
+
+    }
+
+    public void tocarSom(){
+        if (mediaPlayer != null){
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                }
+            });
+        }
     }
 }

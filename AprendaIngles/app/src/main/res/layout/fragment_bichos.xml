@@ -80,7 +80,7 @@
     <ImageButton
         android:id="@+id/imageOvelha"
         android:layout_width="140dp"
-        android:layout_height="231dp"
+        android:layout_height="220dp"
 
         android:foreground="@drawable/ovelha"
         android:scaleType="fitCenter"
@@ -91,7 +91,7 @@
     <ImageButton
         android:id="@+id/imageVaca"
         android:layout_width="140dp"
-        android:layout_height="231dp"
+        android:layout_height="220dp"
         android:foreground="@drawable/vaca"
         android:src="@drawable/vaca"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
