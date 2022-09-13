@@ -13,8 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
+
 
 import ifes.eric.aprendaingles.R;
 
@@ -99,21 +98,34 @@ public class BichosFragment extends Fragment implements View.OnClickListener{
            switch (view.getId()){
                case R.id.imageCao:
                    mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dog);
+                   tocarSom();
                    break;
                case R.id.imageGato:
-                   Toast.makeText(getActivity(),"GATO",Toast.LENGTH_SHORT).show();
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.cat);
+                   tocarSom();
                    break;
                case R.id.imageOvelha:
-                   Toast.makeText(getActivity(),"OVELHA",Toast.LENGTH_SHORT).show();
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sheep);
+                   tocarSom();
+                   try {
+                       Thread.sleep(1000);
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.beeee);
+                   tocarSom();
                    break;
                case R.id.imageLeao:
-                   Toast.makeText(getActivity(),"LEAO",Toast.LENGTH_SHORT).show();
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lion);
+                   tocarSom();
                    break;
                case R.id.imageMacaco:
-                   Toast.makeText(getActivity(),"MACACO",Toast.LENGTH_SHORT).show();
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.monkey);
+                   tocarSom();
                    break;
                case R.id.imageVaca:
-                   Toast.makeText(getActivity(),"VACA",Toast.LENGTH_SHORT).show();
+                   mediaPlayer = MediaPlayer.create(getActivity(), R.raw.cow);
+                   tocarSom();
                    break;
 
            }
@@ -129,6 +141,15 @@ public class BichosFragment extends Fragment implements View.OnClickListener{
                     mediaPlayer.release();
                 }
             });
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null){
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 }

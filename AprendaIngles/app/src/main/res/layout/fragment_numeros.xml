@@ -29,6 +29,7 @@
         android:layout_width="140dp"
         android:layout_height="230dp"
         android:layout_marginTop="24dp"
+        android:clickable="true"
         android:src="@drawable/um"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,6 +39,7 @@
         android:layout_width="140dp"
         android:layout_height="230dp"
         android:layout_marginTop="24dp"
+        android:clickable="true"
         android:src="@drawable/dois"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +48,7 @@
         android:id="@+id/imageTres"
         android:layout_width="140dp"
         android:layout_height="200dp"
+        android:clickable="true"
         android:src="@drawable/tres"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/imageUm" />
@@ -54,6 +57,7 @@
         android:id="@+id/imageQuatro"
         android:layout_width="140dp"
         android:layout_height="200dp"
+        android:clickable="true"
         android:src="@drawable/quatro"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/imageDois" />
@@ -62,6 +66,7 @@
         android:id="@+id/imageCinco"
         android:layout_width="140dp"
         android:layout_height="200dp"
+        android:clickable="true"
         android:src="@drawable/cinco"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/imageTres" />
@@ -70,6 +75,7 @@
         android:id="@+id/imageSeis"
         android:layout_width="140dp"
         android:layout_height="200dp"
+        android:clickable="true"
         android:src="@drawable/seis"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/imageQuatro" />
