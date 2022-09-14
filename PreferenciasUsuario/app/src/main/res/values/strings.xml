@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PreferenciasUsuario</string>
+    <string name="nome_usuario">Qual o seu nome?</string>
+    <string name="nome_salvo">Olá, usuário não definido</string>
+</resources>
