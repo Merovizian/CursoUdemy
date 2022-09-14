@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private final String ARQUIVO_PREFERENCIA = "BancoDados";
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +45,21 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("nome", nome);
                     editor.apply();
                     Toast.makeText(getApplication(), "Usuario " + nomeUsuario.getText() + " Salvo!", Toast.LENGTH_LONG).show();
-                    nomeSalvo.setText("Olá" + nome);
+                    nomeSalvo.setText("Olá, " + nome);
 
                 }
                 }
         });
+        // Recupera os itens salvos
+        SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
+        if (preferences.contains("nome")){
+
+            String nome = preferences.getString("nome","não tem nada aqui");
+            nomeSalvo.setText("Olá, "+ nome);
+
+        }else{
+            nomeSalvo.setText("Olá, Usuário não definido");
+        }
 
 
     }
