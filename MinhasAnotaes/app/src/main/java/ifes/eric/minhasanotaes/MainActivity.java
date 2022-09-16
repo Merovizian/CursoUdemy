@@ -17,13 +17,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private AnotacaoPreferencias preferencias;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-     binding = ActivityMainBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
-
+        preferencias = new AnotacaoPreferencias(getApplicationContext());
 
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
