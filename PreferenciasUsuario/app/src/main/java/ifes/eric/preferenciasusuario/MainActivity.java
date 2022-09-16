@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
         if (preferences.contains("nome")){
 
+            // Retorna o que há em "nome", se não tiver nada, apresenta a "s1" que no caso é "não tem nada aqui"
             String nome = preferences.getString("nome","não tem nada aqui");
             nomeSalvo.setText("Olá, "+ nome);
 
