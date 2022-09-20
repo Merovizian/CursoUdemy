@@ -2,8 +2,10 @@ package ifes.eric.bancodedadossqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
 
             // Recuperar Dados
-            bancoDados.rawQuery("", null);
+            Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas", null);
+
+
+            // Indices da tabela
+            int indiceNome = cursor.getColumnIndex("nome");
+            int indiceIdade = cursor.getColumnIndex("idade");
+
+            // Iniciar o indice no inicio
+            cursor.moveToFirst();
+            // Exibir Dados
+            while (cursor != null){
+                Log.i("Resultado - nome", cursor.getString(indiceNome));
+                Log.i("Resultado - idade", cursor.getString(indiceIdade));
+                cursor.moveToNext();
+            }
 
 
         }catch (Exception e){
