@@ -1,27 +1,36 @@
-package ifes.eric.listadetarefas;
+package ifes.eric.listadetarefas.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import ifes.eric.listadetarefas.R;
+import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
+import ifes.eric.listadetarefas.model.Tarefa;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private TarefaAdapter tarefaAdapter;
+    private List<Tarefa> listaTarefas = new ArrayList<>();
+
     private ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        // CONFIGURAR O RECYCLER VIEW
+        recyclerView = findViewById(R.id.recycler_listaTarefas);
+
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +55,36 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public void carregarListaTarefas(){
+
+        // Listar Tarefas
+        Tarefa tarefa1 = new Tarefa();
+        tarefa1.setNomeTarefa("Ir ao mercado");
+        listaTarefas.add (tarefa1);
+        Tarefa tarefa12 = new Tarefa();
+        tarefa12.setNomeTarefa("Ir ao cinema");
+        listaTarefas.add (tarefa12);
+
+        // Configurar Adapter
+        tarefaAdapter = new TarefaAdapter(listaTarefas);
+
+        // Configurar Recycler
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
+        recyclerView.setAdapter(tarefaAdapter);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        carregarListaTarefas();
+        super.onStart();
     }
 
     @Override

@@ -1,8 +1,10 @@
-package ifes.eric.listadetarefas;
+package ifes.eric.listadetarefas.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ifes.eric.listadetarefas.R;
 
 public class AdicionarTarefaActivity extends AppCompatActivity {
 
