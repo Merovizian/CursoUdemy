@@ -6,22 +6,29 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textozinho;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textozinho = findViewById(R.id.text_inout);
+
         try {
             // Cria o banco de dados
-            SQLiteDatabase bancoDados = openOrCreateDatabase("PrimeiroBD", MODE_PRIVATE, null);
+            SQLiteDatabase bancoDados = openOrCreateDatabase("PrimeiroBD", MODE_PRIVATE,
+                    null);
 
             // Cria uma tabela
             bancoDados.execSQL("DROP TABLE IF EXISTS pessoas");
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (nome VARCHAR, idade INT(3))");
 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ POPULAÇÃO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // Inserir dados | CRIADOR DE BANCO DE DADOS EXCEL
             bancoDados.execSQL("INSERT INTO pessoas(nome, idade) VALUES" +
                     "   (   'Eric Giobini Micaela'  ,   33  )   ,   "   +
@@ -77,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     "	(	'Igor Barros	'	,	71	)");
 
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EXEMPLOS DE CONSULTAS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
             // Recuperar Dados | EXEMPLOS DE Consultas
             /*
             String consulta = "SELECT nome, idade" +
@@ -93,13 +102,36 @@ public class MainActivity extends AppCompatActivity {
                     " FROM pessoas" +
                     " WHERE idade BETWEEN 0 and 99";*/
 
+
             // LIKE - QUALUQER COISA A DIREITA DO % OU A ESQUERDA
             // UTILIZAÇÂO DE CONCATENAÇÃO "+"
-            String filtro = "Eri";
+
+            /*String filtro = "Eri";
             String consulta = "SELECT nome, idade" +
                     " FROM pessoas" +
-                    " WHERE idade >= 18 AND nome LIKE '%"+filtro+"%'";
+                    " WHERE idade >= 18 AND nome LIKE '%"+filtro+"%'";*/
 
+            // ORDENAÇÃO - SEM NADA, ASC, DESC
+            /*String consulta = "SELECT nome, idade" +
+                    " FROM pessoas" +
+                    " ORDER BY idade DESC";*/
+
+            /*String consulta = "SELECT nome, idade" +
+                    " FROM pessoas" +
+                    " ORDER BY nome";*/
+            // LIMITE
+            /*String consulta = "SELECT nome, idade" +
+                    " FROM pessoas" +
+                    " LIMIT 3";*/
+
+            // TODOS OS MANIPULADORES
+            String consulta = "SELECT nome, idade" +
+                    " FROM pessoas" +
+                    " WHERE idade BETWEEN 18 and 65" +
+                    " ORDER BY idade" +
+                    " LIMIT 5";
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
             Cursor cursor = bancoDados.rawQuery(consulta, null);
@@ -115,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             while (cursor != null){
                 String nome = cursor.getString(indiceNome);
                 String idade = cursor.getString(indiceIdade);
+
+                textozinho.setText(nome + "," + idade);
 
                 Log.i("Resultado", ">> nome: " + nome +", idade: "+ idade);
                 cursor.moveToNext();
