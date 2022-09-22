@@ -17,8 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_tarefa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite uma tarefa" />
+            android:hint="Digite uma tarefa"
+            android:textColorHint="#616161" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package ifes.eric.listadetarefas.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ifes.eric.listadetarefas.R;
 import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
+import ifes.eric.listadetarefas.helper.DbHelper;
 import ifes.eric.listadetarefas.helper.RecyclerItemClickListener;
 import ifes.eric.listadetarefas.model.Tarefa;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         // CONFIGURAR O RECYCLER VIEW
         recyclerView = findViewById(R.id.recycler_listaTarefas);
+
 
         // Adicionar evento de clique
         recyclerView.addOnItemTouchListener(
@@ -116,31 +119,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         carregarListaTarefas();
-        Toast.makeText(this,"VOCE ENTROU NO onStart", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"onStart", Toast.LENGTH_SHORT).show();
         super.onStart();
     }
 
     @Override
     protected void onRestart() {
-        Toast.makeText(this,"VOCE ENTROU NO onRestart", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"onRestart", Toast.LENGTH_SHORT).show();
         super.onRestart();
     }
 
     @Override
     protected void onPause() {
-        Toast.makeText(this,"VOCE ENTROU NO onPause", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"onPause", Toast.LENGTH_SHORT).show();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        Toast.makeText(this,"VOCE ENTROU NO onStop", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"onStop", Toast.LENGTH_SHORT).show();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(this,"VOCE ENTROU NO onDestroy", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"onDestroy", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 

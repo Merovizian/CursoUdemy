@@ -8,14 +8,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import ifes.eric.listadetarefas.R;
+import ifes.eric.listadetarefas.helper.TarefaDAO;
+import ifes.eric.listadetarefas.model.Tarefa;
 
 public class AdicionarTarefaActivity extends AppCompatActivity {
+
+    private TextInputEditText editTarefa;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tarefa);
+
+        editTarefa = findViewById(R.id.input_tarefa);
+
     }
 
     @Override
@@ -29,6 +39,13 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.action_salvar:
+                TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+
+                Tarefa tarefa = new Tarefa();
+                tarefa.setNomeTarefa("Ir ao mercado");
+                tarefaDAO.salvar(tarefa);
+
+
 
                 break;
             case R.id.action_editar:
