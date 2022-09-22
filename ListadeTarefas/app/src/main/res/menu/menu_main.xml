@@ -3,8 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ifes.eric.listadetarefas.activity.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_salvar"
+        android:orderInCategory="1"
+        android:title="Salvar"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_save_branco"/>
+
+        <item
+        android:id="@+id/action_editar"
+        android:orderInCategory="2"
+        android:title="Editar"
         app:showAsAction="never" />
+
+        <item
+        android:id="@+id/action_configuracao"
+        android:orderInCategory="3"
+        android:title="Confifurações"
+        app:showAsAction="never" />
+
+
+
 </menu>
