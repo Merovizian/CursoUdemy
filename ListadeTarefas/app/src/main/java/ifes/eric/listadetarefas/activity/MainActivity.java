@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("Clique","onItemClick");
+                                Log.i("Clique","onItemClick" + "| item: " + position);
                             }
 
                             @Override
