@@ -7,14 +7,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import ifes.eric.listadetarefas.R;
+import ifes.eric.listadetarefas.helper.TarefaDAO;
+import ifes.eric.listadetarefas.model.Tarefa;
 
 public class AdicionarTarefaActivity extends AppCompatActivity {
+
+    public TextInputEditText tarefaInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tarefa);
+        tarefaInput = findViewById(R.id.input_tarefa);
     }
 
 
@@ -33,9 +40,13 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_salvar:
-                Toast.makeText(this, "Item salvar pressionado",
-                        Toast.LENGTH_SHORT).show();
-                finish();
+                TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+
+                Tarefa tarefa = new Tarefa();
+                //tarefa.setNomeTarefa(tarefaInput.getText().toString());
+                tarefa.setNomeTarefa("IR PARA O IFES");
+                tarefaDAO.salvar(tarefa);
+
                 break;
 
             case R.id.action_editar:
