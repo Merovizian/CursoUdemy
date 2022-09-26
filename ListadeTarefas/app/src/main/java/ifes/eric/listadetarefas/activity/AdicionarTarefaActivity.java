@@ -16,12 +16,21 @@ import ifes.eric.listadetarefas.model.Tarefa;
 public class AdicionarTarefaActivity extends AppCompatActivity {
 
     public TextInputEditText tarefaInput;
+    private Tarefa tarefaAtual;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tarefa);
         tarefaInput = findViewById(R.id.input_tarefa);
+
+        // Recuperar a tarefa que foi clicada(editar)
+        tarefaAtual = (Tarefa) getIntent().getSerializableExtra("tagtarefaSelecionada");
+
+        // Mostrar ao usuario o texto recuperado
+        if (tarefaAtual != null)
+            tarefaInput.setText(tarefaAtual.getNomeTarefa());
     }
 
 
@@ -40,13 +49,50 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_salvar:
+
                 TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
 
-                Tarefa tarefa = new Tarefa();
-                //tarefa.setNomeTarefa(tarefaInput.getText().toString());
-                tarefa.setNomeTarefa("IR PARA O IFES");
-                tarefaDAO.salvar(tarefa);
+                if (tarefaAtual != null) {
 
+                    String nomeTarefa = tarefaInput.getText().toString();
+                    Toast.makeText(this,"A",Toast.LENGTH_SHORT).show();
+
+                    if (!nomeTarefa.isEmpty()) {
+                        Tarefa tarefa = new Tarefa();
+                        tarefa.setNomeTarefa(nomeTarefa);
+                        tarefa.setId(tarefaAtual.getId());
+
+                        // ATUALIZAR NO BANCO DE DADOS
+                        if (tarefaDAO.atualizar(tarefa)) {
+                            Toast.makeText(this, "Tarefa " + tarefa.getNomeTarefa() +
+                                    " adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        } else {
+                            Toast.makeText(this, "Erro ao atualizar tarefa",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+                    else {
+
+
+                    Tarefa tarefa = new Tarefa();
+                    if (!tarefaInput.getText().toString().isEmpty()) {
+                        tarefa.setNomeTarefa(tarefaInput.getText().toString());
+
+                        if (tarefaDAO.salvar(tarefa)){
+                            Toast.makeText(this, "Tarefa " + tarefa.getNomeTarefa() +
+                                    " adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                    } else {
+                        Toast.makeText(this, "Digite uma tarefa...",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
 
             case R.id.action_editar:

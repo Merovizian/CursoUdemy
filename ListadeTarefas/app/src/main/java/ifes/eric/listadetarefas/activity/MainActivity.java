@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +21,9 @@ import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
 import ifes.eric.listadetarefas.helper.DbHelper;
 import ifes.eric.listadetarefas.helper.RecyclerItemClickListener;
+import ifes.eric.listadetarefas.helper.TarefaDAO;
 import ifes.eric.listadetarefas.model.Tarefa;
+import kotlin.jvm.internal.Ref;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,12 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+
         // Busca o Recycler pelo id.
         recyclerView = findViewById(R.id.recycler_listaTarefas);
 
         // Instanciar a classe
-
-
 
 
         // Adicionar eventos de cliques
@@ -67,8 +70,18 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(View view, int position) {
 
+                                // Recuperar tarefa para edicao
+                                Tarefa tarefaselecionada = listaTarefas.get(position);
+
+
+                                // Enviar tarefa para tela adicionar tarefa
+                                Intent intent = new Intent (MainActivity.this,
+                                        AdicionarTarefaActivity.class);
+                                intent.putExtra("tagtarefaSelecionada", tarefaselecionada);
+                                startActivity(intent);
+
                                 Toast.makeText(getApplicationContext(), "Clicou" + " item "
-                                                + position,
+                                                + tarefaselecionada,
                                         Toast.LENGTH_SHORT).show();
 
                             }
@@ -92,15 +105,12 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            binding.fab.setOnClickListener(view -> {
 
                 // Cria uma activity e a vincula ao FAB button
                 startActivity(new Intent(getApplicationContext(), AdicionarTarefaActivity.class));
 
-            }
-        });
+            });
     }
 
     @Override
@@ -115,13 +125,8 @@ public class MainActivity extends AppCompatActivity {
     public void carregarListaTarefas() {
 
         // LISTAR TAREFAS
-        Tarefa tarefa1 = new Tarefa();
-        tarefa1.setNomeTarefa("Ir ao mercado");
-        listaTarefas.add(tarefa1);
-
-        Tarefa tarefa2 = new Tarefa();
-        tarefa2.setNomeTarefa("Pagar as contas");
-        listaTarefas.add(tarefa2);
+        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+        listaTarefas = tarefaDAO.listar();
 
 
         // CONFIGURAR ADAPTER
@@ -138,10 +143,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
 }
