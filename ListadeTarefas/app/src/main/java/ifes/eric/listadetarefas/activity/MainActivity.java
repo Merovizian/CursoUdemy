@@ -13,15 +13,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ifes.eric.listadetarefas.R;
+import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
+import ifes.eric.listadetarefas.model.Tarefa;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TarefaAdapter tarefaAdapter;
+    private List<Tarefa> listaTarefas = new ArrayList<>();
+
+
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -36,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Busca o Recycler pelo id.
         recyclerView = findViewById(R.id.recycler_listaTarefas);
+
+
+
+
 
 
 
@@ -54,9 +69,20 @@ public class MainActivity extends AppCompatActivity {
     public void carregarListaTarefas (){
 
         // LISTAR TAREFAS
+        Tarefa tarefa1 = new Tarefa();
+        tarefa1.setNomeTarefa("Ir ao mercado");
+        listaTarefas.add(tarefa1);
+
+        Tarefa tarefa2 = new Tarefa();
+        tarefa2.setNomeTarefa("Pagar as contas");
+        listaTarefas.add(tarefa2);
+
+
+
 
 
         // CONFIGURAR ADAPTER
+        tarefaAdapter = new TarefaAdapter(listaTarefas);
 
 
         // CONFIGURAR RECYCLER
