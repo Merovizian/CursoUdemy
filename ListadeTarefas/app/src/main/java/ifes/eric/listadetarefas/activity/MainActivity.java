@@ -53,13 +53,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_listaTarefas);
 
         // Instanciar a classe
-        DbHelper db = new DbHelper(getApplicationContext());
 
-        ContentValues cv = new ContentValues();
-        cv.put("nome", "Teste de anotação");
-
-
-        db.getWritableDatabase().insert("tarefas", null,cv);
 
 
 

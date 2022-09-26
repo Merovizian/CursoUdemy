@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static int VERSION = 1;
+    public static int VERSION = 3;
     public static String NOME_DB = "DB_Tarefas";
     public static String TABELA_TAREFAS = "tarefas";
 
@@ -18,10 +18,11 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, NOME_DB, null, VERSION);
     }
 
+
+    // Metodo de criação de tabelas, ele roda apenas uma vez.
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        String sql = "CREATE TABLE IF NOT EXISTIS " + TABELA_TAREFAS +
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABELA_TAREFAS +
                 " (id INTEGER PRIMARY KEY AUTOINCREMENT) ";
 
 
@@ -39,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
+    // Metodo para atualização, modificação de tabelas, ele roda uma vez a cada nova versão
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
@@ -46,16 +48,17 @@ public class DbHelper extends SQLiteOpenHelper {
         try {
 
             db.execSQL("DROP TABLE IF EXISTS " + TABELA_TAREFAS );
+            Log.i("INFODB", "Sucesso ao Deletar a tabela " + TABELA_TAREFAS + "!");
+
             onCreate(db);
 
-            Log.i("INFODB", "Sucesso ao Deletar a tabela " + TABELA_TAREFAS + "!");
 
         } catch (Exception e) {
             Log.i("INFODB", "ERRO ao Deletar TABELA " + e.getMessage());
         }
 
 
-        Log.i("INFODB", "VERSAO ATUAL: " + i + "VERSÂO ANTERIOR: " + i1);
+        Log.i("INFODB", "VERSAO ATUAL: " + i1 + " VERSÂO ANTERIOR: " + i);
 
     }
 }
