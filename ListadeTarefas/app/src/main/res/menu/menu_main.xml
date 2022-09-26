@@ -4,23 +4,23 @@
     tools:context="ifes.eric.listadetarefas.activity.MainActivity">
     <item
         android:id="@+id/action_salvar"
-        android:orderInCategory="100"
-        android:title="SALVAR"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_salvar"
+        android:icon="@drawable/ic_confirmar"
+        android:orderInCategory="1"
+        android:title="Salvar"
+        app:showAsAction="ifRoom"
 
         />
     <item
         android:id="@+id/action_configuracoes"
-        android:orderInCategory="100"
-        android:title="CONFIGURAÇÕES"
+        android:orderInCategory="3"
+        android:title="Configurações"
         app:showAsAction="never"
 
         />
     <item
         android:id="@+id/action_editar"
-        android:orderInCategory="100"
-        android:title="EDITAR"
+        android:orderInCategory="2"
+        android:title="Editar"
         app:showAsAction="never"
 
         />

@@ -2,7 +2,7 @@ package ifes.eric.listadetarefas.model;
 
 import java.io.Serializable;
 
-public class Tarefa  implements Serializable {
+public class Tarefa implements Serializable {
 
     private Long id;
     private String nomeTarefa;

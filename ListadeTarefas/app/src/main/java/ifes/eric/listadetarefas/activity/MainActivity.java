@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import ifes.eric.listadetarefas.R;
 import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
+import ifes.eric.listadetarefas.helper.RecyclerItemClickListener;
 import ifes.eric.listadetarefas.model.Tarefa;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -30,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TarefaAdapter tarefaAdapter;
     private List<Tarefa> listaTarefas = new ArrayList<>();
-
 
 
     private AppBarConfiguration appBarConfiguration;
@@ -49,6 +50,39 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_listaTarefas);
 
 
+        // Adicionar eventos de cliques
+        recyclerView.addOnItemTouchListener(
+
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                Toast.makeText(getApplicationContext(), "Clicou" + " item "
+                                                + position,
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+                                Toast.makeText(getApplicationContext(), "SEGUROU item "
+                                                + position,
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView,
+                                                    View view, int i, long l) {
+
+                            }
+                        }
+                )
+
+        );
 
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -68,12 +102,11 @@ public class MainActivity extends AppCompatActivity {
         // CArregar a lista
 
 
-
         carregarListaTarefas();
     }
 
     // METODO PARA O RECYCLERVIEW - monta as tarefas.
-    public void carregarListaTarefas (){
+    public void carregarListaTarefas() {
 
         // LISTAR TAREFAS
         Tarefa tarefa1 = new Tarefa();
@@ -83,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
         Tarefa tarefa2 = new Tarefa();
         tarefa2.setNomeTarefa("Pagar as contas");
         listaTarefas.add(tarefa2);
-
-
-
 
 
         // CONFIGURAR ADAPTER
@@ -106,21 +136,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }

@@ -29,7 +29,7 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lista_tarefa_adapter,parent,false);
+                .inflate(R.layout.lista_tarefa_adapter, parent, false);
 
         return new MyViewHolder(itemLista);
     }
@@ -49,7 +49,7 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.MyViewHold
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tarefa;
 
@@ -59,10 +59,8 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.MyViewHold
             tarefa = itemView.findViewById(R.id.text_tarefa);
 
 
-
         }
     }
-
 
 
 }
