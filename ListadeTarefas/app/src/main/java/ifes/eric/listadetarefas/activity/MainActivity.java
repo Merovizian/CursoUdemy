@@ -1,5 +1,7 @@
 package ifes.eric.listadetarefas.activity;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ifes.eric.listadetarefas.R;
 import ifes.eric.listadetarefas.adapter.TarefaAdapter;
 import ifes.eric.listadetarefas.databinding.ActivityMainBinding;
+import ifes.eric.listadetarefas.helper.DbHelper;
 import ifes.eric.listadetarefas.helper.RecyclerItemClickListener;
 import ifes.eric.listadetarefas.model.Tarefa;
 
@@ -48,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Busca o Recycler pelo id.
         recyclerView = findViewById(R.id.recycler_listaTarefas);
+
+        // Instanciar a classe
+        DbHelper db = new DbHelper(getApplicationContext());
+
+        ContentValues cv = new ContentValues();
+        cv.put("nome", "Teste de anotação");
+
+
+        db.getWritableDatabase().insert("tarefas", null,cv);
+
 
 
         // Adicionar eventos de cliques
@@ -99,9 +112,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         // CArregar a lista
-
-
         carregarListaTarefas();
     }
 
