@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // CArregar a lista
+
+
+
+        carregarListaTarefas();
     }
 
     // METODO PARA O RECYCLERVIEW - monta as tarefas.
@@ -91,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
                 LinearLayout.VERTICAL));
-        //recyclerView.setAdapter(adapter);
-
-
-
+        recyclerView.setAdapter(tarefaAdapter);
 
 
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
