@@ -22,7 +22,7 @@ public class TarefaDAO implements ITarefaDAO {
         DbHelper db = new DbHelper(context);
         escreve = db.getWritableDatabase();
         le = db.getReadableDatabase();
-
+        // TESTANDO O GIT
 
     }
 
