@@ -103,6 +103,20 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                                        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+                                        if (tarefaDAO.deletar(tarefaSelecionada)){
+                                            carregarListaTarefas();
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Tarefa " +
+                                                            tarefaSelecionada.getNomeTarefa() +
+                                                    " deletada com sucesso!",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Não foi possível deletar a tarefa "
+                                                    + tarefaSelecionada.getNomeTarefa(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
 
 
                                     }

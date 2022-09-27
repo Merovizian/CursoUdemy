@@ -55,7 +55,6 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
                 if (tarefaAtual != null) {
 
                     String nomeTarefa = tarefaInput.getText().toString();
-                    Toast.makeText(this,"A",Toast.LENGTH_SHORT).show();
 
                     if (!nomeTarefa.isEmpty()) {
                         Tarefa tarefa = new Tarefa();
@@ -65,7 +64,7 @@ public class AdicionarTarefaActivity extends AppCompatActivity {
                         // ATUALIZAR NO BANCO DE DADOS
                         if (tarefaDAO.atualizar(tarefa)) {
                             Toast.makeText(this, "Tarefa " + tarefa.getNomeTarefa() +
-                                    " adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                                    " atualizada com sucesso!", Toast.LENGTH_SHORT).show();
                             finish();
 
                         } else {

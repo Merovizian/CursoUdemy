@@ -30,14 +30,14 @@ public class TarefaDAO implements ITarefaDAO {
     public boolean salvar(Tarefa tarefa) {
 
         ContentValues cv = new ContentValues();
-        cv.put("nome",tarefa.getNomeTarefa());
+        cv.put("nome", tarefa.getNomeTarefa());
 
         try {
-            escreve.insert(DbHelper.TABELA_TAREFAS, null,cv);
-            Log.i("INFODB", "Tarefa" + tarefa.getNomeTarefa() + "salva com sucesso!");
+            escreve.insert(DbHelper.TABELA_TAREFAS, null, cv);
+            Log.i("INFODB", "Tarefa " + tarefa.getNomeTarefa() + "salva com sucesso!");
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i("INFODB", "Erro no TRY DE TAREFADAO");
             return false;
 
@@ -55,11 +55,11 @@ public class TarefaDAO implements ITarefaDAO {
 
             String[] args = {tarefa.getId().toString()};
 
-            escreve.update(DbHelper.TABELA_TAREFAS,cv,"id=?",args);
-            Log.i("INFODB", "Tarefa" + tarefa.getNomeTarefa() + "atualizada com sucesso!");
+            escreve.update(DbHelper.TABELA_TAREFAS, cv, "id=?", args);
+            Log.i("INFODB", "Tarefa " + tarefa.getNomeTarefa() + "atualizada com sucesso!");
 
-        }catch (Exception e){
-            Log.i("INFODB", "Erro no TRY Atualizar tarefa "+ e.getMessage());
+        } catch (Exception e) {
+            Log.i("INFODB", "Erro no TRY Atualizar tarefa " + e.getMessage());
             return false;
 
         }
@@ -70,7 +70,20 @@ public class TarefaDAO implements ITarefaDAO {
 
     @Override
     public boolean deletar(Tarefa tarefa) {
-        return false;
+
+
+        try {
+            String[] args = {tarefa.getId().toString()};
+
+            escreve.delete(DbHelper.TABELA_TAREFAS, "id=?", args);
+            Log.i("INFODB", "Tarefa " + tarefa.getNomeTarefa() + "removida com sucesso!");
+
+        } catch (Exception e) {
+            Log.i("INFODB", "Erro no TRY remover tarefa " + e.getMessage());
+            return false;
+
+        }
+        return true;
     }
 
     @Override
@@ -78,9 +91,9 @@ public class TarefaDAO implements ITarefaDAO {
 
         List<Tarefa> tarefas = new ArrayList<>();
 
-        Cursor c = le.rawQuery("SELECT * FROM " + DbHelper.TABELA_TAREFAS,null);
+        Cursor c = le.rawQuery("SELECT * FROM " + DbHelper.TABELA_TAREFAS, null);
 
-        while (c.moveToNext()){
+        while (c.moveToNext()) {
 
             Tarefa tarefa = new Tarefa();
 
