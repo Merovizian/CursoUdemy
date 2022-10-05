@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,13 +122,21 @@ public class MainActivity extends AppCompatActivity {
         */
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SALVANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
         DatabaseReference usuarios = referencia.child("Usuarios");
 
         // OBJETO - METODO "addvalue"
         // Instanciar uma classe nova "ValueEvenListener()"
+        // Listener funciona só quando é acionado, e somente do nó que é acionado
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("FIREBASE", snapshot.getValue().toString());
 
             }
 
