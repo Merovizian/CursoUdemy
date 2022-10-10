@@ -4,17 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,15 +22,13 @@ public class MainActivity extends AppCompatActivity {
     // getReference("usuario").
 
 
-    private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
-    private TextView texto;
+    private final DatabaseReference  referencia  = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        texto = findViewById(R.id.text_hello);
+        //TextView texto = findViewById(R.id.text_hello);
 
 
 
@@ -124,10 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
         DatabaseReference usuarios = referencia.child("Usuarios");
 
         // OBJETO - METODO "addvalue"
@@ -135,8 +127,9 @@ public class MainActivity extends AppCompatActivity {
         // Listener funciona só quando é acionado, e somente do nó que é acionado
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
+            // RETORNA AS MUDANÇAS EM TEMPO REAL DO DATABASE
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("FIREBASE", snapshot.getValue().toString());
+                Log.i("ERICBASE", Objects.requireNonNull(snapshot.child("001").child("Nome").getValue()).toString());
 
             }
 
@@ -145,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
