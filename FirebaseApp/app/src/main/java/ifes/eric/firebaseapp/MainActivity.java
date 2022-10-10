@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,19 +17,32 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Atributo/CLASSE DatabaseR
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANCO DE  DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Atributo/CLASSE DatabaseReference
     // Método getInstance() - serve para recuperar instancia para salvar os bancos.
     // Método getReference() - serve para apontar para a raiz do banco de dados. Poderia ser:
     // getReference("usuario").
+    private final DatabaseReference referencia  = FirebaseDatabase.getInstance().getReference();
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANCO DE  DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-    private final DatabaseReference  referencia  = FirebaseDatabase.getInstance().getReference();
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private FirebaseAuth usuarioAuth = FirebaseAuth.getInstance();
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //TextView texto = findViewById(R.id.text_hello);
+
+        usuarioAuth.createUserWithEmailAndPassword("ericgmicaela@gmail.com",
+                "eric12345").add;
 
 
 
@@ -129,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             // RETORNA AS MUDANÇAS EM TEMPO REAL DO DATABASE
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("ERICBASE", Objects.requireNonNull(snapshot.child("001").child("Nome").getValue()).toString());
+                Log.i("ERICBASE", Objects.requireNonNull(snapshot.child("001").child("Nome").
+                        getValue()).toString());
 
             }
 
