@@ -3,6 +3,7 @@ package ifes.eric.firebaseapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -17,9 +18,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
+import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -134,9 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
 */
 
-
 /*
-
         // OUTRO JEITO DE POPULAR BD
         DatabaseReference usuarios = referencia.child("Usuarios");
         usuarios.child("001").child("Nome").setValue("Eric Giobini Micaela",1);
@@ -148,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         usuarios.child("002").child("Idade").setValue(23,2);
         usuarios.child("002").child("Nacionalidade").setValue("Brasil",4);
         usuarios.child("002").child("Trabalha?").setValue(false,3);
-
 
         // Utilizando uma clase como metodo
         Usuario usuario = new Usuario();
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
         //TENTATIVA GERAR BANCO
         // INSTANCIAR UM METODO
-
 
         DatabaseReference produtos = referencia.child("Produtos");
 
@@ -192,20 +191,36 @@ public class MainActivity extends AppCompatActivity {
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SALVANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /*
         DatabaseReference usuarios = referencia.child("Usuarios");
-
         // Metodo de identificador unico utilizando classe
         Usuario usuario = new Usuario();
-        usuario.setNome("Eric");
-        usuario.setSobrenome("Giobni Micaela");
-        usuario.setIdade(33);
-        usuario.setTrabalha(false);
+        usuario.setNome("Roberto");
+        usuario.setSobrenome("Carlos da Silva");
+        usuario.setIdade(25);
+        usuario.setTrabalha(true);
         // Cria um identificador unico
         usuarios.push().setValue(usuario);
 
+        Usuario usuario1 = new Usuario();
+        usuario1.setNome("Ronaldinho");
+        usuario1.setSobrenome("Gaucho");
+        usuario1.setIdade(36);
+        usuario1.setTrabalha(true);
+        // Cria um identificador unico
+        usuarios.push().setValue(usuario1);
 
+        Usuario usuario2 = new Usuario();
+        usuario2.setNome("Pablo Escobar");
+        usuario2.setSobrenome("Dono da Jamaica");
+        usuario2.setIdade(45);
+        usuario2.setTrabalha(false);
+        // Cria um identificador unico
+        usuarios.push().setValue(usuario2);
+        */
+
+        /*
         DatabaseReference produtos = referencia.child("Produtos");
-
         // Metodo de identificador unico utilizando classe
         Produto produto1 = new Produto();
         produto1.setNome("Note 8 Pro");
@@ -222,13 +237,9 @@ public class MainActivity extends AppCompatActivity {
         faculdades.child("Tipo").setValue("Superior",5);
         faculdades.child("Nota MEC").setValue(5,4);
         // Cria um identificador unico
-
+         */
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         /*
@@ -254,6 +265,68 @@ public class MainActivity extends AppCompatActivity {
 
          */
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ APLICANDO FILTROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        DatabaseReference usuarios = referencia.child("Usuarios");
+
+        // METODO 1
+        //DatabaseReference usuarioPesquisa = usuarios.child("-NE732Z8BF_RrNGHOGY4");
+
+        // METODO 2A
+        //Query usuarioPesquisa = usuarios.orderByChild("nome").equalTo("Eric");
+
+
+        // METODO 2B
+        //Query usuarioPesquisa = usuarios.orderByChild("idade").startAt(35).endAt(60);
+
+        // METODO 3
+        //Query usuarioPesquisa = usuarios.orderByKey().limitToFirst(3);
+
+        // METOROD 3B
+        Query usuarioPesquisa = usuarios.orderByKey().limitToLast(3);
+
+
+        usuarioPesquisa.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                /*  METODO 1
+                // SEM USAR CLASSE
+                texto.setText(snapshot.child("nome").getValue().toString() + " "
+                        + snapshot.child("sobrenome").getValue().toString() + " ,"
+                + " Idade: " + snapshot.child("idade").getValue().toString());
+
+                 */
+                /*
+                // USANDO CLASSE
+                String ehTrabalhador;
+                Usuario dadospesquisador = snapshot.getValue(Usuario.class);
+                if (dadospesquisador.isTrabalha()){
+                    ehTrabalhador = "Trabalha";
+                }else ehTrabalhador = "Não Trabalha";
+                texto.setText("Nome: " + dadospesquisador.getNome() +
+                        "\nIdade: " + dadospesquisador.getIdade() +
+                        "\n" + ehTrabalhador);
+
+                 */
+
+
+                Log.i("ERICBD", snapshot.getValue().toString());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ APLICANDO FILTROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
     }
 
