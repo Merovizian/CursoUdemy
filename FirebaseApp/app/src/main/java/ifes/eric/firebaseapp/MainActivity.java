@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,14 +30,13 @@ public class MainActivity extends AppCompatActivity {
     // Método getReference() - serve para apontar para a raiz do banco de dados. Poderia ser:
     // getReference("usuario").
     private final DatabaseReference referencia  = FirebaseDatabase.getInstance().getReference();
-
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANCO DE  DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private FirebaseAuth usuarioAuth = FirebaseAuth.getInstance();
-
+    private final FirebaseAuth usuarioAuth = FirebaseAuth.getInstance();
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -39,13 +44,67 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TextView texto = findViewById(R.id.text_hello);
+        TextView texto = findViewById(R.id.text_hello);
 
-        usuarioAuth.createUserWithEmailAndPassword("ericgmicaela@gmail.com",
-                "eric12345").add;
+        // DESLOGAR USUARIO
+        //usuarioAuth.signOut();
 
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICACAO  DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       /*
+       usuarioAuth.signInWithEmailAndPassword(
 
+                "ericgmicaela@gmail.com",
+                "eric12345"
+        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    // CLASSE PARA OBTER O USUARIO
+                    FirebaseUser userAuth = usuarioAuth.getCurrentUser();
+                    texto.setText("Sucesso ao logar " + userAuth.getEmail());
+                }else{
+                    texto.setText("Erro ao logar");
+                }
+            }
+        });
+        */
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICACAO  DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Verifica se o Usuario está logado ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /*
+        if (usuarioAuth.getCurrentUser() != null){
+            FirebaseUser user = usuarioAuth.getCurrentUser();
+            Toast.makeText(this, user.getEmail() + " LOGADO" , Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "USUARIO NÃO LOGADO", Toast.LENGTH_LONG).show();
+        }
+
+         */
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Verifica se o Usuario está logado ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CADASTRO DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*
+        usuarioAuth.createUserWithEmailAndPassword(
+                "hulk2022@gmail.com",
+                "eric12345")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    texto.setText("Sucesso ao cadastar usuario");
+                }else{
+                    texto.setText("Erro ao cadastar usuario");
+                }
+            }
+        });
+*/
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CADASTRO DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SALVANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /*
         // CRIANDO UM BANCO DE DADOS
         referencia.child("Faculdade").child("001").child("Instituição")
@@ -76,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SALVANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /*
 
         // OUTRO JEITO DE POPULAR BD
@@ -132,9 +190,27 @@ public class MainActivity extends AppCompatActivity {
         */
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SALVANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        DatabaseReference usuarios = referencia.child("Usuarios");
+
+        Usuario usuario = new Usuario();
+        usuario.setNome("Eric");
+        usuario.setSobrenome("Giobni Micaela");
+        usuario.setIdade(33);
+        usuario.setTrabalha(false);
+        // Cria um identificador unico
+        usuarios.push().setValue(usuario);
+
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        DatabaseReference usuarios = referencia.child("Usuarios");
+        //DatabaseReference usuarios = referencia.child("Usuarios");
 
         // OBJETO - METODO "addvalue"
         // Instanciar uma classe nova "ValueEvenListener()"
