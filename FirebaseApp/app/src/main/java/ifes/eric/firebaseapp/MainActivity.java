@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         //TENTATIVA GERAR BANCO
         // INSTANCIAR UM METODO
 
+
         DatabaseReference produtos = referencia.child("Produtos");
 
         Produto produto1 = new Produto();
@@ -193,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         DatabaseReference usuarios = referencia.child("Usuarios");
 
+        // Metodo de identificador unico utilizando classe
         Usuario usuario = new Usuario();
         usuario.setNome("Eric");
         usuario.setSobrenome("Giobni Micaela");
@@ -202,6 +204,25 @@ public class MainActivity extends AppCompatActivity {
         usuarios.push().setValue(usuario);
 
 
+        DatabaseReference produtos = referencia.child("Produtos");
+
+        // Metodo de identificador unico utilizando classe
+        Produto produto1 = new Produto();
+        produto1.setNome("Note 8 Pro");
+        produto1.setMarca("Xiaomi");
+        produto1.setValor(2000);
+        produto1.setDescricao("Celular");
+        // Cria um identificador unico
+        produtos.push().setValue(produto1);
+
+        // Metodo de identificador unico sem utilizar classe
+        DatabaseReference faculdades = referencia.child("Faculdade").push();
+        faculdades.child("Nome").setValue("Ifes",2);
+        faculdades.child("Local").setValue("Guarapari",3);
+        faculdades.child("Tipo").setValue("Superior",5);
+        faculdades.child("Nota MEC").setValue(5,4);
+        // Cria um identificador unico
+
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ IDENTIFICADOR UNICO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -210,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /*
         //DatabaseReference usuarios = referencia.child("Usuarios");
 
         // OBJETO - METODO "addvalue"
@@ -229,16 +251,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+         */
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECUPERANDO DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
-
     }
-
-
-
-
-
 
 }
