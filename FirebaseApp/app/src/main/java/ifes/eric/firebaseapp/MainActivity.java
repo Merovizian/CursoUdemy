@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.UUID;
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD e Deletar  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private ImageView imageFoto;
+    private ImageView imageFoto, imageDownload;
     private Button botaoUpload, delete, botaodownload;
     private TextInputEditText nomearquivo;
 
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+
                String nomearquivoJPEG = nomearquivo.getText().toString();
 
                if (!nomearquivoJPEG.contains(".jpeg")){
@@ -185,24 +188,42 @@ public class MainActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  DOWNLOAD  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         botaodownload = findViewById(R.id.button_downloadImagem);
-        botaodownload.setOnLongClickListener(new View.OnLongClickListener() {
+        imageDownload = findViewById(R.id.imageView_download);
+        botaodownload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
+
+
+                // Configuração para imagem ser salva em memória
+                imageDownload.setDrawingCacheEnabled(true);
+                imageDownload.buildDrawingCache();
+
+                // Recuperar um bitmap da imagem (imagem a ser carregada)
+                Bitmap bitmap = imageDownload.getDrawingCache();
+
+                // Comprimir o bitmap para o formato pnj/jpeg
+                ByteArrayOutputStream  caos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,caos);
+
+                //Converte o baos para pixel brutos em uma matriz de bytes
+                //(dados da imagem))
+                byte[] dadosImagem = caos.toByteArray();
+
+
                 String nomearquivoJPEG = nomearquivo.getText().toString();
 
                 if (!nomearquivoJPEG.contains(".jpeg")){
                     nomearquivoJPEG = nomearquivoJPEG + ".jpeg";
                 }
 
-
+                Toast.makeText(MainActivity.this, "ASUE", Toast.LENGTH_LONG).show();
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 StorageReference imagens = storageReference.child("Imagens");
                 StorageReference imagemRef = imagens.child(nomearquivoJPEG);
 
-
-
-
-                return false;
+                Glide.with(MainActivity.this)
+                        .load(imagemRef)
+                        .into(imageDownload);
             }
         });
 
