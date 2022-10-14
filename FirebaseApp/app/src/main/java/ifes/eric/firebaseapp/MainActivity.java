@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD e Deletar  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private ImageView imageFoto;
-    private Button botaoUpload;
+    private Button botaoUpload, delete, botaodownload;
+    private TextInputEditText nomearquivo;
 
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD e Deletar  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
@@ -101,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 // Define nós para o storage
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 StorageReference imagens = storageReference.child("Imagens");
-                StorageReference imagemRef = imagens.child("celular2.jpeg");
+
+                // Cria nomes diferentes de arquivos
+                String nomeArquivo = UUID.randomUUID().toString();
+                StorageReference imagemRef = imagens.child("celular_"+nomeArquivo+"_.jpeg");
 
                 // Retorna objeto que irá controlar o Upload
                 UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
@@ -130,16 +136,91 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  DELETANDO  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        botaoUpload = findViewById(R.id.button_uploadImagem);
+        imageFoto = findViewById(R.id.imageView_Foto);
+        delete = findViewById(R.id.button_delete);
+        nomearquivo = findViewById(R.id.Input_nomeArquivo);
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               String nomearquivoJPEG = nomearquivo.getText().toString();
+
+               if (!nomearquivoJPEG.contains(".jpeg")){
+                   nomearquivoJPEG = nomearquivoJPEG + ".jpeg";
+               }
+
+
+
+               // Define nós para o storage
+               StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+               StorageReference imagens = storageReference.child("Imagens");
+               StorageReference imagemRef = imagens.child(nomearquivoJPEG);
+               imagemRef.delete().addOnFailureListener(MainActivity.this, new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception e) {
+                       Toast.makeText(MainActivity.this, "Error ao deletar " +
+                       imagemRef.getName() + "\nerro:" +
+                               e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                   }
+               }).addOnSuccessListener(MainActivity.this, new OnSuccessListener<Void>() {
+                   @Override
+                   public void onSuccess(Void unused) {
+                       Toast.makeText(MainActivity.this, "Sucesso ao deletar " +
+                                       imagemRef.getName()
+                               , Toast.LENGTH_LONG).show();
+                   }
+               });
+           }
+           });
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  DELETANDO  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  DOWNLOAD  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        botaodownload = findViewById(R.id.button_downloadImagem);
+        botaodownload.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String nomearquivoJPEG = nomearquivo.getText().toString();
+
+                if (!nomearquivoJPEG.contains(".jpeg")){
+                    nomearquivoJPEG = nomearquivoJPEG + ".jpeg";
+                }
+
+
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference imagens = storageReference.child("Imagens");
+                StorageReference imagemRef = imagens.child(nomearquivoJPEG);
+
+
+
+
+                return false;
+            }
+        });
+
+
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  DOWNLOAD  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICACAO  DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        /*
 
         // DESLOGAR USUARIO
         //usuarioAuth.signOut();
 
 
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICACAO  DE  USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       /*
        usuarioAuth.signInWithEmailAndPassword(
 
                 "ericgmicaela@gmail.com",
@@ -164,9 +245,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (usuarioAuth.getCurrentUser() != null){
             FirebaseUser user = usuarioAuth.getCurrentUser();
-            Toast.makeText(this, user.getEmail() + " LOGADO" , Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, user.getEmail() + " LOGADO" , Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this, "USUARIO NÃO LOGADO", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "USUARIO NÃO LOGADO", Toast.LENGTH_LONG).show();
         }
 
 

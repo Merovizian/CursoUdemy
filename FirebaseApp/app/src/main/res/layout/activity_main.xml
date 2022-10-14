@@ -8,13 +8,11 @@
 
     <ImageView
         android:id="@+id/imageView_Foto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="55dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="54dp"
         android:layout_marginTop="27dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_uploadImagem"
+        android:layout_marginEnd="54dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,10 +22,47 @@
         android:id="@+id/button_uploadImagem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="406dp"
+        android:layout_marginTop="48dp"
         android:text="Upload Imagem"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_Foto" />
+
+    <Button
+        android:id="@+id/button_downloadImagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Download Imagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:text="Deletar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_downloadImagem" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_uploadImagem">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Input_nomeArquivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Digite o nome do arquivo" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
