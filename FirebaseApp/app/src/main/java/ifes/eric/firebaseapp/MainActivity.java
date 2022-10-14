@@ -4,12 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -32,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     // Método getInstance() - serve para recuperar instancia para salvar os bancos.
     // Método getReference() - serve para apontar para a raiz do banco de dados. Poderia ser:
     // getReference("usuario").
-    private final DatabaseReference referencia  = FirebaseDatabase.getInstance().getReference();
+    //private final DatabaseReference referencia  = FirebaseDatabase.getInstance().getReference();
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BANCO DE  DADOS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -43,11 +56,83 @@ public class MainActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ AUTENTIFICAÇÃO DE USUARIO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private ImageView imageFoto;
+    private Button botaoUpload;
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView texto = findViewById(R.id.text_hello);
+        //TextView texto = findViewById(R.id.text_hello);
+
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        botaoUpload = findViewById(R.id.button_uploadImagem);
+        imageFoto = findViewById(R.id.imageView_Foto);
+
+        botaoUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Configuração para imagem ser salva em memória
+                imageFoto.setDrawingCacheEnabled(true);
+                imageFoto.buildDrawingCache();
+
+                // Recuperar um bitmap da imagem (imagem a ser carregada)
+                Bitmap bitmap = imageFoto.getDrawingCache();
+
+                // Comprimir o bitmap para o formato pnj/jpeg
+                ByteArrayOutputStream  baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+
+                //Converte o baos para pixel brutos em uma matriz de bytes
+                //(dados da imagem))
+                byte[] dadosImagem = baos.toByteArray();
+
+                // Define nós para o storage
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference imagens = storageReference.child("Imagens");
+                StorageReference imagemRef = imagens.child("celular2.jpeg");
+
+                // Retorna objeto que irá controlar o Upload
+                UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+
+                uploadTask.addOnFailureListener(MainActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,"Upload da imagem "+
+                                imagemRef.toString() + " Falhou" + e.getMessage().toString(),
+                                Toast.LENGTH_LONG  ).show();
+                    }
+                }).addOnSuccessListener(MainActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imagemRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                Uri url = task.getResult();
+                                Toast.makeText(MainActivity.this,"Upload da imagem "+
+                                                imagemRef.getName() + " Sucesso!",
+                                        Toast.LENGTH_LONG  ).show();
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD DE IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
         // DESLOGAR USUARIO
         //usuarioAuth.signOut();
@@ -76,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Verifica se o Usuario está logado ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        /*
+
         if (usuarioAuth.getCurrentUser() != null){
             FirebaseUser user = usuarioAuth.getCurrentUser();
             Toast.makeText(this, user.getEmail() + " LOGADO" , Toast.LENGTH_LONG).show();
@@ -84,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "USUARIO NÃO LOGADO", Toast.LENGTH_LONG).show();
         }
 
-         */
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Verifica se o Usuario está logado ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -268,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ APLICANDO FILTROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+        /*
         DatabaseReference usuarios = referencia.child("Usuarios");
 
         // METODO 1
@@ -278,15 +363,18 @@ public class MainActivity extends AppCompatActivity {
         //Query usuarioPesquisa = usuarios.orderByChild("nome").equalTo("Eric");
 
 
-        // METODO 2B
+        // METODO 2B ">= e <="
+
         //Query usuarioPesquisa = usuarios.orderByChild("idade").startAt(35).endAt(60);
 
         // METODO 3
         //Query usuarioPesquisa = usuarios.orderByKey().limitToFirst(3);
 
         // METOROD 3B
-        Query usuarioPesquisa = usuarios.orderByKey().limitToLast(3);
+        //Query usuarioPesquisa = usuarios.orderByKey().limitToLast(3);
 
+        // METODO 4
+        Query usuarioPesquisa = usuarios.orderByChild("nome").startAt("A").endAt("E" + "\uf8ff");
 
         usuarioPesquisa.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -313,6 +401,7 @@ public class MainActivity extends AppCompatActivity {
                         "\n" + ehTrabalhador);
 
                  */
+        /*
 
 
                 Log.i("ERICBD", snapshot.getValue().toString());
@@ -324,6 +413,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    */
+
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ APLICANDO FILTROS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
