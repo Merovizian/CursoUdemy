@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "467110845100",
+    "project_id": "ifes-eric-organizze",
+    "storage_bucket": "ifes-eric-organizze.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467110845100:android:adc36fb7c665b154f39d09",
+        "android_client_info": {
+          "package_name": "ifes.eric.organizze"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467110845100-pknqfp99ce8v9ckh7lmn331ajei3cq6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ifes.eric.organizze",
+            "certificate_hash": "c483448454f02aaadd7c09ed03aa8bec33cae9ba"
+          }
+        },
+        {
+          "client_id": "467110845100-ea0k8kfnjtrc5qa4ksg95rsdjt5hmrm8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqMLJF--NDQUIKiphq8W7kZ8id9lkeQTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467110845100-ea0k8kfnjtrc5qa4ksg95rsdjt5hmrm8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

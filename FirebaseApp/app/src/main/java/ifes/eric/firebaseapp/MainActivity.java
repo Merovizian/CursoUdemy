@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Type;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Queue;
@@ -68,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText nomearquivo;
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  UPLOAD e Deletar  IMAGENS  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 
     @Override
@@ -193,37 +193,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                // Configuração para imagem ser salva em memória
-                imageDownload.setDrawingCacheEnabled(true);
-                imageDownload.buildDrawingCache();
-
-                // Recuperar um bitmap da imagem (imagem a ser carregada)
-                Bitmap bitmap = imageDownload.getDrawingCache();
-
-                // Comprimir o bitmap para o formato pnj/jpeg
-                ByteArrayOutputStream  caos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG,100,caos);
-
-                //Converte o baos para pixel brutos em uma matriz de bytes
-                //(dados da imagem))
-                byte[] dadosImagem = caos.toByteArray();
-
-
                 String nomearquivoJPEG = nomearquivo.getText().toString();
 
                 if (!nomearquivoJPEG.contains(".jpeg")){
                     nomearquivoJPEG = nomearquivoJPEG + ".jpeg";
                 }
 
-                Toast.makeText(MainActivity.this, "ASUE", Toast.LENGTH_LONG).show();
+
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 StorageReference imagens = storageReference.child("Imagens");
                 StorageReference imagemRef = imagens.child(nomearquivoJPEG);
+                imagemRef.getDownloadUrl().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(MainActivity.this).load(uri).into(imageDownload);
 
-                Glide.with(MainActivity.this)
-                        .load(imagemRef)
-                        .into(imageDownload);
+                    }
+                }).addOnFailureListener(MainActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
             }
         });
 
@@ -266,9 +259,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (usuarioAuth.getCurrentUser() != null){
             FirebaseUser user = usuarioAuth.getCurrentUser();
-            Toast.makeText(MainActivity.this, user.getEmail() + " LOGADO" , Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, user.getEmail() +
+                    " LOGADO" , Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(MainActivity.this, "USUARIO NÃO LOGADO", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "USUARIO NÃO LOGADO"
+                    , Toast.LENGTH_LONG).show();
         }
 
 
