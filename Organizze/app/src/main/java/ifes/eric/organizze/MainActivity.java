@@ -42,27 +42,27 @@ public class MainActivity extends IntroActivity {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Slides Fragments     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.teal_200)
+                .background(R.color.white)
                 .fragment(R.layout.intro_um)
                 .build()
         );
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.teal_200)
+                .background(R.color.white)
                 .fragment(R.layout.intro_dois)
                 .build()
         );
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.teal_200)
+                .background(R.color.white)
                 .fragment(R.layout.intro_tres)
                 .build()
         );
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.teal_200)
+                .background(R.color.white)
                 .fragment(R.layout.intro_quatro)
                 .build()
         );
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.teal_200)
+                .background(R.color.white)
                 .fragment(R.layout.intro_cadastro)
                 .canGoForward(false)
                 .build()
@@ -84,8 +84,7 @@ public class MainActivity extends IntroActivity {
     }
     public void cadastrar(View view){
         startActivity(new Intent(this, cadastroActivity.class));
-
-
     }
+
 
 }
