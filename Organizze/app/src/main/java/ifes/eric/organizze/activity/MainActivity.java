@@ -1,4 +1,4 @@
-package ifes.eric.organizze;
+package ifes.eric.organizze.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
+import ifes.eric.organizze.R;
 import ifes.eric.organizze.activity.cadastroActivity;
 import ifes.eric.organizze.activity.loginActivity;
 
