@@ -40,44 +40,20 @@ public class cadastroActivity extends AppCompatActivity {
         campoSenha = findViewById(R.id.editText_Cadastro_senha);
    }
 
-    public void efetuarCadastro(View view){
+    public void efetuarCadastro(View view) {
         String textoNome = campoNome.getText().toString();
         String textoSenha = campoSenha.getText().toString();
         String textoEmail = campoEmail.getText().toString();
+        Validacao validacao = new Validacao();
 
-        if (validacao(textoNome,textoSenha,textoEmail) == 0){
+
+        if (validacao.validar(textoNome, textoSenha, textoEmail, cadastroActivity.this) == 0) {
             usuario = new Usuario();
             usuario.setNome(textoNome);
             usuario.setEmail(textoEmail);
             usuario.setSenha(textoSenha);
             cadastrarUsuario();
         }
-
-
-    }
-
-    public int validacao(String nome, String senha, String email){
-
-        if (!nome.isEmpty() ){
-            if (!email.isEmpty() ){
-                if (!senha.isEmpty() ){
-
-                }else{
-                    Toast.makeText(this, "Preencha o senha", Toast.LENGTH_SHORT).show();
-                    return 3;
-
-                }
-            }else{
-                Toast.makeText(this, "Preencha a email", Toast.LENGTH_SHORT).show();
-                return 2;
-
-            }
-        }else{
-            Toast.makeText(this, "Preencha o nome", Toast.LENGTH_SHORT).show();
-            return 1;
-
-        }
-        return 0;
     }
 
     public void cadastrarUsuario(){
@@ -113,4 +89,6 @@ public class cadastroActivity extends AppCompatActivity {
 
     }
 }
+
+
 

@@ -22,7 +22,6 @@ import ifes.eric.organizze.activity.loginActivity;
 public class MainActivity extends IntroActivity {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  FIREBASEAUTH   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Declara uma instancia FirebaseAuth.
-    private FirebaseAuth mAuth;
 //*****************************************  FIREBASEAUTH  *****************************************
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   DATABASE      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +75,7 @@ public class MainActivity extends IntroActivity {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  FIREBASEAUTH   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Declara uma instancia FirebaseAuth.
-        mAuth = FirebaseAuth.getInstance();
+
 //*****************************************  FIREBASEAUTH  *****************************************
     }
 
