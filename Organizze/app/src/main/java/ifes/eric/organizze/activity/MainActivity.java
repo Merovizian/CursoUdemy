@@ -2,6 +2,7 @@ package ifes.eric.organizze.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,10 +19,14 @@ import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.activity.cadastroActivity;
 import ifes.eric.organizze.activity.loginActivity;
+import ifes.eric.organizze.config.ConfiguracaoFirebase;
 
 public class MainActivity extends IntroActivity {
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  FIREBASEAUTH   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Declara uma instancia FirebaseAuth.
+    private FirebaseAuth auth;
+
+
 //*****************************************  FIREBASEAUTH  *****************************************
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   DATABASE      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,13 +37,12 @@ public class MainActivity extends IntroActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        verificarUsuario();
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Slides      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         setButtonBackVisible(false);
         setButtonNextVisible(false);
 //******************************************   Slides     ******************************************
-
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Slides Fragments     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         addSlide(new FragmentSlide.Builder()
@@ -68,6 +72,8 @@ public class MainActivity extends IntroActivity {
                 .build()
         );
 
+
+
 //*************************************   Slides Fragments     *************************************
 
 
@@ -86,5 +92,27 @@ public class MainActivity extends IntroActivity {
         startActivity(new Intent(this, cadastroActivity.class));
     }
 
+    public void verificarUsuario(){
+        auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        //auth.signOut();
 
+        if (auth.getCurrentUser() != null){
+            Toast.makeText(this, "Logado como:\n" + auth.getCurrentUser().getEmail(),
+                    Toast.LENGTH_SHORT).show();
+            abrirTelaPrincipal();
+        }
+
+    }
+
+    public void abrirTelaPrincipal(){
+        startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
+        finish();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 }

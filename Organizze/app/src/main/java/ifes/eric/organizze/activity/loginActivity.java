@@ -2,6 +2,8 @@ package ifes.eric.organizze.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,17 +57,20 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(loginActivity.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                    abrirTelaPrincipal();
 
                 }else{
                     String excecao = "";
                     try {
                         throw task.getException();
                     }catch (FirebaseAuthInvalidCredentialsException e){
-                        excecao = "Senha incorreta";
-                    }catch (FirebaseAuthInvalidUserException e) {
                         excecao = "Email não cadastrado ou excluído definitivamente";
+
+                    }catch (FirebaseAuthInvalidUserException e) {
+                        excecao = "Senha incorreta";
+
                     }catch (Exception e){
+
                         excecao = "Erro ao cadastrar usuario: " + e.getMessage();
                         e.printStackTrace();
                     }
@@ -74,5 +79,12 @@ public class loginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void abrirTelaPrincipal() {
+
+        startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
+        finish();
+
     }
 }
