@@ -2,6 +2,7 @@ package ifes.eric.floatingactionmenuproject;
 
 import android.os.Bundle;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +18,19 @@ import ifes.eric.floatingactionmenuproject.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    FloatingActionButton gloa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        gloa = findViewById(R.id.menu_item);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -36,14 +40,17 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+
+        gloa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(MainActivity.this, "Receita", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
