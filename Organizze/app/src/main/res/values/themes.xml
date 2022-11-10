@@ -13,4 +13,27 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-</resources>
+
+    <style name="Eric.despesa" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorPrimary">#C12A2A</item>
+        <item name="android:colorPrimaryDark">#BD0A0A</item>
+        <item name="android:colorAccent">#8F0000</item>
+    </style>
+
+    <style name="Eric.receitas" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorPrimary">#4CAF50</item>
+        <item name="android:colorPrimaryDark">#23AE30</item>
+        <item name="android:colorAccent">#036819</item>
+    </style>
+
+
+
+
+
+
+
+    </resources>

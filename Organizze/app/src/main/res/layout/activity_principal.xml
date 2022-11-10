@@ -64,7 +64,6 @@
             app:fab_colorNormal="#0707C5"
             app:fab_colorPressed="#09096C"
             fab:fab_label="Receita"
-
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -74,6 +73,15 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_add_24"
             fab:fab_label="Despesa"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_item_deslogar"
+            android:onClick="Logoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_add_24"
+            fab:fab_label="Sair do Sistema"
             fab:fab_size="mini" />
 
 

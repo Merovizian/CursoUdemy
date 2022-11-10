@@ -32,6 +32,10 @@ public class MainActivity extends IntroActivity {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   DATABASE      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Mensagem");
+
+    public MainActivity() {
+
+    }
 //*****************************************   DATABASE     *****************************************
 
     @Override
@@ -102,6 +106,15 @@ public class MainActivity extends IntroActivity {
             abrirTelaPrincipal();
         }
 
+    }
+
+    public MainActivity(FirebaseAuth auth) {
+        this.auth = auth;
+    }
+
+    public void Logoff(){
+        auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        auth.signOut();
     }
 
     public void abrirTelaPrincipal(){
