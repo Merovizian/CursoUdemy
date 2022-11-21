@@ -108,9 +108,11 @@ public class MainActivity extends IntroActivity {
 
     }
 
-    public MainActivity(FirebaseAuth auth) {
+    /*public MainActivity(FirebaseAuth auth) {
         this.auth = auth;
     }
+
+     */
 
     public void Logoff(){
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();

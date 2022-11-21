@@ -23,6 +23,7 @@ import org.w3c.dom.Text;
 
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
+import ifes.eric.organizze.helper.Base64Custom;
 import ifes.eric.organizze.model.Usuario;
 
 public class cadastroActivity extends AppCompatActivity {
@@ -65,6 +66,10 @@ public class cadastroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+
+                    String idUsuario = Base64Custom.codificarBase64( usuario.getEmail());
+                    usuario.setIdUsuario(idUsuario);
+                    usuario.salvar();
                     Toast.makeText(cadastroActivity.this, "Sucesso ao cadastrar "
                             + usuario.getNome(), Toast.LENGTH_SHORT).show();
                     finish();
