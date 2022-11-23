@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/TextEdit_despesas_valor"
+            android:id="@+id/TextEdit_receitas_valor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInput_despesa_descricao"
+            android:id="@+id/textInput_receita_descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ex: Conta de energia" />

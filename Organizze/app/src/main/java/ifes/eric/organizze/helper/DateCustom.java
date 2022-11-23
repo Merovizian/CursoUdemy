@@ -1,7 +1,9 @@
 package ifes.eric.organizze.helper;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
-import java.util.logging.SimpleFormatter;
 
 public class DateCustom {
 
@@ -24,10 +26,17 @@ public class DateCustom {
     }
 
     public static String mesAnoDataEscolhida(String data){
+        try {
 
-        String retornoData[] = data.split("/");
-        String retorno2[] = retornoData[2].split(" ");
-        return retornoData[1] + retorno2[0] ;
+
+            String retornoData[] = data.split("/");
+            String retorno2[] = retornoData[2].split(" ");
+            return retornoData[1] + retorno2[0] ;
+
+
+        } catch (Exception ex) {
+            return mesAtual();
+        }
 
 
     }

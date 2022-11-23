@@ -9,7 +9,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e127283-8720-44d3-8796-f68a79cacf77" name="Changes" comment="" />
+    <list default="true" id="8e127283-8720-44d3-8796-f68a79cacf77" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/DespesaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/DespesaActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/ReceitasActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/ReceitasActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/helper/DateCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/helper/DateCustom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_despesa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_despesa.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_receitas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_receitas.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

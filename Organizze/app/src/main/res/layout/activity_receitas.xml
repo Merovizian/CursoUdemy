@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/TextEdit_despesas_valor"
+            android:id="@+id/TextEdit_receitas_valor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -46,6 +46,7 @@
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_receita_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ex: 19/10/2019" />
@@ -65,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_receita_categoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ex: Salario" />
@@ -84,6 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput_receita_descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ex: Diaria" />
@@ -97,6 +100,7 @@
         android:layout_marginEnd="178dp"
         android:layout_marginBottom="48dp"
         android:clickable="true"
+        android:onClick="salvarReceita"
         app:backgroundTint="#4CAF50"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
