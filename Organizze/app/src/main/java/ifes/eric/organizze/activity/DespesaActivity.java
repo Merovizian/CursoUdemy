@@ -47,25 +47,39 @@ public class DespesaActivity extends AppCompatActivity {
         recuperarDespesaTotal();
 
     }
+
+    /* Metodo que gera toda a movimentação necessaria para salvar a Despesa */
     public void salvarDespesa (View view){
 
+        // teste de validação utilizando o metodo validarCamposDespesas
         if (validarCamposDespesa()){
-            String dataEscolhida = campoData.getText().toString();
-            Double valorRecuperado = Double.parseDouble(campoValor.getText().toString());
 
-
+            // Instancia uma nova movimentação da classe movimentação
             movimentacao = new Movimentacao();
+
+            // Valor escolhido pelo usuario, no campo.
             movimentacao.setValor(Double.parseDouble(campoValor.getText().toString()));
+
+            // Campo categoria escolhido pelo usuario, no campo.
             movimentacao.setCategoria(campoCategoria.getText().toString());
+
+            // Campo Descrição escolhido pelo usuario, no campo.
             movimentacao.setDescricao(campoDescricao.getText().toString());
-            movimentacao.setData(dataEscolhida);
+
+            // Data escolhida pelo usuario, no campo.
+            movimentacao.setData(campoData.getText().toString());
+
+            // D que simboliza Despesa
             movimentacao.setTipo("D");
 
-            Double despesaAtualizada = valorRecuperado + despesaTotal;
+            // Usa o valor da receita recuperado, mais o valor digitado em campo para gerar o valor total
+            Double despesaAtualizada = movimentacao.getValor() + despesaTotal;
+
+            // Usa o metodo para atualizar no firebase
             atualizarDespesa(despesaAtualizada);
 
 
-            movimentacao.salvar(dataEscolhida);
+            movimentacao.salvar(campoData.getText().toString());
             Toast.makeText(this, "Movimentação Salva", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -73,6 +87,7 @@ public class DespesaActivity extends AppCompatActivity {
 
     }
 
+    /* Metodo valida o que os campos que o usuario ira digitar*/
     public Boolean validarCamposDespesa() {
 
         String textoValor = campoValor.getText().toString();
@@ -92,15 +107,20 @@ public class DespesaActivity extends AppCompatActivity {
 
     }
 
+    /* Metodo que recupera do firebase o valor da despesaTotal*/
     public void recuperarDespesaTotal(){
-        String emailUsuario = autenticacao.getCurrentUser().getEmail();
-        String idUsuario = Base64Custom.codificarBase64(emailUsuario);
+        // Cria um cod64 do email de usuario que está logado.
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+
+        // Instancia um usuarioREF e o aponta para o child Usuario/cod64 do email
         DatabaseReference usuarioREF = firebaseRef.child("usuarios").child(idUsuario);
 
-
+        // metodos para receber o que está no firebase de onde a  instancia UsuarioREF está apontando.
         usuarioREF.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instancia um usuario para receber os valores que estão no firebase.
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 despesaTotal = usuario.getDespesaTotal();
 
@@ -115,13 +135,17 @@ public class DespesaActivity extends AppCompatActivity {
 
     }
 
-    public void atualizarDespesa(Double despesa){
 
+    /* Metodo que atualiza no firebase o valor da despesa total */
+    public void atualizarDespesa(Double despesa){
+        // retorna o valor em cod64 do email de que esta logado.
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.codificarBase64(emailUsuario);
+
+        // Instancia um usuarioREF e o aponta para o child Usuario/cod64 do email
         DatabaseReference usuarioREF = firebaseRef.child("usuarios").child(idUsuario);
 
-
+        // apontado para Usuario/cod64 e adiciona nó com o valor do atribulo despesa recebido
         usuarioREF.child("despesaTotal").setValue(despesa);
 
     }
