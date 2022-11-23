@@ -44,6 +44,7 @@ public class DespesaActivity extends AppCompatActivity {
         movimentacao.setData(dataEscolhida);
         movimentacao.setTipo("d");
         movimentacao.salvar(dataEscolhida);
+
         Toast.makeText(this, "Movimentação Salva", Toast.LENGTH_SHORT).show();
         finish();
 

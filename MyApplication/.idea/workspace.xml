@@ -9,13 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e127283-8720-44d3-8796-f68a79cacf77" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/PrincipalActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_principal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/loginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/loginActivity.java" afterDir="false" />
-    </list>
+    <list default="true" id="8e127283-8720-44d3-8796-f68a79cacf77" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +35,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../camerapplication" />
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">

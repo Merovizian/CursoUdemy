@@ -26,7 +26,9 @@ public class DateCustom {
     public static String mesAnoDataEscolhida(String data){
 
         String retornoData[] = data.split("/");
-        return retornoData[1] + retornoData[2] ;
+        String retorno2[] = retornoData[2].split(" ");
+        return retornoData[1] + retorno2[0] ;
+
 
     }
 }
