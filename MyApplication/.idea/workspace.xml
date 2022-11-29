@@ -10,11 +10,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e127283-8720-44d3-8796-f68a79cacf77" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/DespesaActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/DespesaActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/ReceitasActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/ReceitasActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/helper/DateCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/helper/DateCustom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_despesa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_despesa.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_receitas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_receitas.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/androidTest/java/ifes/eric/calendario/ExampleInstrumentedTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/java/ifes/eric/calendario/MainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/app/src/test/java/ifes/eric/calendario/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Calendario/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/content_principal.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/PrincipalActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/java/ifes/eric/organizze/activity/PrincipalActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_principal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/app/src/main/res/layout/activity_principal.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Organizze/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Organizze/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
