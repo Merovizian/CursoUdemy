@@ -48,9 +48,9 @@ public class PrincipalActivity extends AppCompatActivity {
         calendario = findViewById(R.id.calendarView_CalendarioNovo);
         calendario.state().edit()
                 .setMinimumDate(CalendarDay.from(2019,1,1))
-                .setMaximumDate(CalendarDay.from(2023,1,1))
+                .setMaximumDate(CalendarDay.from(2024,1,1))
                 .commit();
-        CharSequence meses[] = {"Janeiro", "Fevereiro", "Março", "Abril","Maio", "Junho", "Julho", "Eric", "Setembro", "Outubro", "Novembro", "Dezembro"};
+        CharSequence meses[] = {"Janeiro", "Fevereiro", "Março", "Abril","Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         calendario.setTitleMonths(meses);
 
         // Listener
@@ -58,7 +58,6 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 int mes = date.getMonth() + 1;
-                Toast.makeText(PrincipalActivity.this, mes, Toast.LENGTH_SHORT).show();
             }
         });
 

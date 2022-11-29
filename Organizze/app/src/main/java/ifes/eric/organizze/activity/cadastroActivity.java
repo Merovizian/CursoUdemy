@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import org.w3c.dom.Text;
 
+import java.util.Objects;
+
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
@@ -39,6 +41,9 @@ public class cadastroActivity extends AppCompatActivity {
         campoEmail = findViewById(R.id.editText_cadastro_email);
         campoNome = findViewById(R.id.editText_cadastro_nome);
         campoSenha = findViewById(R.id.editText_Cadastro_senha);
+
+        
+        //Objects.requireNonNull(getSupportActionBar()).setTitle("Cadastro");
    }
 
     public void efetuarCadastro(View view) {

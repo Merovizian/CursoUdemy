@@ -28,6 +28,7 @@ public class loginActivity extends AppCompatActivity {
     private EditText campoEmail, campoSenha;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
+    public int teste = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +84,12 @@ public class loginActivity extends AppCompatActivity {
 
     private void abrirTelaPrincipal() {
 
-        startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
-        finish();
+        if (teste == 0 ){
+
+            startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
+            teste = 1;
+            finish();
+        }
 
     }
 }

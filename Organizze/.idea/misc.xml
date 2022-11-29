@@ -16,6 +16,8 @@
         <entry key="app/src/main/res/layout/intro_quatro.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/intro_tres.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/intro_um.xml" value="0.32708333333333334" />
+        <entry key="app/src/main/res/layout/menu_principal.xml" value="0.32708333333333334" />
+        <entry key="app/src/main/res/menu/menu_principal.xml" value="0.7869674185463659" />
       </map>
     </option>
   </component>
