@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +27,14 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.adapter.AdapterMovimentacao;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
+import ifes.eric.organizze.model.Movimentacao;
 import ifes.eric.organizze.model.Usuario;
 
 public class PrincipalActivity extends AppCompatActivity {
@@ -60,6 +64,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
     // Recycler view
     private RecyclerView recyclerView;
+    private AdapterMovimentacao adapterMovimentacao;
+    private List<Movimentacao> movimentacoes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +89,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Configuração Adapter  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        // Configurar Adapter
+        adapterMovimentacao = new AdapterMovimentacao(movimentacoes, this);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter();
-
+        recyclerView.setAdapter(adapterMovimentacao);
 
 //   ***********************************  Configuração Adapter  ************************************
 
@@ -135,6 +143,8 @@ public class PrincipalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Botoes FAB e Menu  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     public void sair(){
         MainActivity main = new MainActivity();
         main.Logoff();
@@ -144,16 +154,19 @@ public class PrincipalActivity extends AppCompatActivity {
     public void adicionarReceita(View view    ){
         startActivity(new Intent(getApplicationContext(),ReceitasActivity.class));
     }
+
     public void adicionarDespesa(View view    ){
         startActivity(new Intent(getApplicationContext(),DespesaActivity.class));
     }
 
+//   ***********************************  Botoes FAB e Menu  ************************************
 
     public void recuperarValorTotal(){
         String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
         userRF = database.child("usuarios").child(idUser);
 
         valueEventListenerUsuario = userRF.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -165,7 +178,14 @@ public class PrincipalActivity extends AppCompatActivity {
                 DecimalFormat decimalFormat = new DecimalFormat("0.##");
                 String resultadoFormatado = decimalFormat.format(resumoUsuario);
 
-                textoValorFinal.setText("R$ " + resultadoFormatado);
+                if (resumoUsuario < 0){
+                    textoValorFinal.setTextColor((getResources().getColor(android.R.color.holo_red_dark)));
+                    textoValorFinal.setText("R$ " + resultadoFormatado);
+                }else {
+                    textoValorFinal.setTextColor((getResources().getColor(android.R.color.holo_green_light)));
+                    textoValorFinal.setText("R$ " + resultadoFormatado);
+                }
+
                 textoNomeUsuario.setText("Olá, " + usuario.getNome());
 
             }
