@@ -85,14 +85,6 @@
             fab:fab_label="Despesa"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item_deslogar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Logoff"
-            android:src="@drawable/ic_baseline_add_24"
-            fab:fab_label="Sair do Sistema"
-            fab:fab_size="mini" />
 
 
     </com.github.clans.fab.FloatingActionMenu>

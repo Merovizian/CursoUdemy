@@ -23,7 +23,8 @@
             android:theme="@style/Eric.receitas"/>
         <activity
             android:name=".activity.PrincipalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.OrganizzeAction"/>
         <activity
             android:name=".activity.cadastroActivity"
             android:exported="false" />

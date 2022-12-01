@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +117,7 @@ public class MainActivity extends IntroActivity {
     public void Logoff(){
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
         auth.signOut();
+        Log.i("SAIU","TA NO LOGOOF");
     }
 
     public void abrirTelaPrincipal(){

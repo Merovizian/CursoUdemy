@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.text.DecimalFormat;
+
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
@@ -29,6 +34,9 @@ public class PrincipalActivity extends AppCompatActivity {
     DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
     FirebaseAuth autenticador = ConfiguracaoFirebase.getFirebaseAutenticacao();
     TextView textoValorFinal, textoNomeUsuario;
+
+    private double receitaTotal, despesaTotal, resumoUsuario;
+
     private MaterialCalendarView calendario;
 
     @Override
@@ -42,6 +50,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
         recuperarValorTotal();
 
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("");
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MANIPULACAO CALENDAR  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Configurações de layout  -  Pode ser feito como uma função/metodo
@@ -64,10 +74,31 @@ public class PrincipalActivity extends AppCompatActivity {
 
 //   ***********************************  MANIPULACAO CALENDAR  ************************************
 
+    }
 
+    @Override
+    //Inflar transforma um objeto XML em objeto do tipo view
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        switch(item.getItemId()){
+            case R.id.menuSair:
+                sair();
+                break;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void sair(){
+        MainActivity main = new MainActivity();
+        main.Logoff();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     public void adicionarReceita(View view    ){
@@ -77,12 +108,6 @@ public class PrincipalActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),DespesaActivity.class));
     }
 
-    public void Logoff(View view){
-
-        MainActivity main = new MainActivity();
-        main.Logoff();
-        finish();
-    }
 
     public void recuperarValorTotal(){
         String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
@@ -93,12 +118,15 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Usuario usuario = snapshot.getValue(Usuario.class);
-                Double despesaTotal = usuario.getDespesaTotal();
-                Double receitaTotal = usuario.getReceitaTotal();
-                Double valorFinal = -despesaTotal + receitaTotal;
+                despesaTotal = usuario.getDespesaTotal();
+                receitaTotal = usuario.getReceitaTotal();
+                resumoUsuario = receitaTotal - despesaTotal;
 
-                textoValorFinal.setText("R$ " + valorFinal.toString());
-                textoNomeUsuario.setText(usuario.getNome());
+                DecimalFormat decimalFormat = new DecimalFormat("0.##");
+                String resultadoFormatado = decimalFormat.format(resumoUsuario);
+
+                textoValorFinal.setText("R$ " + resultadoFormatado);
+                textoNomeUsuario.setText("Olá, " + usuario.getNome());
 
             }
 
@@ -110,10 +138,11 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
-
-
+    protected void onDestroy() {
+        super.onDestroy();
+        sair();
+        Log.i("SAIU", "NAO SAIU");
     }
 }
