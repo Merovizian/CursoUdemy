@@ -2,6 +2,8 @@ package ifes.eric.organizze.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,18 +28,38 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.text.DecimalFormat;
 
 import ifes.eric.organizze.R;
+import ifes.eric.organizze.adapter.AdapterMovimentacao;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
 import ifes.eric.organizze.model.Usuario;
 
 public class PrincipalActivity extends AppCompatActivity {
-    DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
-    FirebaseAuth autenticador = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    TextView textoValorFinal, textoNomeUsuario;
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Banco de dados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
+    private DatabaseReference userRF;
+
+//   ***********************************   Banco de dados   ************************************
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Autenticador  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Referencia seu usuario do auth
+    FirebaseAuth autenticador = ConfiguracaoFirebase.getFirebaseAutenticacao();
+//   ***********************************  Autenticador  ************************************
+
+
+    // Objeto que trata e recebe um evento value event listener
+    private ValueEventListener valueEventListenerUsuario;
+
+    // Objetos/variaveis padrões
+    TextView textoValorFinal, textoNomeUsuario;
     private double receitaTotal, despesaTotal, resumoUsuario;
 
+    // Objeto do calendario GIT
     private MaterialCalendarView calendario;
+
+    // Recycler view
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +69,33 @@ public class PrincipalActivity extends AppCompatActivity {
         // Conectando as variaveis com os IDs
         textoNomeUsuario = findViewById(R.id.text_nomeUsuario);
         textoValorFinal = findViewById(R.id.text_valorFinal);
+        calendario = findViewById(R.id.calendarView_CalendarioNovo);
+        recyclerView = findViewById(R.id.recycler_princiapal_movimentos);
 
-        recuperarValorTotal();
 
+
+
+        // Configurações da Toolbar - ActionBar existe por causa do MENU
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle("");
 
+
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Configuração Adapter  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter();
+
+
+//   ***********************************  Configuração Adapter  ************************************
+
+
+
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MANIPULACAO CALENDAR  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // Configurações de layout  -  Pode ser feito como uma função/metodo
-        calendario = findViewById(R.id.calendarView_CalendarioNovo);
         calendario.state().edit()
                 .setMinimumDate(CalendarDay.from(2019,1,1))
                 .setMaximumDate(CalendarDay.from(2024,1,1))
@@ -111,9 +151,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void recuperarValorTotal(){
         String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
-        DatabaseReference userRF = database.child("usuarios").child(idUser);
+        userRF = database.child("usuarios").child(idUser);
 
-        userRF.addValueEventListener(new ValueEventListener() {
+        valueEventListenerUsuario = userRF.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -138,11 +178,15 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarValorTotal();
+    }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        sair();
-        Log.i("SAIU", "NAO SAIU");
+    protected void onStop() {
+        super.onStop();
+        userRF.removeEventListener(valueEventListenerUsuario);
     }
 }

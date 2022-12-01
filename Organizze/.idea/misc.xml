@@ -10,7 +10,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16302083333333334" />
         <entry key="app/src/main/res/layout/activity_principal.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_receitas.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/content_principal.xml" value="0.26345609065155806" />
+        <entry key="app/src/main/res/layout/adapter_movimentacao.xml" value="0.32708333333333334" />
+        <entry key="app/src/main/res/layout/content_principal.xml" value="0.33" />
         <entry key="app/src/main/res/layout/intro_cadastro.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/intro_dois.xml" value="0.328125" />
         <entry key="app/src/main/res/layout/intro_quatro.xml" value="0.328125" />
