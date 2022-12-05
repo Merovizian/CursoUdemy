@@ -89,6 +89,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
 
+
+
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Configuração Adapter  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         // Configurar Adapter

@@ -35,7 +35,7 @@
                 android:text="valor"
                 android:textColor="#00D39E"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
