@@ -1,26 +1,22 @@
 package ifes.eric.organizze.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import ifes.eric.organizze.R;
-import ifes.eric.organizze.adapter.AdapterMovimentacao;
-import ifes.eric.organizze.config.ConfiguracaoFirebase;
-import ifes.eric.organizze.helper.Base64Custom;
-import ifes.eric.organizze.model.Movimentacao;
-import ifes.eric.organizze.model.Usuario;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,13 +29,20 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import ifes.eric.organizze.R;
+import ifes.eric.organizze.adapter.AdapterMovimentacao;
+import ifes.eric.organizze.config.ConfiguracaoFirebase;
+import ifes.eric.organizze.helper.Base64Custom;
+import ifes.eric.organizze.model.Movimentacao;
+import ifes.eric.organizze.model.Usuario;
+
 public class PrincipalActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Banco de dados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference userRF;
-    private DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
-    private DatabaseReference movimentacaoRF;
+    private DatabaseReference movimentacaoRF = ConfiguracaoFirebase.getFirebaseDatabase();
 //   ***********************************   Banco de dados   ************************************
 
 
@@ -94,7 +97,6 @@ public class PrincipalActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
         recyclerView.setAdapter(adapterMovimentacao);
 
 //   ***********************************  Configuração Adapter  ************************************
@@ -114,7 +116,7 @@ public class PrincipalActivity extends AppCompatActivity {
         // Mostra a movimentação sem usar o listener do calendário
         String mesSelecionado = String.format("%02d", (calendario.getCurrentDate().getMonth()+1));
         mesAno = mesSelecionado  +  String.valueOf(calendario.getCurrentDate().getYear());
-        Log.i("DADOS", mesAno);
+
 
         Toast.makeText(this, mesAno, Toast.LENGTH_LONG).show();
         // Listener
@@ -127,6 +129,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 movimentacaoRF.removeEventListener(valueEventListenerMovimentacoes);
 
                 recuperarMovimentacoes();
+                Log.i("DADOS", mesAno);
             }
         });
 
@@ -143,7 +146,7 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch(item.getItemId()){
             case R.id.menuSair:
@@ -177,8 +180,9 @@ public class PrincipalActivity extends AppCompatActivity {
         userRF = database.child("usuarios").child(idUser);
 
         valueEventListenerUsuario = userRF.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("ResourceType")
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 despesaTotal = usuario.getDespesaTotal();
@@ -201,7 +205,7 @@ public class PrincipalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -212,31 +216,37 @@ public class PrincipalActivity extends AppCompatActivity {
     public void recuperarMovimentacoes(){
         // Retorna o codigo em base 64 do email utilizado pelo usuario atual
         String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
-
         // direciona o ponteiro para o email dentro de movimentações
-        movimentacaoRF = firebase.child("movimentacao").child(idUser).child(mesAno);
+        movimentacaoRF = movimentacaoRF.child("movimentacao").child(idUser).child(mesAno);
+
         valueEventListenerMovimentacoes = movimentacaoRF.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 movimentacoes.clear();
 
-                Log.i("TESTE", "ENTROU");
+                Log.i("DADOS", "ENTROU");
 
                 for (DataSnapshot dados: snapshot.getChildren()){
                     Movimentacao movimentacao = dados.getValue(Movimentacao.class);
 
+                    Log.i("DADOS", "ENTROU4");
+
                     movimentacoes.add(movimentacao);
+                    Log.i("DADOS", "ENTROU2");
+
 
                 }
+                Log.i("DADOS", "ENTROU3");
 
                adapterMovimentacao.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled( DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
     }
