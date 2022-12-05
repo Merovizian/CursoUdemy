@@ -42,7 +42,7 @@ public class PrincipalActivity extends AppCompatActivity {
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Banco de dados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference userRF;
-
+    private DatabaseReference movimentacaoRF = ConfiguracaoFirebase.getFirebaseDatabase();
 //   ***********************************   Banco de dados   ************************************
 
 
@@ -54,6 +54,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     // Objeto que trata e recebe um evento value event listener
     private ValueEventListener valueEventListenerUsuario;
+    private ValueEventListener valueEventListenerMovimentacoes;
 
     // Objetos/variaveis padrões
     TextView textoValorFinal, textoNomeUsuario;
@@ -61,6 +62,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     // Objeto do calendario GIT
     private MaterialCalendarView calendario;
+    private String mesAno ;
 
     // Recycler view
     private RecyclerView recyclerView;
@@ -111,11 +113,23 @@ public class PrincipalActivity extends AppCompatActivity {
         CharSequence meses[] = {"Janeiro", "Fevereiro", "Março", "Abril","Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         calendario.setTitleMonths(meses);
 
+        // Mostra a movimentação sem usar o listener do calendário
+        String mesSelecionado = String.format("%02d", (calendario.getCurrentDate().getMonth()+1));
+        mesAno = mesSelecionado  +  String.valueOf(calendario.getCurrentDate().getYear());
+
+
+        Toast.makeText(this, mesAno, Toast.LENGTH_LONG).show();
         // Listener
         calendario.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-                int mes = date.getMonth() + 1;
+                String mesSelecionado = String.format("%02d", (calendario.getCurrentDate().getMonth()+1));
+                mesAno = mesSelecionado  +  String.valueOf(calendario.getCurrentDate().getYear());
+
+                movimentacaoRF.removeEventListener(valueEventListenerMovimentacoes);
+
+                recuperarMovimentacoes();
+                Log.i("DADOS", mesAno);
             }
         });
 
@@ -197,16 +211,58 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
     }
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Recuperar Movimentações  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public void recuperarMovimentacoes(){
+        // Retorna o codigo em base 64 do email utilizado pelo usuario atual
+        String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
+        // direciona o ponteiro para o email dentro de movimentações
+        movimentacaoRF = movimentacaoRF.child("movimentacao").child(idUser).child(mesAno);
+
+        valueEventListenerMovimentacoes = movimentacaoRF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                movimentacoes.clear();
+
+                Log.i("DADOS", "ENTROU");
+
+                for (DataSnapshot dados: snapshot.getChildren()){
+                    Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+
+                    Log.i("DADOS", "ENTROU4");
+
+                    movimentacoes.add(movimentacao);
+                    Log.i("DADOS", "ENTROU2");
+
+
+                }
+                Log.i("DADOS", "ENTROU3");
+
+               adapterMovimentacao.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+    }
+//   ******************************  Metodo Recuperar Movimentações  *******************************
 
     @Override
     protected void onStart() {
         super.onStart();
         recuperarValorTotal();
+        recuperarMovimentacoes();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         userRF.removeEventListener(valueEventListenerUsuario);
+        movimentacaoRF.removeEventListener(valueEventListenerMovimentacoes);
     }
 }
