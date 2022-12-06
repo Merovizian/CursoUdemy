@@ -1,5 +1,6 @@
 package ifes.eric.organizze.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +37,8 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 public class PrincipalActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Banco de dados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,6 +71,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterMovimentacao adapterMovimentacao;
     private List<Movimentacao> movimentacoes = new ArrayList<>();
+    private Movimentacao movimentacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,9 +136,10 @@ public class PrincipalActivity extends AppCompatActivity {
                 recuperarMovimentacoes();
             }
         });
-
-
 //   ***********************************  MANIPULACAO CALENDAR  ************************************
+
+        swipe();
+
 
     }
 
@@ -155,7 +163,6 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Botoes FAB e Menu  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     public void sair(){
         MainActivity main = new MainActivity();
         main.Logoff();
@@ -169,7 +176,6 @@ public class PrincipalActivity extends AppCompatActivity {
     public void adicionarDespesa(View view    ){
         startActivity(new Intent(getApplicationContext(),DespesaActivity.class));
     }
-
 //   ***********************************  Botoes FAB e Menu  ************************************
 
     public void recuperarValorTotal(){
@@ -207,8 +213,81 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
     }
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Recuperar Movimentações  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Exclui movimentos  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void excluirMovimentacao(RecyclerView.ViewHolder viewHolder){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        alertDialog.setTitle("Excluir Movimentação da conta");
+        alertDialog.setMessage("Têm certeza que deseja excluir a movimentação?");
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                int itemPosition = viewHolder.getAdapterPosition();
+                movimentacao = movimentacoes.get(itemPosition);
+                // Retorna o codigo em base 64 do email utilizado pelo usuario atual
+                String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
+
+                // direciona o ponteiro para o email dentro de movimentações
+                movimentacaoRF = firebase.child("movimentacao")
+                        .child(idUser)
+                        .child(mesAno);
+                movimentacaoRF.child(movimentacao.getKeyID()).removeValue();
+                if (movimentacao.getTipo().equals("D")){
+
+                    Toast.makeText(PrincipalActivity.this, "DEVEDOR", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(PrincipalActivity.this, "CREDOR", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(PrincipalActivity.this, "Ação cancelada", Toast.LENGTH_SHORT).show();
+                adapterMovimentacao.notifyDataSetChanged();
+            }
+        });
+        alertDialog.create()
+                .show();
+
+    }
+//   *********************************  Metodo Exclui movimentos  **********************************
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~  Metodo Dar Oções ao mover para os lados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void swipe(){
+        ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                // Impede que o item seja Dropado
+                int draflags = ItemTouchHelper.ACTION_STATE_IDLE;
+                // modo de movimento para o inicio e para o final
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(draflags, swipeFlags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                excluirMovimentacao(viewHolder);
+            }
+        };
+
+        new ItemTouchHelper( itemTouch ).attachToRecyclerView(recyclerView);
+
+
+
+    }
+//   ***********************  Metodo Dar Oções ao mover para os lados   ****************************
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Recuperar Movimentações  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void recuperarMovimentacoes(){
         // Retorna o codigo em base 64 do email utilizado pelo usuario atual
         String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
@@ -226,7 +305,11 @@ public class PrincipalActivity extends AppCompatActivity {
                 for (DataSnapshot dados: snapshot.getChildren()){
                     Movimentacao movimentacao = dados.getValue(Movimentacao.class);
 
+                    // coloca no objeto movimentação, da classe Movimentacao, a chave de cada uma
+                    // das movimentações.
+                    movimentacao.setKeyID( dados.getKey());
                     movimentacoes.add(movimentacao);
+
 
                 }
 

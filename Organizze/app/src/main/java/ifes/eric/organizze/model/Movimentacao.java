@@ -9,11 +9,19 @@ import ifes.eric.organizze.helper.DateCustom;
 
 public class Movimentacao {
 
-    private String data, categoria, descricao, tipo;
+    private String data, categoria, descricao, tipo, keyID;
     private double valor;
 
     public String getData() {
         return data;
+    }
+
+    public String getKeyID() {
+        return keyID;
+    }
+
+    public void setKeyID(String keyID) {
+        this.keyID = keyID;
     }
 
     public void setData(String data) {
