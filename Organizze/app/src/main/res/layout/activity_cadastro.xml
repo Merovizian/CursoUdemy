@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editText_cadastro_nome"
@@ -36,7 +37,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:ignore="Autofill,HardcodedText" />
 
     <EditText
         android:id="@+id/editText_cadastro_email"
@@ -54,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_cadastro_nome" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_cadastro_nome"
+        tools:ignore="Autofill,HardcodedText" />
 
     <EditText
         android:id="@+id/editText_Cadastro_senha"
@@ -72,7 +75,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_cadastro_email" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_cadastro_email"
+        tools:ignore="HardcodedText,Autofill" />
 
     <Button
         android:id="@+id/button_cadastro_cadastrar"
@@ -89,7 +93,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Cadastro_senha" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_Cadastro_senha"
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

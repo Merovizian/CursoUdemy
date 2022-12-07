@@ -14,9 +14,12 @@
 
     <TextView
         android:id="@+id/textView_dois"
-        android:textColor="@color/black"
+        android:layout_width="300dp"
 
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginTop="25dp"
+        android:text="@string/intro_dois"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 </LinearLayout>

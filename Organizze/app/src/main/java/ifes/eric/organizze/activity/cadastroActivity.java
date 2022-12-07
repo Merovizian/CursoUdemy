@@ -5,21 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-
-import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -31,7 +26,7 @@ import ifes.eric.organizze.model.Usuario;
 public class cadastroActivity extends AppCompatActivity {
 
     private EditText campoNome, campoEmail, campoSenha;
-    private FirebaseAuth autenticacao;
+
     private Usuario usuario;
 
     @Override
@@ -41,18 +36,19 @@ public class cadastroActivity extends AppCompatActivity {
         campoEmail = findViewById(R.id.editText_cadastro_email);
         campoNome = findViewById(R.id.editText_cadastro_nome);
         campoSenha = findViewById(R.id.editText_Cadastro_senha);
-
-        
-        //Objects.requireNonNull(getSupportActionBar()).setTitle("Cadastro");
    }
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  efetuarCadastro   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void efetuarCadastro(View view) {
+        // Método que efetua a validação do cadastro.
+
         String textoNome = campoNome.getText().toString();
         String textoSenha = campoSenha.getText().toString();
         String textoEmail = campoEmail.getText().toString();
+
+        // Cria uma instancaia para o metodo validação.
         Validacao validacao = new Validacao();
 
-
+        // Se for validado os dados então cria-se uma instancia de usuário com esses dados
         if (validacao.validar(textoNome, textoSenha, textoEmail, cadastroActivity.this) == 0) {
             usuario = new Usuario();
             usuario.setNome(textoNome);
@@ -61,27 +57,36 @@ public class cadastroActivity extends AppCompatActivity {
             cadastrarUsuario();
         }
     }
+//****************************************  efetuarCadastro  ***************************************
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Cadastrar firebaseAuth   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void cadastrarUsuario(){
+        // Método que realiza o cadastro no firebaseAuth
 
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        // Usa a classe configuraçãoFirebase para criar uma instancia que referencia o FirebaseAuth
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        // Usa a classe usuario para fornecer os dados para a criação autenticador
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),usuario.getSenha()
                                 ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
+            // Caso a tarefa seja realizada
             public void onComplete(@NonNull Task<AuthResult> task) {
+                // caso senha realizada com sucesso
                 if (task.isSuccessful()){
-
-                    String idUsuario = Base64Custom.codificarBase64( usuario.getEmail());
-                    usuario.setIdUsuario(idUsuario);
+                    // o ID usuario será o codigo64 do email
+                    usuario.setIdUsuario(Base64Custom.codificarBase64( usuario.getEmail()));
+                    // método da classe usuario que salva o usuario na firebase
                     usuario.salvar();
                     Toast.makeText(cadastroActivity.this, "Sucesso ao cadastrar "
                             + usuario.getNome(), Toast.LENGTH_SHORT).show();
                     finish();
+                // caso há erros. (essas exceções não são corretas, tem que verificar)
                 }else{
-                    String excecao = "";
+                    String excecao;
                     try {
-                        throw task.getException();
+                        throw Objects.requireNonNull(task.getException());
                     }catch (FirebaseAuthWeakPasswordException e){
                         excecao = "Digite uma senha mais forte";
                     }catch (FirebaseAuthInvalidCredentialsException e) {
@@ -99,6 +104,8 @@ public class cadastroActivity extends AppCompatActivity {
         });
 
     }
+//**************************************  Cadastrar firebaseAuth  **********************************
+
 }
 
 

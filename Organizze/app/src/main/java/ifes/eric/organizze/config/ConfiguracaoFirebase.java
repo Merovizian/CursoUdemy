@@ -6,13 +6,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+// Classe para facilitar a obtenção das referencias (apontador) do FirebaseAuth e DatabaseReference
 public class ConfiguracaoFirebase extends AppCompatActivity {
 
     private static FirebaseAuth autenticacao;
     private static DatabaseReference firebase;
 
 
-    //retorna a instancia do FirebaDatabase
+    //retorna a instancia do FirebaDatabase referenciada.
     public static DatabaseReference getFirebaseDatabase(){
         if (firebase == null){
             firebase = FirebaseDatabase.getInstance().getReference();
@@ -22,7 +24,7 @@ public class ConfiguracaoFirebase extends AppCompatActivity {
 
 
 
-    //retorna a instancia do FirebaseAuth
+    //retorna a instancia do FirebaseAuth referenciada
     public static FirebaseAuth getFirebaseAutenticacao(){
 
         if (autenticacao == null){
