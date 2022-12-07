@@ -214,6 +214,29 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
+
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Atualizar os dados  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void atualizarSaldo(){
+        String idUser = Base64Custom.codificarBase64(autenticador
+                .getCurrentUser().getEmail().toString());
+        userRF = firebase.child("usuarios").child(idUser);
+
+        if ( movimentacao.getTipo().equals("R")){
+            receitaTotal = receitaTotal - movimentacao.getValor();
+            userRF.child("receitaTotal").setValue(receitaTotal);
+
+        }else{
+            receitaTotal = receitaTotal + movimentacao.getValor();
+            userRF.child("receitaTotal").setValue(receitaTotal);
+
+        }
+
+
+
+    }
+//   ************************************  Atualizar os dados  *************************************
+
+
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Exclui movimentos  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void excluirMovimentacao(RecyclerView.ViewHolder viewHolder){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -235,12 +258,8 @@ public class PrincipalActivity extends AppCompatActivity {
                         .child(idUser)
                         .child(mesAno);
                 movimentacaoRF.child(movimentacao.getKeyID()).removeValue();
-                if (movimentacao.getTipo().equals("D")){
+                atualizarSaldo();
 
-                    Toast.makeText(PrincipalActivity.this, "DEVEDOR", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(PrincipalActivity.this, "CREDOR", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -248,11 +267,12 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(PrincipalActivity.this, "Ação cancelada", Toast.LENGTH_SHORT).show();
-                adapterMovimentacao.notifyDataSetChanged();
             }
         });
         alertDialog.create()
                 .show();
+        adapterMovimentacao.notifyDataSetChanged();
+
 
     }
 //   *********************************  Metodo Exclui movimentos  **********************************
