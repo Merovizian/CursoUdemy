@@ -74,7 +74,8 @@
             app:fab_colorNormal="#0707C5"
             app:fab_colorPressed="#09096C"
             fab:fab_label="Receita"
-            fab:fab_size="mini" />
+            fab:fab_size="mini"
+            tools:ignore="UsingOnClickInXml" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_item2"
@@ -83,7 +84,8 @@
             android:onClick="adicionarDespesa"
             android:src="@drawable/ic_baseline_add_24"
             fab:fab_label="Despesa"
-            fab:fab_size="mini" />
+            fab:fab_size="mini"
+            tools:ignore="UsingOnClickInXml" />
 
 
 
