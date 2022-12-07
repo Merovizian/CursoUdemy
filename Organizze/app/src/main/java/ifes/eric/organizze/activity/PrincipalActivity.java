@@ -1,5 +1,6 @@
 package ifes.eric.organizze.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class PrincipalActivity extends AppCompatActivity {
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   Banco de dados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference userRF;
-    private DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+    private final DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
     private DatabaseReference movimentacaoRF;
 //   ***********************************   Banco de dados   ************************************
 
@@ -70,7 +71,7 @@ public class PrincipalActivity extends AppCompatActivity {
     // Recycler view
     private RecyclerView recyclerView;
     private AdapterMovimentacao adapterMovimentacao;
-    private List<Movimentacao> movimentacoes = new ArrayList<>();
+    private final List<Movimentacao> movimentacoes = new ArrayList<>();
     private Movimentacao movimentacao;
 
     @Override
@@ -88,7 +89,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         // Configurações da Toolbar - ActionBar existe por causa do MENU
-        getSupportActionBar().setElevation(0);
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
         getSupportActionBar().setTitle("");
 
 
@@ -115,21 +116,22 @@ public class PrincipalActivity extends AppCompatActivity {
                 .setMinimumDate(CalendarDay.from(2019,1,1))
                 .setMaximumDate(CalendarDay.from(2024,1,1))
                 .commit();
-        CharSequence meses[] = {"Janeiro", "Fevereiro", "Março", "Abril","Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
+        CharSequence[] meses = {"Janeiro", "Fevereiro", "Março", "Abril","Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
         calendario.setTitleMonths(meses);
 
-        // Mostra a movimentação sem usar o listener do calendário
-        String mesSelecionado = String.format("%02d", (calendario.getCurrentDate().getMonth()+1));
-        mesAno = mesSelecionado  +  String.valueOf(calendario.getCurrentDate().getYear());
+        // Mostra a movimentação sem usar o listener do calendário - format > formatação de string
+        @SuppressLint("DefaultLocale") String mesSelecionado = String.format("%02d",
+                (calendario.getCurrentDate().getMonth()+1));
+        mesAno = mesSelecionado  + calendario.getCurrentDate().getYear();
         Log.i("DADOS", mesAno);
 
-        Toast.makeText(this, mesAno, Toast.LENGTH_LONG).show();
         // Listener
         calendario.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-                String mesSelecionado = String.format("%02d", (calendario.getCurrentDate().getMonth()+1));
-                mesAno = mesSelecionado  +  String.valueOf(calendario.getCurrentDate().getYear());
+                @SuppressLint("DefaultLocale") String mesSelecionado = String.format("%02d",
+                        (calendario.getCurrentDate().getMonth()+1));
+                mesAno = mesSelecionado  + calendario.getCurrentDate().getYear();
 
                 movimentacaoRF.removeEventListener(valueEventListenerMovimentacoes);
 
@@ -137,38 +139,32 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 //   ***********************************  MANIPULACAO CALENDAR  ************************************
-
         swipe();
-
-
     }
 
     @Override
-    //Inflar transforma um objeto XML em objeto do tipo view
+    //Inflater transforma um objeto XML em objeto do tipo view
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    // Menu com a opção de deslogar do sistema
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
-            case R.id.menuSair:
-                sair();
-                break;
+
+        if (item.getItemId() == R.id.menuSair) {
+
+            MainActivity main = new MainActivity();
+            main.Logoff();
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Botoes FAB e Menu  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public void sair(){
-        MainActivity main = new MainActivity();
-        main.Logoff();
-        startActivity(new Intent(this, MainActivity.class));
-    }
-
     public void adicionarReceita(View view    ){
         startActivity(new Intent(getApplicationContext(),ReceitasActivity.class));
     }
@@ -178,20 +174,31 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 //   ***********************************  Botoes FAB e Menu  ************************************
 
+//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Printa na tela o ValorTotal  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void recuperarValorTotal(){
-        String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
+        String idUser = Base64Custom.codificarBase64(Objects.requireNonNull(Objects.requireNonNull(autenticador.
+                        getCurrentUser())
+                .getEmail()));
         userRF = database.child("usuarios").child(idUser);
 
+        // Faz uma ligação entre o objeto userRF e o firebase
         valueEventListenerUsuario = userRF.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            // snapshot é a instancia que gera essa ligação
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                // usando os dados do Snapshot, cria-se um objeto usuario.
                 Usuario usuario = snapshot.getValue(Usuario.class);
+                assert usuario != null;
+                // as variaveis globais receita e despesas são completadas com o que está no snapshot
                 despesaTotal = usuario.getDespesaTotal();
                 receitaTotal = usuario.getReceitaTotal();
                 resumoUsuario = receitaTotal - despesaTotal;
 
+                // metodo para colocar o double em formatação
                 DecimalFormat decimalFormat = new DecimalFormat("0.##");
+                // a forma da formatação é aplicado ao double resumoUsuario.
                 String resultadoFormatado = decimalFormat.format(resumoUsuario);
 
                 if (resumoUsuario < 0){
@@ -207,20 +214,20 @@ public class PrincipalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
     }
+//   *******************************  Printa na tela o ValorTotal  *********************************
 
-
-//   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Atualizar os dados  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//   ------------------------------------  Atualizar os dados  -------------------------------------
     public void atualizarSaldo(){
-        String idUser = Base64Custom.codificarBase64(autenticador
-                .getCurrentUser().getEmail().toString());
+        String idUser = Base64Custom.codificarBase64(Objects.requireNonNull(Objects.requireNonNull(autenticador
+                .getCurrentUser()).getEmail()));
         userRF = firebase.child("usuarios").child(idUser);
-
+        // verifica se a movimentação é uma receita ou uma despesa
         if ( movimentacao.getTipo().equals("R")){
             receitaTotal = receitaTotal - movimentacao.getValor();
             userRF.child("receitaTotal").setValue(receitaTotal);
@@ -230,15 +237,13 @@ public class PrincipalActivity extends AppCompatActivity {
             userRF.child("receitaTotal").setValue(receitaTotal);
 
         }
-
-
-
     }
 //   ************************************  Atualizar os dados  *************************************
 
-
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Exclui movimentos  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    @SuppressLint("NotifyDataSetChanged")
     public void excluirMovimentacao(RecyclerView.ViewHolder viewHolder){
+        // instancia um alerta dialog
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("Excluir Movimentação da conta");
@@ -248,16 +253,19 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                // busca no recyclerview a posição que esta o viewHolder e a adciona no objeto movimentacao
                 int itemPosition = viewHolder.getAdapterPosition();
                 movimentacao = movimentacoes.get(itemPosition);
                 // Retorna o codigo em base 64 do email utilizado pelo usuario atual
-                String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
+                String idUser = Base64Custom.codificarBase64(Objects.requireNonNull(Objects.requireNonNull(autenticador
+                        .getCurrentUser()).getEmail()));
 
                 // direciona o ponteiro para o email dentro de movimentações
                 movimentacaoRF = firebase.child("movimentacao")
                         .child(idUser)
                         .child(mesAno);
                 movimentacaoRF.child(movimentacao.getKeyID()).removeValue();
+                // Chama o metodo atualizar Saldo apos excluir movimentção
                 atualizarSaldo();
 
             }
@@ -271,6 +279,8 @@ public class PrincipalActivity extends AppCompatActivity {
         });
         alertDialog.create()
                 .show();
+
+        // atualiza o adapter
         adapterMovimentacao.notifyDataSetChanged();
 
 
@@ -279,10 +289,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~  Metodo Dar Oções ao mover para os lados   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void swipe(){
+        // instancia-se um objeto itemTouch
         ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
             @Override
-            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                // Impede que o item seja Dropado
+
+            public int getMovementFlags(@NonNull RecyclerView recyclerView,
+                                        @NonNull RecyclerView.ViewHolder viewHolder) {
+                // não sei para que serve
                 int draflags = ItemTouchHelper.ACTION_STATE_IDLE;
                 // modo de movimento para o inicio e para o final
                 int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
@@ -290,33 +303,36 @@ public class PrincipalActivity extends AppCompatActivity {
             }
 
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
+            // ao jogar para um dos lados, da o objeto a ser usado e a direção que foi jogado
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 excluirMovimentacao(viewHolder);
             }
         };
 
+        // atranha o swipe ao recyclerview
         new ItemTouchHelper( itemTouch ).attachToRecyclerView(recyclerView);
-
-
-
     }
 //   ***********************  Metodo Dar Oções ao mover para os lados   ****************************
 
 //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Metodo Recuperar Movimentações  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void recuperarMovimentacoes(){
         // Retorna o codigo em base 64 do email utilizado pelo usuario atual
-        String idUser = Base64Custom.codificarBase64(autenticador.getCurrentUser().getEmail().toString());
+        String idUser = Base64Custom.codificarBase64(Objects.requireNonNull(Objects.
+                requireNonNull(autenticador.getCurrentUser()).getEmail()));
 
         // direciona o ponteiro para o email dentro de movimentações
         movimentacaoRF = firebase.child("movimentacao").child(idUser).child(mesAno);
         valueEventListenerMovimentacoes = movimentacaoRF.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 movimentacoes.clear();
 
@@ -327,6 +343,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
                     // coloca no objeto movimentação, da classe Movimentacao, a chave de cada uma
                     // das movimentações.
+                    assert movimentacao != null;
                     movimentacao.setKeyID( dados.getKey());
                     movimentacoes.add(movimentacao);
 
@@ -337,7 +354,7 @@ public class PrincipalActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled( DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
