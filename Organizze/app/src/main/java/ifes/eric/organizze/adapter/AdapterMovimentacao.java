@@ -1,13 +1,14 @@
 package ifes.eric.organizze.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-//import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -21,19 +22,26 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
     List<Movimentacao> movimentacoes;
     Context context;
 
+    // construtor, serve para gerar instanciar objetos
     public AdapterMovimentacao(List<Movimentacao> movimentacoes, Context context) {
         this.movimentacoes = movimentacoes;
         this.context = context;
     }
 
+
+    @NonNull
     @Override
+
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_movimentacao, parent, false);
         return new MyViewHolder(itemLista);
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
+    // Usa os itens criados no MyViewHolder para settar de acordo com o que há em movimentações
+    // de acordo com a posição.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Movimentacao movimentacao = movimentacoes.get(position);
 
@@ -55,7 +63,8 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
         return movimentacoes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    // clase que cria os TextViews que serão anexados ao XLM
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView titulo, valor, categoria, data;
 
