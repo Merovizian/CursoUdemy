@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import ifes.eric.organizze.R;
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
@@ -24,11 +26,10 @@ import ifes.eric.organizze.model.Usuario;
 
 
 public class ReceitasActivity extends AppCompatActivity {
-    private Movimentacao movimentacao;
     private TextInputEditText campoData, campoCategoria, campoDescricao;
     private EditText campoValor;
-    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
+    private final FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    private final DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
     private Double receitaTotal;
 
     @Override
@@ -49,25 +50,26 @@ public class ReceitasActivity extends AppCompatActivity {
 
     }
 
-    /* Metodo que gera toda a movimentação necessaria para salvar a receita */
+
+//   ---------------------------- Salva a movimentacao de Receita  ---------------------------------
     public void salvarReceita (View view){
 
         // teste de validação utilizando o metodo validarCamposReceitas
         if (validarCamposReceita()){
             // Instancia uma nova movimentação da classe movimentação
-            movimentacao = new Movimentacao();
+            Movimentacao movimentacao = new Movimentacao();
 
             // Valor escolhido pelo usuario, no campo.
             movimentacao.setValor(Double.parseDouble(campoValor.getText().toString()));
 
             // Campo categoria escolhido pelo usuario, no campo.
-            movimentacao.setCategoria(campoCategoria.getText().toString());
+            movimentacao.setCategoria(Objects.requireNonNull(campoCategoria.getText()).toString());
 
             // Campo Descrição escolhido pelo usuario, no campo.
-            movimentacao.setDescricao(campoDescricao.getText().toString());
+            movimentacao.setDescricao(Objects.requireNonNull(campoDescricao.getText()).toString());
 
             // Data escolhida pelo usuario, no campo.
-            movimentacao.setData(campoData.getText().toString());
+            movimentacao.setData(Objects.requireNonNull(campoData.getText()).toString());
 
             // R que simboliza RECEITA
             movimentacao.setTipo("R");
@@ -85,14 +87,14 @@ public class ReceitasActivity extends AppCompatActivity {
             finish();
 
         }
-
     }
+//   *****************************  Salva a movimentacao de Receita  *******************************
 
-    /* Metodo valida o que os campos que o usuario ira digitar*/
+//   ----------------------------  Validação dos campos digitados   ---------------------------------
     public Boolean validarCamposReceita() {
 
         String textoValor = campoValor.getText().toString();
-        String textoData = campoData.getText().toString();
+        String textoData = Objects.requireNonNull(campoData.getText()).toString();
 
         if (!textoValor.isEmpty()) {
             if (!textoData.isEmpty()){
@@ -107,13 +109,13 @@ public class ReceitasActivity extends AppCompatActivity {
         }
 
     }
+//   *****************************  Validação dos campos digitados   *******************************
 
-
-
-    /* Metodo que recupera do firebase o valor da receitaTotal*/
+//   --------------------------- Metodo que retorna a receitaTotal  --------------------------------
     public void recuperarReceitaTotal(){
         // Cria um cod64 do email de usuario que está logado.
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail().toString());
+        String idUsuario = Base64Custom.codificarBase64(Objects.requireNonNull(Objects.requireNonNull
+                (autenticacao.getCurrentUser()).getEmail()));
 
         // Instancia um usuarioREF e o aponta para o child Usuario/cod64 do email
         DatabaseReference usuarioREF = database.child("usuarios").child(idUsuario);
@@ -125,6 +127,7 @@ public class ReceitasActivity extends AppCompatActivity {
 
                 // instancia um usuario para receber os valores que estão no firebase.
                 Usuario usuario = snapshot.getValue(Usuario.class);
+                assert usuario != null;
                 receitaTotal =  usuario.getReceitaTotal();
             }
 
@@ -135,11 +138,13 @@ public class ReceitasActivity extends AppCompatActivity {
         });
 
     }
+//   **************************  Metodo que retorna a receitaTotal   *******************************
 
-    /* Metodo que atualiza no firebase o valor da receita total */
+//   ----------------------- Atualiza o valor descontado no Firebase  ------------------------------
     public void atualizarReceita (Double despesa){
         // retorna o valor em cod64 do email de que esta logado.
-        String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        String emailUsuario = Objects.requireNonNull(autenticacao.getCurrentUser()).getEmail();
+        assert emailUsuario != null;
         String idUsuario = Base64Custom.codificarBase64(emailUsuario);
 
         // Instancia um usuarioREF e o aponta para o child Usuario/cod64 do email
@@ -147,8 +152,8 @@ public class ReceitasActivity extends AppCompatActivity {
 
         // apontado para Usuario/cod64 e adiciona nó com o valor do atribulo receita recebido
         usuarioREF.child("receitaTotal").setValue(despesa);
-
     }
+//   *********************  Atualiza o valor descontado no Firebase   ******************************
 
 
 }

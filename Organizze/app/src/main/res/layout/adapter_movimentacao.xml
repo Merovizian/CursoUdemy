@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="3dp"
@@ -24,7 +25,8 @@
                 android:layout_weight="5"
                 android:text="Titulo"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/text_adapter_data"
@@ -32,7 +34,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:text="TextView"
-                android:textAlignment="viewStart" />
+                android:textAlignment="viewStart"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textAdapterValor"
@@ -43,7 +46,8 @@
                 android:text="valor"
                 android:textColor="#00D39E"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText"  />
 
         </LinearLayout>
 
@@ -53,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:text="Categoria"
+            tools:ignore="HardcodedText,InefficientWeight"
             android:textColor="#696969"
             android:textSize="14sp" />
 

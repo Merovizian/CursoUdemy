@@ -7,23 +7,14 @@ import ifes.eric.organizze.config.ConfiguracaoFirebase;
 
 public class Usuario {
     private String nome, email, senha, idUsuario;
-    private Double receitaTotal = 0.0;
-    private Double despesaTotal = 0.0;
 
     public Double getReceitaTotal() {
-        return receitaTotal;
+        return 0.0;
     }
 
-    public void setReceitaTotal(Double receitaTotal) {
-        this.receitaTotal = receitaTotal;
-    }
 
     public Double getDespesaTotal() {
-        return despesaTotal;
-    }
-
-    public void setDespesaTotal(Double despesaTotal) {
-        this.despesaTotal = despesaTotal;
+        return 0.0;
     }
 
     public Usuario() {
@@ -36,10 +27,6 @@ public class Usuario {
         firebase.child("usuarios")
                 .child(this.idUsuario)
                 .setValue(this);
-    }
-
-    public String getIdUsuario() {
-        return idUsuario;
     }
 
     @Exclude

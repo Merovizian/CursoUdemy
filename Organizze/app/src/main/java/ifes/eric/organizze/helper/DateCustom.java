@@ -1,7 +1,7 @@
 package ifes.eric.organizze.helper;
 
-import android.content.Context;
-import android.widget.Toast;
+
+import android.annotation.SuppressLint;
 
 import java.text.SimpleDateFormat;
 
@@ -11,6 +11,7 @@ public class DateCustom {
     public static String dataAtual(){
 
         long data = System.currentTimeMillis();
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d/M/yyyy hh:mm:ss");
 
         return simpleDateFormat.format(data);
@@ -19,6 +20,7 @@ public class DateCustom {
     public static String mesAtual(){
 
         long data = System.currentTimeMillis();
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMyyyy");
 
         return simpleDateFormat.format(data);
@@ -29,8 +31,8 @@ public class DateCustom {
         try {
 
 
-            String retornoData[] = data.split("/");
-            String retorno2[] = retornoData[2].split(" ");
+            String[] retornoData = data.split("/");
+            String[] retorno2 = retornoData[2].split(" ");
             return retornoData[1] + retorno2[0] ;
 
 

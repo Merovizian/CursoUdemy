@@ -3,6 +3,8 @@ package ifes.eric.organizze.model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Objects;
+
 import ifes.eric.organizze.config.ConfiguracaoFirebase;
 import ifes.eric.organizze.helper.Base64Custom;
 import ifes.eric.organizze.helper.DateCustom;
@@ -66,7 +68,8 @@ public class Movimentacao {
     public void salvar(String dataEscolhida){
 
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        String idUsuario = Base64Custom.codificarBase64(Objects.requireNonNull
+                (Objects.requireNonNull(autenticacao.getCurrentUser()).getEmail()));
 
         DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabase();
         reference.child("movimentacao")

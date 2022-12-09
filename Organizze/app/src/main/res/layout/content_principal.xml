@@ -21,7 +21,8 @@
             android:text="Carregando..."
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/text_valorFinal"
@@ -30,7 +31,8 @@
             android:text="R$ -"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="34sp" />
+            android:textSize="34sp"
+            tools:ignore="HardcodedText"  />
 
         <TextView
             android:id="@+id/textView9"
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:text="Saldo Geral"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="HardcodedText"  />
 
 
     </LinearLayout>

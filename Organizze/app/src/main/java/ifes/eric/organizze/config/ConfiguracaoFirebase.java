@@ -20,7 +20,7 @@ public class ConfiguracaoFirebase extends AppCompatActivity {
             firebase = FirebaseDatabase.getInstance().getReference();
         }
         return firebase;
-    };
+    }
 
 
 
