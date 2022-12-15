@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "40492480868",
+    "project_id": "whatsapp-95c5a",
+    "storage_bucket": "whatsapp-95c5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40492480868:android:0c139568327783d717a271",
+        "android_client_info": {
+          "package_name": "ifes.eric.whatsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40492480868-fu1ettv1k3f8feea4duvjs3590l3ds9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ifes.eric.whatsapp",
+            "certificate_hash": "f0716a0d8d293da19916837004acdd8f341dfbf1"
+          }
+        },
+        {
+          "client_id": "40492480868-14g1vsqa7vgmb3pqaguetcel4ej2q8nd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJlryG4SlEVre7SpZaZQkOBr4wpHgc51g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40492480868-14g1vsqa7vgmb3pqaguetcel4ej2q8nd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
