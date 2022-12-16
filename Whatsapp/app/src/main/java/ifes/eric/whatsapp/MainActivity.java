@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     // varival para criar um objeto usuario
     Usuario usuario;
 
+    // Declarar uma instancia de FirebaseAuth
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             // caso sejam consistentes, cria-se uma instancia usuario.
             usuario  = new Usuario();
             usuario.setEmail(TextoEmail);
-            usuario.setIdUsuario(TextoSenha);
+            usuario.setSenha(TextoSenha);
 
             // e utilizao o metodo para validar login
             validarLogin();
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
 //   ------------------------- Metodo que faz os tramites para logar  ------------------------------
     public void validarLogin(){
         // objeto auth apontando para o firebase
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
+
 
 
         //utiliza a instancia criada para get no email e senha e realizar o login pelo auth
@@ -92,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         throw Objects.requireNonNull(task.getException());
                     }catch (FirebaseAuthInvalidCredentialsException e){
-                        excecao = "Email não cadastrado ou excluído definitivamente";
+                        excecao = "Senha Incorreta";
 
                     }catch (FirebaseAuthInvalidUserException e) {
-                        excecao = "Senha incorreta";
+                        excecao = "Email não cadastrado ou excluído definitivamente";
 
                     }catch (Exception e){
 

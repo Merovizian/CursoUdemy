@@ -10,5 +10,10 @@ public class CadastroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+
+        // configuração do titulo
+        getSupportActionBar().setTitle("Cadastro de novo Usuario");
+        getSupportActionBar().setElevation(0);
     }
 }
