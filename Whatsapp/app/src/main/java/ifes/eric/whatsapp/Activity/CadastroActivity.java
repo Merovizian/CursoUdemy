@@ -1,0 +1,89 @@
+package ifes.eric.whatsapp.Activity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import ifes.eric.whatsapp.Model.Usuario;
+import ifes.eric.whatsapp.Model.Validacao;
+import ifes.eric.whatsapp.R;
+
+public class CadastroActivity extends AppCompatActivity {
+
+    private EditText campoEmail, campoSenha, campoNome;
+
+    Usuario usuario;
+
+    private FirebaseAuth auth;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cadastro);
+
+        campoEmail = findViewById(R.id.imput_cadastro_email);
+        campoNome = findViewById(R.id.imput_cadastro_nome);
+        campoSenha = findViewById(R.id.imput_cadastro_senha);
+
+
+        // configuração do titulo
+        getSupportActionBar().setTitle("Cadastro de novo Usuario");
+        getSupportActionBar().setElevation(0);
+    }
+
+
+//   ----------------------------------  Validação dos Dados  --------------------------------------
+    public void validarDados(View view){
+        String nome = campoNome.getText().toString();
+        String email = campoEmail.getText().toString();
+        String senha = campoSenha.getText().toString();
+        // coloca nas variaveis acima o que foi digitado
+
+        Validacao validacao = new Validacao();
+        // Objeto de validação
+
+        if(validacao.validar(nome, senha, email, CadastroActivity.this) == 0 ){
+            // Verifica se o usuario não digitou algum dos campos acima
+
+            usuario = new Usuario();
+            // Cria-se uma instancia de objeto de usuarios.
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+
+            efetuarCadastro();
+        }
+    }
+//   ******************************     Validação dos Dados      ***********************************
+
+
+
+//   ----------------------------------  Validação dos Dados  --------------------------------------
+    public void efetuarCadastro(){
+
+        auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+            }
+        });
+
+
+
+    }
+
+
+//   ******************************     Validação dos Dados      ***********************************
+}
+
+

@@ -1,4 +1,4 @@
-package ifes.eric.whatsapp;
+package ifes.eric.whatsapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,21 +9,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
 import ifes.eric.whatsapp.Model.Usuario;
 import ifes.eric.whatsapp.Model.Validacao;
+import ifes.eric.whatsapp.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     // variaveis de entrada de texto
     EditText email, senha;
 
@@ -39,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+
 
         // tirar o a elevação e o titulo.
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//   ------------------------- Verifica se os campos foram digitados  ------------------------------
+    //   ------------------------- Verifica se os campos foram digitados  ------------------------------
     public void verificarcampos(View view) {
         String TextoSenha = senha.getText().toString();
         String TextoEmail = email.getText().toString();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Validacao validacao = new Validacao();
 
 
-        if (validacao.validar(TextoSenha, TextoEmail, MainActivity.this) == 0) {
+        if (validacao.validar(TextoSenha, TextoEmail, LoginActivity.this) == 0) {
             // caso sejam consistentes, cria-se uma instancia usuario.
             usuario  = new Usuario();
             usuario.setEmail(TextoEmail);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 //   ************************   Verifica se os campos foram digitados   ****************************
 
-//   ------------------------- Metodo que faz os tramites para logar  ------------------------------
+    //   ------------------------- Metodo que faz os tramites para logar  ------------------------------
     public void validarLogin(){
         // objeto auth apontando para o firebase
         auth = FirebaseAuth.getInstance();
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         excecao = "Erro ao cadastrar usuario: " + e.getMessage();
                         e.printStackTrace();
                     }
-                    Toast.makeText(MainActivity.this, excecao, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, excecao, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 //   ************************   Metodo que faz os tramites apra logar   ****************************
 
-//   ---------------------------  Inicia a activity Principal  --------------------------------
+    //   ---------------------------  Inicia a activity Principal  --------------------------------
     private void abrirTelaPrincipal() {
         // tratativa para evitar que o start activity seja pressionado varias vezes.
         if (teste == 0 ){
@@ -132,7 +132,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
     }
 }
-
-//   --------------------------- Metodo que retorna a receitaTotal  --------------------------------
-
-//   **************************  Metodo que retorna a receitaTotal   *******************************
