@@ -19,6 +19,9 @@ public class Usuario {
         this.email = email;
     }
 
+    public Usuario() {
+    }
+
     public String getSenha() {
         return senha;
     }

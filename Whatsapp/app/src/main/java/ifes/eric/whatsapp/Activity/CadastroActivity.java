@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import ifes.eric.whatsapp.Model.Usuario;
 import ifes.eric.whatsapp.Model.Validacao;
@@ -71,12 +75,40 @@ public class CadastroActivity extends AppCompatActivity {
     public void efetuarCadastro(){
 
         auth = FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
+                // Verifica se foi finalizada corretamente o cadastro.
+                if (task.isSuccessful()) {
+
+                    Toast.makeText(CadastroActivity.this, usuario.getNome() +
+                            " Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
+
+
+                } else {
+                    String excecao;
+
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        excecao = "A senha deve ter pelo menos 6 caracteres";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        excecao = "Email invalido ou mal formatado";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        excecao = "Usuario já existente";
+                    } catch (Exception e) {
+                        excecao = e.getMessage();
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(CadastroActivity.this, excecao, Toast.LENGTH_LONG).show();
+
+                }
             }
-        });
+            });
 
 
 
