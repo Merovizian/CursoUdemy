@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             validarLogin();
         }
     }
+
 //   ************************   Verifica se os campos foram digitados   ****************************
 
     //   ------------------------- Metodo que faz os tramites para logar  ------------------------------
@@ -92,6 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                     abrirTelaPrincipal();
                     // caso ocorram problemas com a task (erros não verificados)
                 }else{
+                    TextView tentativa = findViewById(R.id.text_TESTE);
+
+                    tentativa.setText(task.getException().toString());
+
+
                     String excecao;
                     try {
                         throw Objects.requireNonNull(task.getException());
@@ -119,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         // tratativa para evitar que o start activity seja pressionado varias vezes.
         if (teste == 0 ){
 
-            //startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             teste = 1;
 
             Toast.makeText(this, "TELA PRINCIPAL ABERTA", Toast.LENGTH_SHORT).show();
@@ -130,5 +137,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void cadastro (View view){
         startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
+    }
+
+
+    public void logoff (View view){
+        auth = FirebaseAuth.getInstance();
+        auth.signOut();
+        Toast.makeText(this, "Usuario Saiu", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
     }
 }
