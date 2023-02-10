@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -43,11 +44,21 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // tirar o a elevação e o titulo.
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+       // Objects.requireNonNull(getSupportActionBar()).setTitle("");
 
         email = findViewById(R.id.textInput_main_email);
         senha = findViewById(R.id.textInput_main_senha);
+        TextView tentativa = findViewById(R.id.text_TESTE);
+
+
+        try {
+            auth = FirebaseAuth.getInstance();
+            tentativa.setText(auth.getCurrentUser().getEmail().toString());
+        } catch (NullPointerException e){
+            tentativa.setText("Usuario Deslogado");
+        }
+
 
 
     }
@@ -145,6 +156,18 @@ public class LoginActivity extends AppCompatActivity {
         auth.signOut();
         Toast.makeText(this, "Usuario Saiu", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser usuarioAtivo = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuarioAtivo != null){
+            abrirTelaPrincipal();
+        }
+
 
     }
 }
