@@ -57,5 +57,11 @@ dependencies {
     // Add the dependency for the Firebase Storage library
     implementation 'com.google.firebase:firebase-storage'
 
+    // Add the dependency for tablayout
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    // Add the dependency for tablayout Optional: see how to use the utility.
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
+
 
 }

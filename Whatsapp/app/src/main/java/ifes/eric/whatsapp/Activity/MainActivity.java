@@ -3,29 +3,23 @@ package ifes.eric.whatsapp.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
-import java.util.Objects;
-
-import ifes.eric.whatsapp.Model.Usuario;
-import ifes.eric.whatsapp.Model.Validacao;
+import ifes.eric.whatsapp.Fragmants.ContatosFragments;
+import ifes.eric.whatsapp.Fragmants.ConversasFragment;
 import ifes.eric.whatsapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("WhatsAPP");
         setSupportActionBar(toolbar);
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add(R.string.titleA, ConversasFragment.class)
+                .add(R.string.titleB, ContatosFragments.class)
+                .create());
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+        viewPagerTab.setViewPager(viewPager);
     }
 
 
