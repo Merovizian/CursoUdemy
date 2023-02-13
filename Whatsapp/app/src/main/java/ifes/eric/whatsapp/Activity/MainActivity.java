@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         Toolbar toolbar = findViewById(R.id.toolbar_principal);
-
-
         toolbar.setTitle("WhatsAPP");
         setSupportActionBar(toolbar);
 
+
+//   ---------------------------  Codigos para a criação de abas   --------------------------------
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
                 .add(R.string.titleA, ConversasFragment.class)
@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
         SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);
     }
+//   **************************    Codigos para a criação de abas    *******************************
 
-
-    //   --------------------------- Metodo que cria o meuno na Toolbar --------------------------------
+//   --------------------------- Metodo que cria o menu na Toolbar --------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-
 //   **************************  Metodo que cria o meuno na Toolbar   *******************************
 
 
@@ -73,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_sair:
                 deslogarUsuario();
                 break;
+
+            case R.id.menu_Configuracao:
+                configuracoesUsuario();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,14 +85,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 //   ---------------------------   Metodo que desloga o usuario    --------------------------------
-
     public void deslogarUsuario (){
         auth.signOut();
         Toast.makeText(this, "Usuario Saiu", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
-
 //   **************************   Metodo que desloga o usuario      *******************************
+
+    // Metodo para jogar o usuario no activity de configurações
+    public void configuracoesUsuario(){
+
+        startActivity(new Intent(getApplicationContext(), ConfiguracoesActivity.class));
+
+    }
+
 
 }
 
