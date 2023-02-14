@@ -63,5 +63,9 @@ dependencies {
     // Add the dependency for tablayout Optional: see how to use the utility.
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 
+    // Add the dependency for circle imagens.
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 
 }
