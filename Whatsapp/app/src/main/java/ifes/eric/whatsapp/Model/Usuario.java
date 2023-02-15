@@ -1,7 +1,27 @@
 package ifes.eric.whatsapp.Model;
 
+import android.provider.ContactsContract;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import ifes.eric.whatsapp.helper.Base64Custom;
+
 public class Usuario {
     private String nome, email, senha, idUsuario;
+
+
+    public void salvar(){
+
+        DatabaseReference bandoDados = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usuarioDB = bandoDados.child("usuarios");
+        usuarioDB = usuarioDB.child(Base64Custom.codificarString(nome));
+        usuarioDB.child("Nome").setValue(nome,1);
+        usuarioDB.child("E-mail").setValue(email,2);
+        usuarioDB.child("Senha").setValue(senha,3);
+
+
+    }
 
     public String getNome() {
         return nome;
