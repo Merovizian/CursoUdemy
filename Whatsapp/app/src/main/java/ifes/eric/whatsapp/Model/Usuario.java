@@ -21,8 +21,6 @@ public class Usuario {
         // Salva todas as variaveis pertencentes a classe Usuario, exceto as que são marcadas com
         // @Exclude
         usuarioDB.setValue(this);
-
-
     }
 //   **************************  Metodo para Salvar Usuario no FB   *******************************
     public String getNome() {
