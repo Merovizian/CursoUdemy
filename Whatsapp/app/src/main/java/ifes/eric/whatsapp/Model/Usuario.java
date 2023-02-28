@@ -4,9 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.prefs.BackingStoreException;
-
-import ifes.eric.whatsapp.helper.Base64Custom;
+import ifes.eric.whatsapp.helper.UserFacilities;
 
 public class Usuario {
     private String Nome, Email, Senha, idUsuario;
@@ -17,7 +15,7 @@ public class Usuario {
         // Aponta o bandoDados para a referencia do Firebase
         DatabaseReference bandoDados = FirebaseDatabase.getInstance().getReference();
         // Cria uma referencia que aponta para "usuarios"."email(codificado)
-        DatabaseReference usuarioDB = bandoDados.child("usuarios").child(Base64Custom.codificarString(Email));
+        DatabaseReference usuarioDB = bandoDados.child("usuarios").child(UserFacilities.codificarString(Email));
         // Salva todas as variaveis pertencentes a classe Usuario, exceto as que são marcadas com
         // @Exclude
         usuarioDB.setValue(this);

@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import ifes.eric.whatsapp.Model.Usuario;
 import ifes.eric.whatsapp.Model.Validacao;
 import ifes.eric.whatsapp.R;
-import ifes.eric.whatsapp.helper.Base64Custom;
+import ifes.eric.whatsapp.helper.UserFacilities;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -86,12 +86,14 @@ public class CadastroActivity extends AppCompatActivity {
 
                     Toast.makeText(CadastroActivity.this, usuario.getNome() +
                             " Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                    UserFacilities.AtualizarNomeUsuario(usuario.getNome());
+
                     finish();
 
                     // Bloco que faz a codificação do email de usuario para uma string
                     try{
 
-                        String identificadorUsuario = Base64Custom.codificarString(usuario.getEmail());
+                        String identificadorUsuario = UserFacilities.codificarString(usuario.getEmail());
                         usuario.setIdUsuario(identificadorUsuario);
                         usuario.salvar();
 

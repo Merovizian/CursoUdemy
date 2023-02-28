@@ -14,25 +14,45 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Switch;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
-import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ifes.eric.whatsapp.R;
+import ifes.eric.whatsapp.helper.UserFacilities;
 import ifes.eric.whatsapp.helper.Permissao;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private final String usuarioID64 = UserFacilities.UsuarioEmailB64();
+
     private ImageButton imageButtonCamera, imageButtonGaleria;
     private CircleImageView imagePerfil;
+    private ImageView aplicarNomeUsuario;
+    private EditText mudarNome;
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALERRY = 2;
+
 
 
     //   ---------------------------  Lista de Permissoes solicitadas   --------------------------------
@@ -48,10 +68,15 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configuracoes);
 
 //   -----------------  Codigos que configuram os botoes de photo e galeria  -----------------------
-
         imageButtonGaleria = findViewById(R.id.config_imageButton_gallery);
         imageButtonCamera = findViewById(R.id. config_imageButton_photo);
         imagePerfil = findViewById(R.id.configuracoes_circle_perfil);
+        aplicarNomeUsuario = findViewById(R.id.configuracao_button_nome);
+        mudarNome = findViewById(R.id.configuracao_edit_nome);
+
+
+
+
 
 
         // Evento de clique do botão, poderia ser iniciado como um metodo também
@@ -72,8 +97,38 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
             }
         });
-
 //   *****************  Codigos que configuram os botoes de photo e galeria   **********************
+        aplicarNomeUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                // Aponta o bandoDados para a referencia do Firebase
+                DatabaseReference bandoDados = FirebaseDatabase.getInstance().getReference();
+                // Cria uma referencia que aponta para "usuarios"."email(codificado)
+                DatabaseReference usuarioDB = bandoDados.child("usuarios").child(usuarioID64);
+                usuarioDB.child("nome").setValue(mudarNome.getText().toString());
+                Toast.makeText(ConfiguracoesActivity.this, "Usuario "
+                        + mudarNome.getText().toString() + " alterado com sucesso!",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+
+            }
+        });
+
+        FirebaseUser usuario = UserFacilities.UsuarioGetUser();
+        Uri url = usuario.getPhotoUrl();
+
+        if (url != null){
+            Glide.with(this)
+                    .load(url)
+                    .into(imagePerfil);
+        }else{
+            imagePerfil.setImageResource(R.drawable.padrao);
+        }
+
+        mudarNome.setText(usuario.getDisplayName());
+
 
 //   ---------------------------  Codigos que configuram a toolbar  --------------------------------
         Toolbar toolbar = findViewById(R.id.toolbar_principal);
@@ -89,6 +144,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 //   --------------------------  Metodo que recupera os dados salvos  -----------------------------
     @Override
+    // Acessa uma atividade iniciada e que gera algum resultado.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // caso o resultado da solicitação tenha dado certo.
@@ -107,13 +163,55 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                         // objeto que salva a URI da data
                         Uri localImagemSelecionada = data.getData();
                         // Objeto imagem busca esse data, na URI selecionada, content provem acesso
-                        // aos conteudos.
+                        //aos conteudos.
                         imagem = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagemSelecionada);
                         break;
                 }
                 if (imagem != null){
+
                     // Insere o bitmap Imagem no slot de perfil;
                    imagePerfil.setImageBitmap(imagem);
+
+
+                   // Recuperar dados da imagem no FirebaseStorage
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+
+                    // Transformou a imagem em um Array de bytes.
+                    byte[] dadosImagem = baos.toByteArray();
+
+
+
+                   // Salvar no firebase
+
+                    StorageReference imageREF = storageReference
+                            .child("imagens")
+                            .child("perfil")
+                            .child(usuarioID64)
+                            .child("perfil.jpeg");
+
+                    UploadTask uploadTask = imageREF.putBytes(dadosImagem);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ConfiguracoesActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(ConfiguracoesActivity.this,
+                                    "A foto de perfil de "
+                                            + UserFacilities.decodificarString(usuarioID64)
+                                            + " enviada com sucesso!", Toast.LENGTH_LONG).show();
+                            imageREF.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    Uri url = task.getResult();
+                                    atualizarFotoUsuario( url );
+                                }
+                            });
+                        }
+                    });
 
                 }
 
@@ -123,6 +221,13 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         }
     }
 //   **************************   Metodo que recupera os dados salvos   ***************************
+
+
+    public void atualizarFotoUsuario(Uri url){
+        UserFacilities.atualizarFotoUsuario(url);
+
+
+    }
 
 
 //   ---------------------  Metodo que aponta os resultados das permissoes  ------------------------
@@ -164,6 +269,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Essa atividade pode gerar um resultado que sera analisado em onActivityResult
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
@@ -174,6 +280,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
         Intent takeGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         if (takeGalleryIntent.resolveActivity(getPackageManager()) != null) {
+            // Essa atividade pode gerar um resultado que sera analisado em onActivityResult
             startActivityForResult(takeGalleryIntent, REQUEST_IMAGE_GALERRY);
         }
 
