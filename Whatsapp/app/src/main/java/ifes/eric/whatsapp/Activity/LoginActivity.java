@@ -42,24 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        // tirar o a elevação e o titulo.
-        //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
-       // Objects.requireNonNull(getSupportActionBar()).setTitle("");
-
         email = findViewById(R.id.textInput_main_email);
         senha = findViewById(R.id.textInput_main_senha);
-        TextView tentativa = findViewById(R.id.text_TESTE);
-
-
-        try {
-            auth = FirebaseAuth.getInstance();
-            tentativa.setText(auth.getCurrentUser().getEmail().toString());
-        } catch (NullPointerException e){
-            tentativa.setText("Usuario Deslogado");
-        }
-
-
 
     }
 
@@ -139,8 +123,6 @@ public class LoginActivity extends AppCompatActivity {
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             teste = 1;
-
-            Toast.makeText(this, "TELA PRINCIPAL ABERTA", Toast.LENGTH_SHORT).show();
         }
     }
 //   **************************     Inicia a activity Principal      *******************************
@@ -162,10 +144,21 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        TextView nomeLogado = findViewById(R.id.text_TESTE);
 
         FirebaseUser usuarioAtivo = FirebaseAuth.getInstance().getCurrentUser();
+
+
         if (usuarioAtivo != null){
+            nomeLogado.setText(usuarioAtivo.getEmail());
             abrirTelaPrincipal();
+
+        }else{
+            nomeLogado.setText("Usuario Deslogado");
+        }
+
+
+        if (usuarioAtivo != null){
         }
 
 

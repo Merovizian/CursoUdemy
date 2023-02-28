@@ -46,9 +46,11 @@ public class UserFacilities {
         return usuario.getCurrentUser();
     }
 
+//   ---------------------- Metodo que Atualiza a foto do Usuario no Firebase ----------------------
     public static boolean atualizarFotoUsuario (Uri url){
         try {
             FirebaseUser user = UsuarioGetUser();
+            // Objeto que faz requerimento de alteração dos dados do usuario.
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setPhotoUri(url)
                     .build();
@@ -68,10 +70,14 @@ public class UserFacilities {
         }
 
     }
+//   *******************  Metodo que Atualiza a foto do Usuario no Firebase   **********************
 
+
+//   ---------------------- Metodo que Atualiza o nome do Usuario no Firebase ----------------------
     public static boolean AtualizarNomeUsuario (String nome){
         try {
             FirebaseUser user = UsuarioGetUser();
+            // Objeto que faz requerimento de alteração dos dados do usuario.
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(nome)
                     .build();
@@ -91,7 +97,10 @@ public class UserFacilities {
         }
 
     }
-
+//   *******************  Metodo que Atualiza o nome do Usuario no Firebase   **********************
 
 
 }
+//   --------------------------- Metodo que retorna a receitaTotal  --------------------------------
+
+//   **************************  Metodo que retorna a receitaTotal   *******************************

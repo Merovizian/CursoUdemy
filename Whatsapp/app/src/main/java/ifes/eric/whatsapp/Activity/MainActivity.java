@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 //   **************************    Codigos para a criação de abas    *******************************
 
+
 //   --------------------------- Metodo que cria o menu na Toolbar --------------------------------
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

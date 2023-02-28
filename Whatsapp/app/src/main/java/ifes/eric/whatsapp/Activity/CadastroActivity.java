@@ -25,7 +25,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     private EditText campoEmail, campoSenha, campoNome;
 
-    Usuario usuario;
+    private Usuario usuario;
 
     private FirebaseAuth auth;
 
@@ -39,10 +39,6 @@ public class CadastroActivity extends AppCompatActivity {
         campoNome = findViewById(R.id.imput_cadastro_nome);
         campoSenha = findViewById(R.id.imput_cadastro_senha);
 
-
-        // configuração do titulo
-        //getSupportActionBar().setTitle("Cadastro de novo Usuario");
-        //getSupportActionBar().setElevation(0);
     }
 
 
@@ -75,6 +71,7 @@ public class CadastroActivity extends AppCompatActivity {
 //   ----------------------------------  Validação dos Dados  --------------------------------------
     public void efetuarCadastro(){
 
+        // Fornece a instancia, link, seleção do Autenticador Firebase
         auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -86,8 +83,9 @@ public class CadastroActivity extends AppCompatActivity {
 
                     Toast.makeText(CadastroActivity.this, usuario.getNome() +
                             " Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                    UserFacilities.AtualizarNomeUsuario(usuario.getNome());
 
+                    // Utiliza o objeto usuario acima criado para atualizar o nome de perfil
+                    UserFacilities.AtualizarNomeUsuario(usuario.getNome());
                     finish();
 
                     // Bloco que faz a codificação do email de usuario para uma string
@@ -95,6 +93,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                         String identificadorUsuario = UserFacilities.codificarString(usuario.getEmail());
                         usuario.setIdUsuario(identificadorUsuario);
+                        // Metodo para salvar usuario no FirebaseDatabase
                         usuario.salvar();
 
                     } catch (Exception e){

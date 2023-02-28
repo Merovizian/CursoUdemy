@@ -67,17 +67,13 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
+
 //   -----------------  Codigos que configuram os botoes de photo e galeria  -----------------------
         imageButtonGaleria = findViewById(R.id.config_imageButton_gallery);
         imageButtonCamera = findViewById(R.id. config_imageButton_photo);
         imagePerfil = findViewById(R.id.configuracoes_circle_perfil);
         aplicarNomeUsuario = findViewById(R.id.configuracao_button_nome);
         mudarNome = findViewById(R.id.configuracao_edit_nome);
-
-
-
-
-
 
         // Evento de clique do botão, poderia ser iniciado como um metodo também
         imageButtonGaleria.setOnClickListener(new View.OnClickListener() {
@@ -98,35 +94,49 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             }
         });
 //   *****************  Codigos que configuram os botoes de photo e galeria   **********************
+
+
+//   -----------------        Codigos que configuram o nome de usuario       -----------------------
         aplicarNomeUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 // Aponta o bandoDados para a referencia do Firebase
                 DatabaseReference bandoDados = FirebaseDatabase.getInstance().getReference();
+
                 // Cria uma referencia que aponta para "usuarios"."email(codificado)
                 DatabaseReference usuarioDB = bandoDados.child("usuarios").child(usuarioID64);
+
+                // Seta o nome do usuario no BD a partir do que foi colocado na caixa de texto
                 usuarioDB.child("nome").setValue(mudarNome.getText().toString());
                 Toast.makeText(ConfiguracoesActivity.this, "Usuario "
                         + mudarNome.getText().toString() + " alterado com sucesso!",
                         Toast.LENGTH_SHORT).show();
                 finish();
-
             }
         });
+//   ***********************   Codigos que configuram o nome de usuario   **************************
 
+
+//   --------------------  Codigos que aplica a foto de perfil na pagina  --------------------------
+        // Cria um objeto Firebase User e aponta para o usuario atual
         FirebaseUser usuario = UserFacilities.UsuarioGetUser();
+
+        // metodo para extrair a Url da foto.
         Uri url = usuario.getPhotoUrl();
 
         if (url != null){
+            // Utiliza uma implementação para baixar a foto e aplicar a uma imagemview
             Glide.with(this)
                     .load(url)
                     .into(imagePerfil);
         }else{
+            // Caso não tenha essa foto no Firebase, usa-se uma pré definida
             imagePerfil.setImageResource(R.drawable.padrao);
         }
+//   **********************  Codigos que aplica a foto de perfil na pagina  ************************
 
+        // Coloca na caixa de texto o nome de usuario baixado do Firebase
         mudarNome.setText(usuario.getDisplayName());
 
 
@@ -182,19 +192,20 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 
 
-                   // Salvar no firebase
-
+                   // Referencia um objeto no Firebase Storage
                     StorageReference imageREF = storageReference
                             .child("imagens")
                             .child("perfil")
                             .child(usuarioID64)
                             .child("perfil.jpeg");
 
+                    // Utiliza a referencia do objeto do firebase para fazer uma tarefa
                     UploadTask uploadTask = imageREF.putBytes(dadosImagem);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ConfiguracoesActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ConfiguracoesActivity.this,
+                                    e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -203,9 +214,12 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                                     "A foto de perfil de "
                                             + UserFacilities.decodificarString(usuarioID64)
                                             + " enviada com sucesso!", Toast.LENGTH_LONG).show();
+                            // Usa o objeto que referencia um objeto no Firebase para extrair seu
+                            // Url de download
                             imageREF.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
+                                    // Assim que a tarefa retorna com o pedido cria-se um Url
                                     Uri url = task.getResult();
                                     atualizarFotoUsuario( url );
                                 }
@@ -223,9 +237,9 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 //   **************************   Metodo que recupera os dados salvos   ***************************
 
 
+
     public void atualizarFotoUsuario(Uri url){
         UserFacilities.atualizarFotoUsuario(url);
-
 
     }
 
