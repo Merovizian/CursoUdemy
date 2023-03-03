@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import ifes.eric.whatsapp.Model.Usuario;
 import ifes.eric.whatsapp.R;
 import ifes.eric.whatsapp.helper.UserFacilities;
 import ifes.eric.whatsapp.helper.Permissao;
@@ -49,6 +50,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private CircleImageView imagePerfil;
     private ImageView aplicarNomeUsuario;
     private EditText mudarNome;
+
+    private Usuario usuario;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_IMAGE_GALERRY = 2;
@@ -74,6 +77,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         imagePerfil = findViewById(R.id.configuracoes_circle_perfil);
         aplicarNomeUsuario = findViewById(R.id.configuracao_button_nome);
         mudarNome = findViewById(R.id.configuracao_edit_nome);
+
+        usuario = UserFacilities.getDadosUsuario();
 
         // Evento de clique do botão, poderia ser iniciado como um metodo também
         imageButtonGaleria.setOnClickListener(new View.OnClickListener() {
@@ -108,10 +113,23 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 DatabaseReference usuarioDB = bandoDados.child("usuarios").child(usuarioID64);
 
                 // Seta o nome do usuario no BD a partir do que foi colocado na caixa de texto
-                usuarioDB.child("nome").setValue(mudarNome.getText().toString());
-                Toast.makeText(ConfiguracoesActivity.this, "Usuario "
-                        + mudarNome.getText().toString() + " alterado com sucesso!",
-                        Toast.LENGTH_SHORT).show();
+                String nomeUsuarioTrocar = mudarNome.getText().toString();
+                usuarioDB.child("nome").setValue(nomeUsuarioTrocar);
+
+                // Aplica a troca de nome no FirebaseUser
+                boolean retornoNome = UserFacilities.AtualizarNomeUsuario(nomeUsuarioTrocar);
+
+
+                if (retornoNome){
+
+                    usuario.setNome(mudarNome.getText().toString());
+                    usuario.atualizarUsuario();
+
+                    Toast.makeText(ConfiguracoesActivity.this, "Usuario "
+                                    + mudarNome.getText().toString() + " alterado com sucesso!",
+                            Toast.LENGTH_SHORT).show();
+                }
+
                 finish();
             }
         });
@@ -239,14 +257,21 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 
     public void atualizarFotoUsuario(Uri url){
-        UserFacilities.atualizarFotoUsuario(url);
+
+        if (UserFacilities.atualizarFotoUsuario(url)) {
+            usuario.setFoto(url.toString());
+            usuario.atualizarUsuario();
+            Toast.makeText(this, "Foto trocada com sucesso!", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
 
 //   ---------------------  Metodo que aponta os resultados das permissoes  ------------------------
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // laço que percorre as permissoes requeridas
         for (int permissaoResultado : grantResults) {
