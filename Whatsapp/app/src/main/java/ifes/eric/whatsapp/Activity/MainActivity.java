@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_Configuracao:
                 configuracoesUsuario();
                 break;
+
+            case R.id.adicionar_user:
+                adicionarUsuario();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -97,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
     public void configuracoesUsuario(){
 
         startActivity(new Intent(getApplicationContext(), ConfiguracoesActivity.class));
+
+    }
+
+    public void adicionarUsuario(){
+
+        startActivity(new Intent(getApplicationContext(), AdicionarUser.class));
 
     }
 
