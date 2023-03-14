@@ -31,14 +31,13 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_principal);
-        toolbar.setTitle("Conversa");
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        fab = findViewById(R.id.fab);
-
+        /*
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +47,8 @@ public class ChatActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+         */
     }
 
 }
