@@ -2,10 +2,13 @@ package ifes.eric.whatsapp.Model;
 
 import android.provider.ContactsContract;
 
+import androidx.navigation.NavType;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +16,7 @@ import java.util.Objects;
 
 import ifes.eric.whatsapp.helper.UserFacilities;
 
-public class Usuario {
+public class Usuario implements Serializable{
     private String Nome, Email, Senha, idUsuario, Foto;
     private ArrayList<String> listaContatos = new ArrayList<>();
 
