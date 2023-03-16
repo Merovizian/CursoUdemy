@@ -32,7 +32,7 @@
             android:paddingRight="6dp">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editText_contentChat_mensagens"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -48,7 +48,7 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/fab_contentChat_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
