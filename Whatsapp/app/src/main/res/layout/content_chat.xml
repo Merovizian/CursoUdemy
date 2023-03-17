@@ -41,7 +41,7 @@
                 android:inputType="textPersonName" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imageView_contentChat_envioCamera"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
@@ -54,6 +54,7 @@
             android:clickable="true"
             app:backgroundTint="@color/verde_alternativo"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_baseline_send_24" />
+            app:srcCompat="@drawable/ic_baseline_send_24"
+            android:onClick="enviarMensagem"/>
     </LinearLayout>
 </LinearLayout>

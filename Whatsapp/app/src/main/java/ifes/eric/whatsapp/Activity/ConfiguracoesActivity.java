@@ -321,6 +321,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         if (takeGalleryIntent.resolveActivity(getPackageManager()) != null) {
             // Essa atividade pode gerar um resultado que sera analisado em onActivityResult
             startActivityForResult(takeGalleryIntent, REQUEST_IMAGE_GALERRY);
+
         }
 
     }
