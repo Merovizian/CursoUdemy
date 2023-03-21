@@ -2,6 +2,7 @@ package ifes.eric.whatsapp.Activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,9 +14,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
@@ -41,12 +47,19 @@ public class ChatActivity extends AppCompatActivity {
     private Usuario destinatario;
 
     public EditText mensagemDestinatario;
+    public String Remetente = UserFacilities.UsuarioEmailB64();
+    public String Destinatario ;
 
     private FirebaseAuth auth;
 
     private RecyclerView recyclerMensagens;
     private MensagensAdapter mensagensAdapter;
     private List<Mensagem> listaMensagens = new ArrayList<>();
+
+    private DatabaseReference databaseReference;
+    private DatabaseReference mensagensRef;
+
+    private ChildEventListener childEventListenerMensagens;
 
 
     @Override
@@ -71,8 +84,10 @@ public class ChatActivity extends AppCompatActivity {
         recyclerMensagens.setHasFixedSize(true);
         recyclerMensagens.setAdapter(mensagensAdapter);
 
-
 //   *******************************      Codigos para a criação do recycler view     **********************************
+
+
+
 
 
 
@@ -86,6 +101,7 @@ public class ChatActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null ){
             destinatario = (Usuario) bundle.getSerializable("chatContato");
+            Destinatario = UserFacilities.codificarString(destinatario.getEmail());
             nomeDestinatario.setText(destinatario.getNome());
             String foto = destinatario.getFoto();
             if (foto != null){
@@ -97,18 +113,17 @@ public class ChatActivity extends AppCompatActivity {
             }else
                 fotoDestinatario.setImageResource(R.drawable.padrao);
         }
-
-
 //   **************************   Codigos para apresentar a foto e o nome de usuario     *******************************
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        mensagensRef = databaseReference.child("mensagens")
+                .child(Remetente)
+                .child(Destinatario);
 
     }
 
 
     public void enviarMensagem(View view){
         auth = FirebaseAuth.getInstance();
-
-        String Remetente = UserFacilities.UsuarioEmailB64();
-        String Destinatario = UserFacilities.codificarString(destinatario.getEmail());
 
         String textoMensagem = mensagemDestinatario.getText().toString();
 
@@ -119,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
             mensagem.setMensagem(textoMensagem);
             mensagem.setIdDestinatario(Destinatario);
 
-            salvarMensagem(Remetente, Destinatario, textoMensagem, 1);
+            salvarMensagem(Remetente, Destinatario, mensagem);
 
 
         }else{
@@ -134,18 +149,72 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public void salvarMensagem(String idRemetente, String idDestinatario, String msg, Integer codigo){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mensagemRef = databaseReference.child("mensagens");
-        DatabaseReference conversaAtiva = mensagemRef.child(idRemetente).child(idDestinatario).push();
-        if (codigo == 1){
-            conversaAtiva.child("mensagem").setValue(msg);
-        } else if (codigo == 2) {
-            conversaAtiva.child("imagem").setValue(msg);
-        }
-        conversaAtiva.child("idUsuario").setValue(idRemetente);
+    public void salvarMensagem(String idRemetente, String idDestinatario, Mensagem msg){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        mensagensRef = databaseReference.child("mensagens");
+
+        mensagensRef.child(idRemetente)
+                .child(idDestinatario)
+                .push()
+                .setValue(msg);
+
+        // Limpa a caixa de texto
         mensagemDestinatario.setText("");
 
     }
+
+
+
+    private void recuperarMensagens(){
+        childEventListenerMensagens = mensagensRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                Mensagem mensagem = snapshot.getValue(Mensagem.class);
+                listaMensagens.add(mensagem);
+                mensagensAdapter.notifyDataSetChanged();
+                Toast.makeText(ChatActivity.this, "previousChildName", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarMensagens();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mensagensRef.removeEventListener(childEventListenerMensagens);
+    }
+
 
 }
