@@ -19,11 +19,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import ifes.eric.whatsapp.Adapter.MensagensAdapter;
 import ifes.eric.whatsapp.Model.Mensagem;
 import ifes.eric.whatsapp.Model.Usuario;
 import ifes.eric.whatsapp.R;
@@ -38,6 +44,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    private RecyclerView recyclerMensagens;
+    private MensagensAdapter mensagensAdapter;
+    private List<Mensagem> listaMensagens = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +59,21 @@ public class ChatActivity extends AppCompatActivity {
         setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mensagemDestinatario = findViewById(R.id.editText_contentChat_mensagens);
+
+//   -------------------------------     Codigos para a criação do recycler view     -----------------------------------
+        mensagensAdapter = new MensagensAdapter(listaMensagens, getApplicationContext());
+        recyclerMensagens = findViewById(R.id.recycler_contentChat_rolodeConversas);
+
+
+        // Configuração RecyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerMensagens.setLayoutManager(layoutManager);
+        recyclerMensagens.setHasFixedSize(true);
+        recyclerMensagens.setAdapter(mensagensAdapter);
+
+
+//   *******************************      Codigos para a criação do recycler view     **********************************
+
 
 
 //   ---------------------------  Codigos para apresentar a foto e o nome de usuario    --------------------------------
