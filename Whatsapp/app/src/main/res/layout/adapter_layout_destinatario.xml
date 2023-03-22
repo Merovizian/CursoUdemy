@@ -5,7 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="left"
-    android:layout_margin="6dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginTop="6dp"
     android:background="@drawable/bg_balao"
     android:backgroundTint="@color/white"
     android:orientation="vertical">

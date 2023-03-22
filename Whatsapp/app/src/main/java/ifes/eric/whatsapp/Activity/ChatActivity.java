@@ -134,7 +134,12 @@ public class ChatActivity extends AppCompatActivity {
             mensagem.setMensagem(textoMensagem);
             mensagem.setIdDestinatario(Destinatario);
 
+            // Envio da mensagem para o firebase a partir do User1 (User1 = remetente)
             salvarMensagem(Remetente, Destinatario, mensagem);
+
+            // Envio da mesma mensagem acima para o firebase, mas para o User2 (User2 = destinatário)
+            salvarMensagem(Destinatario, Remetente, mensagem);
+
 
 
         }else{
@@ -174,7 +179,6 @@ public class ChatActivity extends AppCompatActivity {
                 Mensagem mensagem = snapshot.getValue(Mensagem.class);
                 listaMensagens.add(mensagem);
                 mensagensAdapter.notifyDataSetChanged();
-                Toast.makeText(ChatActivity.this, "previousChildName", Toast.LENGTH_SHORT).show();
 
             }
 

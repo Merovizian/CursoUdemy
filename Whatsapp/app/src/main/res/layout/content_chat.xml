@@ -36,10 +36,11 @@
                 android:id="@+id/editText_contentChat_mensagens"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textLongMessage" />
 
             <ImageView
                 android:id="@+id/imageView_contentChat_envioCamera"
