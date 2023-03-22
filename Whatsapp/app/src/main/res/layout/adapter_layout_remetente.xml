@@ -7,13 +7,11 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_gravity="right"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="6dp"
+        android:layout_margin="6dp"
         android:background="@drawable/bg_balao"
         android:backgroundTint="@color/balaoremetente"
+        android:layout_alignParentRight="true"
         android:gravity="right"
         android:orientation="vertical">
 

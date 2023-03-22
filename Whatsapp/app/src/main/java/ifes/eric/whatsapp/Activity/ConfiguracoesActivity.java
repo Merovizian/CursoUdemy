@@ -232,6 +232,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                                     "A foto de perfil de "
                                             + UserFacilities.decodificarString(usuarioID64)
                                             + " enviada com sucesso!", Toast.LENGTH_LONG).show();
+
+
                             // Usa o objeto que referencia um objeto no Firebase para extrair seu
                             // Url de download
                             imageREF.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
