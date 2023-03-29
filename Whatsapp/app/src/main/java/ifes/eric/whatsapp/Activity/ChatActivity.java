@@ -269,15 +269,39 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-
+    // Programa que salva a conversa no Firebase
     private void salvarConversa(Mensagem msg) {
 
+        // Cria uma nova instancia para o objeto conversa
         Conversa conversaRemetente = new Conversa();
+        // Adiciona o Remetente como uma variavel do objeto conversa
         conversaRemetente.setIdRemetente(Remetente);
+        // Adiciona o Destinatario como uma variavel do objeto conversa
         conversaRemetente.setIdDestinatario(Destinatario);
+        // Adiciona a ultima mensagem, que é uma variavel local para o objeto conversa
         conversaRemetente.setUltimaMensagem(msg.getMensagem());
+        // Adiciona um OBJETO inteiro dentro do objeto mensagem
         conversaRemetente.setUsuarioExibicao(destinatario);
+        // Salva todas as inserções acima FireBase
         conversaRemetente.salvar();
+
+
+
+        // faz toda o processo acima, mas agora para o outro usuario poder enxergar a ultima mensagem
+        Conversa conversaDestinatario = new Conversa();
+        // Adiciona o Remetente como uma variavel do objeto conversa
+        conversaRemetente.setIdRemetente(Destinatario);
+        // Adiciona o Destinatario como uma variavel do objeto conversa
+        conversaRemetente.setIdDestinatario(Remetente);
+        // Adiciona a ultima mensagem, que é uma variavel local para o objeto conversa
+        conversaRemetente.setUltimaMensagem(msg.getMensagem());
+        // Adiciona um OBJETO inteiro dentro do objeto mensagem
+        conversaRemetente.setUsuarioExibicao(UserFacilities.getDadosUsuario());
+        // Salva todas as inserções acima FireBase
+        conversaRemetente.salvar();
+
+
+
 
 
     }

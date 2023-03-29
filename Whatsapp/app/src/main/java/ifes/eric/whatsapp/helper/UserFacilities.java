@@ -118,6 +118,7 @@ public class UserFacilities {
         // Usa o objeto firebaseUser para extrair os dados e colocar no objeto usuario
         usuario.setEmail(firebaseUser.getEmail());
         usuario.setNome(firebaseUser.getDisplayName());
+        usuario.setIdUsuario(UsuarioEmailB64());
 
         if (firebaseUser.getPhotoUrl() == null) {
             usuario.setFoto("");
