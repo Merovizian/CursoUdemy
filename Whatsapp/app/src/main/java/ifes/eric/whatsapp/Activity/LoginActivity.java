@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //   ------------------------- Verifica se os campos foram digitados  ------------------------------
     public void verificarcampos(View view) {
+        Toast.makeText(this, "A", Toast.LENGTH_SHORT).show();
         String TextoSenha = senha.getText().toString();
         String TextoEmail = email.getText().toString();
 

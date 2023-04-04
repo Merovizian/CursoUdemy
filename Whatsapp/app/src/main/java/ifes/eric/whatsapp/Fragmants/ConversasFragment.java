@@ -157,4 +157,8 @@ public class ConversasFragment extends Fragment {
         super.onStop();
         conversasREF.removeEventListener(childEventListenerConversas);
     }
+
+    public void pesquisarConversas(String query ){
+
+    }
 }
