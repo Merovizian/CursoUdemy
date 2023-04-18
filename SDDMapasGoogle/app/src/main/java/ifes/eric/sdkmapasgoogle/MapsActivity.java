@@ -1,13 +1,18 @@
 package ifes.eric.sdkmapasgoogle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.icu.text.Transliterator;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -28,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
@@ -44,13 +50,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng ifesLocation = new LatLng(-20.6464339462924, -40.49584270628985);
-        LatLng p1Location = new LatLng(-20.64644, -40.494);
 
-        mMap.addMarker(new MarkerOptions().position(ifesLocation).title("Ifes_Heltec-01"));
-        mMap.addMarker(new MarkerOptions().position(p1Location).title("P1"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ifesLocation));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(p1Location));
+        // Cria um objeto Latitude Longitude.
+        LatLng ifesLocation = new LatLng(-20.64643394, -40.495842706);
+
+        // Mudar a exibição do mapa
+        mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+
+        // Mover a camera -  ZOOM  2.0  até 21.0
+        mMap.moveCamera(   CameraUpdateFactory.newLatLngZoom(ifesLocation, 12) );
+
+
+        mMap.addCircle(new CircleOptions()
+                .center(ifesLocation)
+                .radius(500)
+                .fillColor(R.color.black)
+
+        );
+
+
+
+
+
+//   --------------------------------------  Adiciona Marcador e configuração  ----------------------------------------
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(ifesLocation)
+                        .title("IFES")
+                        .icon(
+                                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)  // UTILIZANDO MARCADOR PADRAO
+                                //BitmapDescriptorFactory.fromResource(R.drawable.clipart2003120)  -- Utilizando Bitmap
+                        )
+
+        );
+//   ***********************************    Adiciona Marcador e configuração     ***************************************
+
+
+
+//   --------------------------------------  Eventos de Click e de Click Longo  ----------------------------------------
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                LatLng marcador = (latLng);
+
+                Double latitude = latLng.latitude;
+                Double longitude = latLng.longitude;
+
+                Toast.makeText(MapsActivity.this, latitude + "\n" + longitude , Toast.LENGTH_SHORT).show();
+
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(latLng)
+                                .title("Local Clicado")
+                                .snippet("DESCRICAO BOBA")
+                );
+
+            }
+        });
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull LatLng latLng) {
+                Toast.makeText(MapsActivity.this, "Long: \n" + latLng.latitude +"\n"+latLng.longitude
+                        , Toast.LENGTH_SHORT).show();
+            }
+        });
+//   ***********************************   Eventos de Click e de Click Longo   *****************************************
+
     }
+
+
+
+
+
 }
