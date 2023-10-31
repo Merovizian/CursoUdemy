@@ -1,17 +1,15 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services'
-
 }
 
 android {
-    namespace 'ifes.eric.whatsapp'
-    compileSdk 32
+    namespace 'hobby.eric.whatsapp'
+    compileSdk 33
 
     defaultConfig {
-        applicationId "ifes.eric.whatsapp"
-        minSdk 21
-        targetSdk 32
+        applicationId "hobby.eric.whatsapp"
+        minSdk 19
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -28,55 +26,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        viewBinding true
-    }
-    buildToolsVersion '33.0.0'
 }
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.5.2'
-    implementation 'androidx.navigation:navigation-ui:2.5.2'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
-    
-    // FIREBASE BOM
-    implementation platform('com.google.firebase:firebase-bom:31.0.0')
-
-    // Add the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics'
-
-    // Add the dependency for the Realtime Database library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-database'
-
-    // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-auth'
-
-    // Add the dependency for the Firebase Storage library
-    implementation 'com.google.firebase:firebase-storage'
-
-    // Add the dependency for tablayout
-    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-
-    // Add the dependency for tablayout Optional: see how to use the utility.
-    implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
-
-    // Add the dependency for circle imagens.
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-
-    // FirebaseUI Storage only
-    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
-
-
-
-
-
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
