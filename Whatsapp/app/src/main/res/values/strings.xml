@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Whatsapp</string>
+    <string name="hintemail">Digite seu e-mail</string>
+    <string name="hintsenha">Digite sua senha</string>
+    <string name="botaoLogin">LOGAR</string>
+    <string name="fraseCadastro">Não tem conta? <u>Cadastre-se</u></string>
 </resources>
