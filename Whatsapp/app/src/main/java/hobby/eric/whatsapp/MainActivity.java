@@ -26,4 +26,10 @@ public class MainActivity extends AppCompatActivity {
         Log.v("ERICTAG", "ESSE É O LOG BRANCO");
 
     }
+
+    @Override
+    protected void onStart() {
+        Log.d("ERICTAG", "ON START NO MAINACTIVITY");
+        super.onStart();
+    }
 }

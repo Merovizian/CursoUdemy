@@ -2,8 +2,11 @@ package hobby.eric.whatsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,5 +17,18 @@ public class LoginActivity extends AppCompatActivity {
         Log.v("ERICTAG", "LOGIN ACTIVITY OnCreate");
 
 
+    }
+
+    public void abrirTelaCadastro(View view){
+        Intent abrirActivityCadastro = new Intent(getApplicationContext(), CadastroActivity.class);
+        startActivity(abrirActivityCadastro);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "REINICIE O PROGRAMA", Toast.LENGTH_SHORT).show();
+
+        super.onDestroy();
     }
 }
