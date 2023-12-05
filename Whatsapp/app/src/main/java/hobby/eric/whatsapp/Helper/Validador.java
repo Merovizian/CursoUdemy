@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-public class validacao {
+public class Validador {
 
     public int validar(String nome, String endereco, String rg, String companheiro, Context context) {
 
@@ -32,7 +32,7 @@ public class validacao {
         return 0;
     }
 
-    public int validar(String nome, String senha, String email, Context context) {
+    public int validar(String nome, String email, String senha, Context context) {
 
         if (!nome.isEmpty()) {
             if (!email.isEmpty()) {

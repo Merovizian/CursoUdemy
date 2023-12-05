@@ -1,4 +1,4 @@
-package hobby.eric.whatsapp;
+package hobby.eric.whatsapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import hobby.eric.whatsapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

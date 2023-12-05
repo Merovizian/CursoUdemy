@@ -1,10 +1,12 @@
-package hobby.eric.whatsapp;
+package hobby.eric.whatsapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import hobby.eric.whatsapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
