@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import hobby.eric.whatsapp.Helper.ConfiguracaoFirebase;
 import hobby.eric.whatsapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,17 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(this, LoginActivity.class));
-
-
-
-
-
 
         Log.e("ERICTAG", "ESSE É O LOG VERMELHO - ERROR");
-        Log.d("ERICTAG", "ESSE É O LOG VERDE - ");
-        Log.i("ERICTAG", "ESSE É O LOG AZUL");
-        Log.v("ERICTAG", "ESSE É O LOG BRANCO");
+        Log.d("ERICTAG", "ESSE É O LOG VERDE - TESTE LOCAL");
+        Log.i("ERICTAG", "ESSE É O LOG AZUL - TESTE CONDICIONAIS ");
+        Log.v("ERICTAG", "ESSE É O LOG BRANCO  - TESTE VARIAVEIS");
 
     }
 
