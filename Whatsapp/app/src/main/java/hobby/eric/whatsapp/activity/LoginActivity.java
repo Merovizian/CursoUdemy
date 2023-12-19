@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     public EditText inputEmail, inputSenha;
     private String textEmail, textSenha;
     public FirebaseAuth firebaseAuth = ConfiguracaoFirebase.getFirebaseAutentificacao();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,17 +43,15 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        Log.v("ERICTAG", "LOGIN / ONCREATE - firebaseAuth.getCurrentUser(): " + firebaseAuth.getCurrentUser().getEmail().toString());
-
     }
 
-    public void abrirTelaCadastro(View view){
+    public void abrirTelaCadastro(View view) {
         Intent abrirActivityCadastro = new Intent(getApplicationContext(), CadastroActivity.class);
         startActivity(abrirActivityCadastro);
 
     }
 
-    public void abrirBotaoLogin(View view){
+    public void abrirBotaoLogin(View view) {
 
         // Anexa os dados lidos nos inputs nas respectivas variveis STRINGS
         textEmail = inputEmail.getText().toString();
@@ -64,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         // Validador de dados inseridos para evitar que o usuario falte com algum dado.
         Validador validador = new Validador();
 
-        if (validador.validar(textSenha, textEmail, this) == 0){
+        if (validador.validar(textSenha, textEmail, this) == 0) {
             usuario.setUserEmail(textEmail);
             usuario.setUserSenha(textSenha);
 
@@ -75,40 +74,49 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void realizarLogin(Usuario usuario){
+    public void realizarLogin(Usuario usuario) {
 
 
         firebaseAuth.signInWithEmailAndPassword(
-                usuario.getUserEmail(),
-                usuario.getUserSenha())
+                        usuario.getUserEmail(),
+                        usuario.getUserSenha())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "USUARIO: " + firebaseAuth.getCurrentUser().getEmail()
-                            + "\nLogado com sucesso!", Toast.LENGTH_SHORT).show();
-                    abrirTelaPrincipal();
-                }else{
-                    String erro = "";
-                    try {
-                        throw Objects.requireNonNull(task.getException());
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "USUARIO: " + firebaseAuth.getCurrentUser().getEmail()
+                                    + "\nLogado com sucesso!", Toast.LENGTH_SHORT).show();
+                            abrirTelaPrincipal();
+                        } else {
+                            String erro = "";
+                            try {
+                                throw Objects.requireNonNull(task.getException());
 
-                    } catch (FirebaseAuthInvalidUserException e){
-                        erro = "Usuário Inválido";
-                    } catch (FirebaseAuthInvalidCredentialsException e){
-                        erro = "Email mal formatado";
-                    } catch (Exception e ){
-                        erro = "Erro:  " + e.getMessage();
-                        e.printStackTrace();
+                            } catch (FirebaseAuthInvalidUserException e) {
+                                erro = "Usuário Inválido";
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                erro = "Email mal formatado";
+                            } catch (Exception e) {
+                                erro = "Erro:  " + e.getMessage();
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(LoginActivity.this, erro, Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    Toast.makeText(LoginActivity.this, erro, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                });
     }
 
-    public void abrirTelaPrincipal (){
+    public void abrirTelaPrincipal() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuarioAtual = firebaseAuth.getCurrentUser();
+        if ( usuarioAtual != null){
+            abrirTelaPrincipal();
+        }
     }
 
     @Override
